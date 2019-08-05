@@ -11,6 +11,18 @@
         <content type="html"><![CDATA[<p> $f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^\frac{(x-\mu)^2}{2\sigma^2}$</p>]]></content>
       
       
+      <categories>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+        </tags>
       
     </entry>
     
