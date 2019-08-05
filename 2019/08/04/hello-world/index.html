@@ -400,18 +400,12 @@
   
   <!-- Gitment评论插件通用代码 -->
 <div id="git"></div>
-<script>
-g_css=window.location.protocol+"//"+window.location.host+"/css/gitment.css";
-g_js=window.location.protocol+"//"+window.location.host+"/js/gitment.js";
-</script>
 
-<link rel="stylesheet" href="" id="Gitment-1"></link>
-<script src="" id="Gitment-2"></script>
+<link rel="stylesheet" href="https://silver-birch-wawa.github.io/css/gitment.css" id="Gitment-1"></link>
+<script src="https://silver-birch-wawa.github.io/js/gitment.js" id="Gitment-2"></script>
 
 <script>
-document.getElementById("Gitment-1").href=g_css;
-document.getElementById("Gitment-2").src=g_js;
-// console.log(js)
+console.log(g_js);
 var gitment = new Gitment({
       id: "Hello World",
       owner: 'silver-birch-wawa',
