@@ -421,13 +421,18 @@
   
   <!-- Gitment评论插件通用代码 -->
 <div id="git"></div>
-<!--
-<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-<script src="https://jjeejj.github.io/js/gitment.js"></script>
--->
-<link rel="stylesheet" href="./css/gitment.css">
-<script src="./js/gitment.js"></script>
 <script>
+g_css=window.location.protocol+"//"+window.location.host+"/css/gitment.css";
+g_js=window.location.protocol+"//"+window.location.host+"/js/gitment.js";
+</script>
+
+<link rel="stylesheet" href="" id="Gitment-1"></link>
+<script src="" id="Gitment-2"></script>
+
+<script>
+document.getElementById("Gitment-1").href=g_css;
+document.getElementById("Gitment-2").src=g_js;
+// console.log(js)
 var gitment = new Gitment({
       id: "tags",
       owner: 'silver-birch-wawa',
