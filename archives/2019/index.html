@@ -78,7 +78,9 @@
 </script>
 
 
-    <script> yiliaConfig.jquery_ui = [false]; </script>
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
 
 
 
@@ -283,6 +285,8 @@
           <div class="article-meta">
               <!-- 添加代码  -->
 
+本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+
 <a href="/2019/08/04/Feature-Engineering/" class="archive-article-date">
       <time datetime="2019-08-04T12:55:43.000Z" itemprop="datePublished">08-04</time>
 </a>
@@ -322,6 +326,8 @@
     <header class="archive-article-header">
           <div class="article-meta">
               <!-- 添加代码  -->
+
+本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 
 <a href="/2019/08/04/hello-world/" class="archive-article-date">
       <time datetime="2019-08-04T10:58:27.472Z" itemprop="datePublished">08-04</time>
@@ -399,7 +405,7 @@
                 $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
             }
             else {
-                var backgroundnum = 5;
+                var backgroundnum = 3;
                 var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
                 $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
             }
@@ -439,22 +445,8 @@ MathJax.Hub.Queue(function() {
 <script>
     // Open in New Window
     
-        var oOpenInNew = {
-            
-            
-            
-            
-            
-            
-             archives: ".archive-article-title", 
-             miniArchives: "a.post-list-link", 
-            
-             friends: "#js-friends a", 
-             socail: ".social a" 
-        }
-        for (var x in oOpenInNew) {
-            $(oOpenInNew[x]).attr("target", "_blank");
-        }
+        $("a").attr("target", "_blank");
+        $("#scroll a, #toc a").removeAttr("target");
     
 </script>
 
