@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Blog for AI Self-Study">
 <meta property="og:description" content="$f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^\frac{(x-\mu)^2}{2\sigma^2}$">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-05T15:44:11.958Z">
+<meta property="og:updated_time" content="2019-08-06T01:46:56.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Feature Engineering">
 <meta name="twitter:description" content="$f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^\frac{(x-\mu)^2}{2\sigma^2}$">
@@ -74,7 +74,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: 
+        search: true
     }
 </script>
 
@@ -106,6 +106,13 @@
 
         
 
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
         
 
 
@@ -262,7 +269,6 @@
   
     <div class="article-meta">
       <!-- 添加代码  -->
-本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 
 <a href="/2019/08/04/Feature-Engineering/" class="article-date">
       <time datetime="2019-08-04T12:55:43.000Z" itemprop="datePublished">2019-08-04</time>
@@ -318,7 +324,7 @@
         <p><span>本文标题:</span><a href="/2019/08/04/Feature-Engineering/">Feature Engineering</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
         <p><span>发布时间:</span>2019-08-04, 20:55:43</p>
-        <p><span>最后更新:</span>2019-08-05, 23:44:11</p>
+        <p><span>最后更新:</span>2019-08-06, 09:46:56</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/08/04/Feature-Engineering/" title="Feature Engineering">https://silver-birch-wawa.github.io/2019/08/04/Feature-Engineering/</a>
             <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/04/Feature-Engineering/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -476,7 +482,7 @@ gitment.render('git')
                 
                     <span>| </span>
                 
-                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+                本文总阅读量<span id="busuanzi_value_page_pv"></span>次
                 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
                 </script>              
             </div>
