@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="一个酒吧废物">
+<meta name="description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
 <meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
 <meta property="og:url" content="https://silver-birch-wawa.github.io/about/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="一个酒吧废物">
+<meta property="og:description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-05T15:38:18.046Z">
+<meta property="og:updated_time" content="2019-08-11T09:18:53.889Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="about">
-<meta name="twitter:description" content="一个酒吧废物">
+<meta name="twitter:description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -332,6 +332,31 @@
 
           
         <center><strong>一个酒吧废物</strong></center>
+
+
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id2[寄存器A]-->id3[寄存器B]
+    subgraph one step
+    id[内存]-->id1[缓存]
+    id1[缓存]-->id2[寄存器A]
+    end
+    subgraph two step
+    id3[寄存器B]-->id4[缓存]  
+    id4[缓存]-->id5[内存]
+    end
+    class id,id1,id2,id3,id4,id5 className;</pre>
+
+
+<p><div id="flowchart-0" class="flow-chart"></div><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op=>operation: 我的操作
+cond=>condition: 判断确认？
+  
+st->op->cond
+cond(yes)->e
+cond(no)->op</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+
       
     </div>
     
@@ -439,6 +464,7 @@ gitment.render('git')
             </div>
         
     </div>
+    <script src="/js/mermaid.min.js"></script>
 </footer>
     </div>
     
@@ -500,6 +526,7 @@ MathJax.Hub.Queue(function() {
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
+
   </div>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
