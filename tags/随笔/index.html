@@ -291,8 +291,8 @@
 
 本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 
-<a href="/2019/08/04/hello-world/" class="archive-article-date">
-      <time datetime="2019-08-04T10:58:27.472Z" itemprop="datePublished">08-04</time>
+<a href="/2019/08/11/hello-world/" class="archive-article-date">
+      <time datetime="2019-08-11T12:22:00.000Z" itemprop="datePublished">08-11</time>
 </a>
 
 
@@ -301,7 +301,7 @@
          
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/04/hello-world/">Hello World</a>
+      <a class="archive-article-title" href="/2019/08/11/hello-world/">Hello World</a>
     </h1>
   
 
@@ -412,8 +412,22 @@ MathJax.Hub.Queue(function() {
 <script>
     // Open in New Window
     
-        $("a").attr("target", "_blank");
-        $("#scroll a, #toc a").removeAttr("target");
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
     
 </script>
 
