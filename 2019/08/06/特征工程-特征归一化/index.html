@@ -23,12 +23,10 @@
 <meta property="og:site_name" content="Blog for AI Self-Study">
 <meta property="og:description" content="为什么要归一化？在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/2019/08/06/特征工程-特征归一化/归一化与否示例.png">
-<meta property="og:updated_time" content="2019-08-06T13:51:52.894Z">
+<meta property="og:updated_time" content="2019-08-11T13:33:44.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="特征工程-特征归一化">
 <meta name="twitter:description" content="为什么要归一化？在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增">
-<meta name="twitter:image" content="https://silver-birch-wawa.github.io/2019/08/06/特征工程-特征归一化/归一化与否示例.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -320,7 +318,7 @@
           
         <h2 id="为什么要归一化？"><a href="#为什么要归一化？" class="headerlink" title="为什么要归一化？"></a>为什么要归一化？</h2><p>在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。</p>
 <p><div align="center">
-    <img src="归一化与否示例.png" width="50%" text-align="center"/>
+![upload successful](\images\pasted-1.png)
 </div></p>
 <h3 id="逻辑回归一定要归一化么？"><a href="#逻辑回归一定要归一化么？" class="headerlink" title="逻辑回归一定要归一化么？"></a>逻辑回归一定要归一化么？</h3><p>如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。</p>
 <h2 id="归一化的方法"><a href="#归一化的方法" class="headerlink" title="归一化的方法"></a>归一化的方法</h2><ol>
@@ -338,7 +336,7 @@
         <p><span>本文标题:</span><a href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
         <p><span>发布时间:</span>2019-08-06, 12:17:32</p>
-        <p><span>最后更新:</span>2019-08-06, 21:51:52</p>
+        <p><span>最后更新:</span>2019-08-11, 21:33:44</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/08/06/特征工程-特征归一化/" title="特征工程-特征归一化">https://silver-birch-wawa.github.io/2019/08/06/特征工程-特征归一化/</a>
             <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/06/特征工程-特征归一化/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
