@@ -1,19 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F08%2F11%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. mermaidgraph TD; A—&gt;B; A—&gt;C; B—&gt;D; C—&gt;D; Quick Start Create a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment 第一段]]></content>
-      <tags>
-        <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[特征工程-特征归一化]]></title>
-    <url>%2F2019%2F08%2F06%2F%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%2F</url>
-    <content type="text"><![CDATA[为什么要归一化？在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。 ![upload successful](\images\pasted-1.png) 逻辑回归一定要归一化么？如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。 归一化的方法 线性函数归一化（适用于简单数值）：$X=\frac{X-X{min}}{X{max}-X_{min}}$ 0均值归一化：$z=\frac{x-u}{\sigma}$]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-      </tags>
-  </entry>
+<search> 
+  
+  
+    
+    <entry>
+      <title>C++编译过程</title>
+      <link href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/"/>
+      <url>/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<pre class="mermaid">graph TD    classDef className fill:white,stroke:#333,stroke-width:1px;    id(预处理,做优化,生成.i文件)-->id1[编译器,生成.s文件]    id1[编译器,生成.s文件]-->id2[汇编器,生成.o文件]    id2[汇编器,生成.o文件]-->id3[链接器,连接库文件和其他目标文件]    id3[链接器,连接库文件和其他目标文件]-->id4(生成可执行文件)    class id,id1,id2,id3,id4 className;</pre><h4 id="C-预处理阶段主要完成的工作："><a href="#C-预处理阶段主要完成的工作：" class="headerlink" title="C++预处理阶段主要完成的工作："></a>C++预处理阶段主要完成的工作：</h4><p>处理#开始的预编译指令：<br>（1）宏定义(#define)：对宏定义进行字符串替换。<br>（2）文件包含(#include)：文件包含命令把指定头文件插入该命令行位置取代该命令行，从而把指定的文件和当前的源程序文件连成一个源文件。<br>（3）条件编译(#ifdef)：当满足某条件时语句进行编译，而当条件不满足时则编译另一组语句。条件编译对程序的移植和调试是很有用的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#ifndef  Linux</span><br><span class="line">linux平台下运行的函数</span><br><span class="line">#else</span><br><span class="line">#ifndef  windows</span><br><span class="line">Windows平台下运行的函数</span><br><span class="line">#endif         </span><br><span class="line">#endif</span><br></pre></td></tr></table></figure></p><h4 id="汇编阶段："><a href="#汇编阶段：" class="headerlink" title="汇编阶段："></a>汇编阶段：</h4><p>直接生成了汇编代码</p><h4 id="链接器阶段"><a href="#链接器阶段" class="headerlink" title="链接器阶段"></a>链接器阶段</h4><p>（1）函数重载：同名函数，不同函数输入变量/输出变量的类型/不同功能。<br>（2）inline函数：如果函数体不太大，对此函数的所有调用都以函数本体去替代，注意inline只是对编译器的一个建议申请，不是强制命令<br>（3）模板处理：函数定义（包括具现化后的函数模板，类模板的成员函数），变量定义（包括函数模板的静态数据变量，类模板的静态数据变量，类模板的全局对象等）<br>（4）虚函数：每一个多态class都有一份虚函数表，定义或继承了虚函数的对象会有一个隐含成员：指向虚表的指针vptr，在构造或析构对象的时候，编译器生成的代码会修改这个指针。按道理说，一个多态class的虚表应该恰好被一个目标文件定义，这样链接就不会有错，但c++编译器有时无法判断是否应该在当前编译单元生成虚表定义，为保险起见，只能每个编译单元都生成虚表，然后交给链接器来消除重复数据。</p><ul><li>C++使用的也是C语言的单遍编译的方式，从头到尾扫描一遍源码，一边解析源码，一边即刻生成目标代码</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2019/08/11/hello-world/"/>
+      <url>/2019/08/11/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p id="1"></p><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p><p><a href="#1">第一段</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>特征工程-特征归一化</title>
+      <link href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/"/>
+      <url>/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[<h2 id="为什么要归一化？"><a href="#为什么要归一化？" class="headerlink" title="为什么要归一化？"></a>为什么要归一化？</h2><p>在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。</p><p><div align="center">![upload successful](\images\pasted-1.png)</div></p><h3 id="逻辑回归一定要归一化么？"><a href="#逻辑回归一定要归一化么？" class="headerlink" title="逻辑回归一定要归一化么？"></a>逻辑回归一定要归一化么？</h3><p>如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。</p><h2 id="归一化的方法"><a href="#归一化的方法" class="headerlink" title="归一化的方法"></a>归一化的方法</h2><ol><li>线性函数归一化（适用于简单数值）：$X=\frac{X-X<em>{min}}{X</em>{max}-X_{min}}$</li><li>0均值归一化：$z=\frac{x-u}{\sigma}$</li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
