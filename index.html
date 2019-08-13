@@ -277,6 +277,479 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-指针的形参" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/指针的形参/" class="article-date">
+      <time datetime="2019-08-13T03:11:32.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/指针的形参/">指针的形参</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）</p>
+<p><img src="\images\pasted-3.png" alt="upload successful"></p>
+<h4 id="p形参的情况："><a href="#p形参的情况：" class="headerlink" title="*p形参的情况："></a>*p形参的情况：</h4><ul>
+<li>一开始:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id3[*p 形参]-->id1[7]
+    subgraph arr数组
+    id[10]-->id1[7]
+    id1[7]-->id2[5]
+    end
+    subgraph *p
+    id3[*p 形参]
+    end
+    class id,id1,id2,id3 className;</pre>
+
+<ul>
+<li>最后:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id4[*p]-->id1[3]
+    id3[*p 形参]-->id[10]
+
+    subgraph *p 形参
+    id3[*p 形参]
+    end
+
+    subgraph *p
+    id4[*p]
+    end    
+
+    subgraph arr数组
+    id[10]-->id1[3]
+    id1[3]-->id2[5]
+    end
+
+    class id,id1,id2,id3,id4 className;</pre>
+
+<ul>
+<li>注意：<code>*p--=3</code>实际上是<code>*p=3</code>，然后<code>(p--)</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *p)&#123;</span><br><span class="line">	return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">	int *p=arr+1;</span><br><span class="line">	printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="amp-p引用的情况："><a href="#amp-p引用的情况：" class="headerlink" title="*&amp;p引用的情况："></a>*&amp;p引用的情况：</h4><ul>
+<li>一开始:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id3[*&p]-->id1[7]
+    subgraph arr数组
+    id[10]-->id1[7]
+    id1[7]-->id2[5]
+    end
+    subgraph *&p
+    id3[*&p]
+    end
+    class id,id1,id2,id3 className;</pre>
+
+<ul>
+<li>最后:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id4[*p]-->id[10]
+    id3[*&p]-->id[10]
+
+    subgraph *&p
+    id3[*&p]
+    end
+
+    subgraph *p
+    id4[*p]
+    end    
+
+    subgraph arr数组
+    id[10]-->id1[3]
+    id1[3]-->id2[5]
+    end
+
+    class id,id1,id2,id3,id4 className;</pre>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *&amp;p)&#123;</span><br><span class="line">    return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">    int *p=arr+1;</span><br><span class="line">    printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为12</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-ifndef-define-endif" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/ifndef-define-endif/" class="article-date">
+      <time datetime="2019-08-13T03:04:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在c语言中，对同一个变量或者函数进行多次声明是不会报错的。所以如果h文件里只是进行了声明工作，即使不使用# ifndef宏定义，多个c文件包含同一个h文件也不会报错。</p>
+<p>但是在c++语言中，#ifdef的作用域只是在单个文件中。所以如果h文件里定义了全局变量，即使采用#ifdef宏定义，多个c文件包含同一个h文件还是会出现全局变量重定义的错误。</p>
+<p>使用#ifndef可以避免下面这种错误：如果在h文件中定义了全局变量，一个c文件包含同一个h文件多次，如果不加#ifndef宏定义，会出现变量重复定义的错误；如果加了#ifndef，则不会出现这种错误。</p>
+<p>其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ifndef x                 //先测试x是否被宏定义过</span><br><span class="line">#define x</span><br><span class="line">   程序段1blabla~    //如果x没有被宏定义过，定义x，并编译程序段 1</span><br><span class="line">#endif   </span><br><span class="line">　　程序段2blabla~　　 //如果x已经定义过了则编译程序段2的语句，“忽视”程序段 1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>循环引用的后果：</p>
+</blockquote>
+<p>有些头文件重复引用只是增加了编译工作的工作量，不会引起太大的问题，仅仅是编译效率低一些，但是对于大工程而言编译效率低下那将是一件多么痛苦的事情。</p>
+<p>有些头文件重复包含，会引起错误，比如在头文件中定义了全局变量(虽然这种方式不被推荐，但确实是C规范允许的)这种会引起重复定义。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-olatile" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/olatile/" class="article-date">
+      <time datetime="2019-08-13T03:00:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/olatile/">volatile</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><p>volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。</p>
+<h4 id="volatile和编译器的优化有关："><a href="#volatile和编译器的优化有关：" class="headerlink" title="volatile和编译器的优化有关："></a>volatile和编译器的优化有关：</h4><p>在本次线程内，当读取一个变量时，为了提高读取速度，编译器进行优化时有时会先把变量读取到一个寄存器中；以后，再读取变量值时，就直接从寄存器中读取；当变量值在本线程里改变时，会同时把变量的新值copy到该寄存器中，以保持一致。 </p>
+<p>当变量因别的线程值发生改变，上面寄存器的值不会相应改变，从而造成应用程序读取的值和实际的变量值不一致。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-联函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/联函数/" class="article-date">
+      <time datetime="2019-08-13T01:41:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/联函数/">内联函数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<h4 id="函数调用原理："><a href="#函数调用原理：" class="headerlink" title="函数调用原理："></a>函数调用原理：</h4><p>执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。</p>
+<hr>
+<p>内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline double square(double x)&#123;return x*x;&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<blockquote>
+<p>内联函数与宏定义的区别:</p>
+</blockquote>
+<p>使用宏和内联函数都可以节省在函数调用方面所带来的时间和空间开销。二者都采用了空间换时间的方式，在其调用处进行展开：<br>(1)  在预编译时期，宏定义在调用处执行字符串的原样替换。在编译时期，内联函数在调用处展开，同时进行参数类型检查。<br>(2)  内联函数首先是函数，可以像调用普通函数一样调用内联函数。而宏定义往往需要添加很多括号防止歧义，编写更加复杂。<br>(3)  内联函数可以作为某个类的成员函数，这样可以使用类的保护成员和私有成员。而当一个表达式涉及到类保护成员或私有成员时，宏就不能实现了(无法将this指针放在合适位置)。</p>
+<p>可以用内联函数完全替代宏。<br>在编写内联函数时，函数体应该短小而简洁，不应该包含循环等较复杂结构，否则编译器不会将其当作内联函数看待，而是把它决议成为一个静态函数。</p>
+<p>有些编译器甚至会优化内联函数，通常为避免一些不必要拷贝和构造，提高工作效率。</p>
+<p>频繁的调用内联函数和宏定义容易造成代码膨胀，消耗更大的内存而造成过多的换页操作。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-虚函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/虚函数/" class="article-date">
+      <time datetime="2019-08-13T01:36:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/虚函数/">虚函数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><a href="https://blog.csdn.net/zwe7616175/article/details/81334711">https://blog.csdn.net/zwe7616175/article/details/81334711</a><br><a href="https://zhidao.baidu.com/question/123304290.html">https://zhidao.baidu.com/question/123304290.html</a></p>
+<hr>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+<p>使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关联的时间开销很少，提高了多态性的效率。</p>
+<p><img src="\images\pasted-2.png" alt="upload successful"></p>
+<p>编译器生成的析构函数都是非虚的，除非是一个子类，其父类有个虚析构函数，此时的虚函数特性继承自基类。有虚函数的类，一般情况下要定义一个虚析构函数。</p>
+<p>纯虚函数不能new。</p>
+<hr>
+<blockquote>
+<p>构造函数不能声明为虚函数的原因？</p>
+</blockquote>
+<ol>
+<li><p>构造一个对象时，必须知道对象实际类型，而虚函数是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功，编译器就无法知道对象的实际类型，是该类本身，还是派生类，还是其他。</p>
+</li>
+<li><p>虚函数的执行依赖于虚函数表，而虚函数表是在构造函数中进行初始化的，即初始化虚表指针（vptr），使得正确指向虚函数表。而在构造对象期间，虚函数表（vtable）还没有被初始化，将无法进行。</p>
+</li>
+</ol>
+<blockquote>
+<p>什么情况下，类的析构函数应该声明为虚函数？为什么？</p>
+</blockquote>
+<p>类A中有了虚函数就会在类的数据成员的最前面添加一个vfptr指针(void** vfptr)，这个指针用来指向一个vtable表（一个函数指针数组）（一个类只有一个该表），该表存储着当前类的所有虚函数的地址。这样vfptr就成为了一个类似成员变量的存在。访问虚函数的时候通过vfptr间址找到vtable表，再间址进而找到要调用的函数。这样就在一定程度上摆脱了类型制约。</p>
+<p>当B类继承A类的时候，因为A中有虚函数，编译器就自动的给B类添加vfprt指针和vtable表。也可以理解为B类继承来了A类中的那个vptr指针成员。（B对象的vfptr浅拷贝到A对象的vfptr）因此，A对象的vfptr所指向的是B对象的虚函数表，而B的析构函数位于书函数表0的位置，因此，这样就可以通过A类对象的指针d，找到B类对象的析构函数，从而在delete d;时，可以销毁B对象，而不会产生内存泄漏和异常。</p>
+<ul>
+<li>简单得来讲：析构函数设为虚函数的原因是为了防止内存泄露。在继承体系中，当基类的指针或引用指向派生类，用基类delete时，如果基类的析构函数没有声明为虚函数，只能析构基类对象，派生类对象将无法析构。因为普通函数受类型的制约，（因为没有vptr指针）使用哪个类的指针调用函数，那么所调用的就是那个累的函数。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># bug复现</span><br><span class="line">a* aa= new b(); // b继承a</span><br><span class="line">delete aa;</span><br><span class="line">// 打印（执行） a 的析构函数，不执行b的</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>所以需要将基类的析构函数声明为虚函数，当撤销基类对象的同时也撤销派生类的对象，这个过程是动态关联完成的。</p>
+<hr>
+<blockquote>
+<p>内联函数不能是虚函数</p>
+</blockquote>
+<p>内联函数会在预编译时会进行代码展开，省略函数调用，因此内联函数不能是虚函数。虽然使用inline和virtual共同修饰一个函数时能够通过编译，并在调用时会表现出虚函数的性质，但这是因为编译器在函数声明中遇到virtual关键字时，会选择忽略inline关键字，不进行代码展开。</p>
+<blockquote>
+<p>静态函数不能声明为虚函数</p>
+</blockquote>
+<p>虚函数体现了对象在运行时的多态性，而静态函数属于整个类，不属于某个对象，不能声明为虚函数。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post--编译过程" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

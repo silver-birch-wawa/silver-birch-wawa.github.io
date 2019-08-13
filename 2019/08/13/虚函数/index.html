@@ -15,17 +15,20 @@
 
 
 
-<meta name="description" content="Machine Learning,Data Mining,Deep Learning">
-<meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog for AI Self-Study">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/categories/C/index.html">
+<meta name="description" content="https://blog.csdn.net/zwe7616175/article/details/81334711https://zhidao.baidu.com/question/123304290.html   说明：  使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚函数">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/08/13/虚函数/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="Machine Learning,Data Mining,Deep Learning">
+<meta property="og:description" content="https://blog.csdn.net/zwe7616175/article/details/81334711https://zhidao.baidu.com/question/123304290.html   说明：  使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-2.png">
+<meta property="og:updated_time" content="2019-08-13T01:38:57.957Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog for AI Self-Study">
-<meta name="twitter:description" content="Machine Learning,Data Mining,Deep Learning">
+<meta name="twitter:title" content="虚函数">
+<meta name="twitter:description" content="https://blog.csdn.net/zwe7616175/article/details/81334711https://zhidao.baidu.com/question/123304290.html   说明：  使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-2.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -57,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Category: C++ | Blog for AI Self-Study</title>
+<title>虚函数 | Blog for AI Self-Study</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -67,10 +70,10 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
-        isCategory: true,
+        isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
         search: true
@@ -270,218 +273,241 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-虚函数" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/虚函数/" class="article-date">
+      <time datetime="2019-08-13T01:36:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      虚函数
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/ifndef-define-endif/" class="archive-article-date">
-      <time datetime="2019-08-13T03:04:00.000Z" itemprop="datePublished">08-13</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
+    <div class="article-entry" itemprop="articleBody">
+      
           
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
+        <p><a href="https://blog.csdn.net/zwe7616175/article/details/81334711">https://blog.csdn.net/zwe7616175/article/details/81334711</a><br><a href="https://zhidao.baidu.com/question/123304290.html">https://zhidao.baidu.com/question/123304290.html</a></p>
+<hr>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+<p>使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关联的时间开销很少，提高了多态性的效率。</p>
+<p><img src="\images\pasted-2.png" alt="upload successful"></p>
+<p>编译器生成的析构函数都是非虚的，除非是一个子类，其父类有个虚析构函数，此时的虚函数特性继承自基类。有虚函数的类，一般情况下要定义一个虚析构函数。</p>
+<p>纯虚函数不能new。</p>
+<hr>
+<blockquote>
+<p>构造函数不能声明为虚函数的原因？</p>
+</blockquote>
+<ol>
+<li><p>构造一个对象时，必须知道对象实际类型，而虚函数是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功，编译器就无法知道对象的实际类型，是该类本身，还是派生类，还是其他。</p>
+</li>
+<li><p>虚函数的执行依赖于虚函数表，而虚函数表是在构造函数中进行初始化的，即初始化虚表指针（vptr），使得正确指向虚函数表。而在构造对象期间，虚函数表（vtable）还没有被初始化，将无法进行。</p>
+</li>
+</ol>
+<blockquote>
+<p>什么情况下，类的析构函数应该声明为虚函数？为什么？</p>
+</blockquote>
+<p>类A中有了虚函数就会在类的数据成员的最前面添加一个vfptr指针(void** vfptr)，这个指针用来指向一个vtable表（一个函数指针数组）（一个类只有一个该表），该表存储着当前类的所有虚函数的地址。这样vfptr就成为了一个类似成员变量的存在。访问虚函数的时候通过vfptr间址找到vtable表，再间址进而找到要调用的函数。这样就在一定程度上摆脱了类型制约。</p>
+<p>当B类继承A类的时候，因为A中有虚函数，编译器就自动的给B类添加vfprt指针和vtable表。也可以理解为B类继承来了A类中的那个vptr指针成员。（B对象的vfptr浅拷贝到A对象的vfptr）因此，A对象的vfptr所指向的是B对象的虚函数表，而B的析构函数位于书函数表0的位置，因此，这样就可以通过A类对象的指针d，找到B类对象的析构函数，从而在delete d;时，可以销毁B对象，而不会产生内存泄漏和异常。</p>
+<ul>
+<li>简单得来讲：析构函数设为虚函数的原因是为了防止内存泄露。在继承体系中，当基类的指针或引用指向派生类，用基类delete时，如果基类的析构函数没有声明为虚函数，只能析构基类对象，派生类对象将无法析构。因为普通函数受类型的制约，（因为没有vptr指针）使用哪个类的指针调用函数，那么所调用的就是那个累的函数。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># bug复现</span><br><span class="line">a* aa= new b(); // b继承a</span><br><span class="line">delete aa;</span><br><span class="line">// 打印（执行） a 的析构函数，不执行b的</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>所以需要将基类的析构函数声明为虚函数，当撤销基类对象的同时也撤销派生类的对象，这个过程是动态关联完成的。</p>
+<hr>
+<blockquote>
+<p>内联函数不能是虚函数</p>
+</blockquote>
+<p>内联函数会在预编译时会进行代码展开，省略函数调用，因此内联函数不能是虚函数。虽然使用inline和virtual共同修饰一个函数时能够通过编译，并在调用时会表现出虚函数的性质，但这是因为编译器在函数声明中遇到virtual关键字时，会选择忽略inline关键字，不进行代码展开。</p>
+<blockquote>
+<p>静态函数不能声明为虚函数</p>
+</blockquote>
+<p>虚函数体现了对象在运行时的多态性，而静态函数属于整个类，不属于某个对象，不能声明为虚函数。</p>
+
+      
     </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    
   </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/08/13/虚函数/">虚函数</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
+        <p><span>发布时间:</span>2019-08-13, 09:36:00</p>
+        <p><span>最后更新:</span>2019-08-13, 09:38:57</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/08/13/虚函数/" title="虚函数">https://silver-birch-wawa.github.io/2019/08/13/虚函数/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/13/虚函数/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/08/13/联函数/">
+                    内联函数
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/08/12/-编译过程/">
+                    C++编译过程
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
     
+<div class="share">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/olatile/" class="archive-article-date">
-      <time datetime="2019-08-13T03:00:00.000Z" itemprop="datePublished">08-13</time>
-</a>
-
-
-
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-         
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"虚函数　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/olatile/">volatile</a>
-    </h1>
+  <!-- Gitment评论插件通用代码 -->
+<div id="git"></div>
+<link rel="stylesheet" href="https://silver-birch-wawa.github.io/css/gitment.css">
+<script src="https://silver-birch-wawa.github.io/js/gitment.js"></script>
+<!-- 汉化
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+-->
+<script>
+var gitment = new Gitment({
+      id: "虚函数",
+      owner: 'silver-birch-wawa',
+      repo: 'silver-birch-wawa.github.io',
+      oauth: {
+        client_id: '0bdbf12aa2f1fbb3971f',
+        client_secret: 'fc1dc6d7c7886a85d50e4c5225294b8f107d9e31'
+      },
+})
+gitment.render('git')
+</script>
+<!-- Gitment代码结束 -->
   
 
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/08/13/联函数/" title="上一篇: 内联函数">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/08/12/-编译过程/" title="下一篇: C++编译过程">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
     </div>
 
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/联函数/" class="archive-article-date">
-      <time datetime="2019-08-13T01:41:00.000Z" itemprop="datePublished">08-13</time>
-</a>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
 
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/联函数/">内联函数</a>
-    </h1>
-  
 
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/虚函数/" class="archive-article-date">
-      <time datetime="2019-08-13T01:36:00.000Z" itemprop="datePublished">08-13</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/虚函数/">虚函数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/12/-编译过程/" class="archive-article-date">
-      <time datetime="2019-08-12T14:26:00.000Z" itemprop="datePublished">08-12</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/12/-编译过程/">C++编译过程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
