@@ -15,18 +15,17 @@
 
 
 
-<meta name="description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
+<meta name="description" content="Machine Learning,Data Mining,Deep Learning">
 <meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
 <meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/about/index.html">
+<meta property="og:title" content="Blog for AI Self-Study">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/tags/操作系统底层/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
+<meta property="og:description" content="Machine Learning,Data Mining,Deep Learning">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-12T14:32:00.374Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
+<meta name="twitter:title" content="Blog for AI Self-Study">
+<meta name="twitter:description" content="Machine Learning,Data Mining,Deep Learning">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -58,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>about | Blog for AI Self-Study</title>
+<title>Tag: 操作系统底层 | Blog for AI Self-Study</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -70,7 +69,7 @@
         isHome: false,
         isPost: false,
         isArchive: false,
-        isTag: false,
+        isTag: true,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
@@ -271,165 +270,140 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/about/index.html" class="article-date">
-      <time datetime="2019-08-04T14:37:01.000Z" itemprop="datePublished">2019-08-04</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <!-- 添加代码  -->
+<a href="/2019/08/14/new和malloc的区别/" class="archive-article-date">
+      <time datetime="2019-08-14T13:02:00.000Z" itemprop="datePublished">08-14</time>
 </a>
 
 
 
-    </div>
+        </div>
+         
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      about
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
-
-
-          
-        <center><strong>一个酒吧废物</strong></center>
-
-
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id2[寄存器A]-->id3[寄存器B]
-    subgraph one step
-    id[内存]-->id1[缓存]
-    id1[缓存]-->id2[寄存器A]
-    end
-    subgraph two step
-    id3[寄存器B]-->id4[缓存]  
-    id4[缓存]-->id5[内存]
-    end
-    class id,id1,id2,id3,id4,id5 className;</pre>
-
-
-<p><div id="flowchart-0" class="flow-chart"></div></p>
-<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 开始
-e=>end: 结束
-op=>operation: 我的操作
-cond=>condition: 判断确认？
-  
-st->op->cond
-cond(yes)->e
-cond(no)->op</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
-
-      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/操作系统底层/">操作系统底层</a>
     </div>
-    
-  </div>
-  
-    
 
 
-  
-</article>
+          
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li></ul>
+    </div>
 
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"about　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
-
-    
-</div>
-
-
-
-
-
-
-
-    
-
-
-
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
   
-  <!-- Gitment评论插件通用代码 -->
-<div id="git"></div>
-<link rel="stylesheet" href="https://silver-birch-wawa.github.io/css/gitment.css">
-<script src="https://silver-birch-wawa.github.io/js/gitment.js"></script>
-<!-- 汉化
-<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-<script src="https://billts.site/js/gitment.js"></script>
--->
-<script>
-var gitment = new Gitment({
-      id: "about",
-      owner: 'silver-birch-wawa',
-      repo: 'silver-birch-wawa.github.io',
-      oauth: {
-        client_id: '0bdbf12aa2f1fbb3971f',
-        client_secret: 'fc1dc6d7c7886a85d50e4c5225294b8f107d9e31'
-      },
-})
-gitment.render('git')
-</script>
-<!-- Gitment代码结束 -->
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <!-- 添加代码  -->
+<a href="/2019/08/13/存对齐/" class="archive-article-date">
+      <time datetime="2019-08-13T09:10:00.000Z" itemprop="datePublished">08-13</time>
+</a>
+
+
+
+        </div>
+         
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/08/13/存对齐/">内存对齐</a>
+    </h1>
   
 
+        <div class="article-info info-on-archive">
+          
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/操作系统底层/">操作系统底层</a>
+    </div>
+
+
+          
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li></ul>
+    </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <!-- 添加代码  -->
+<a href="/2019/08/13/小端存储/" class="archive-article-date">
+      <time datetime="2019-08-13T08:55:00.000Z" itemprop="datePublished">08-13</time>
+</a>
 
 
 
+        </div>
+         
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/08/13/小端存储/">大小端存储</a>
+    </h1>
+  
 
-    <script>
-        
-    </script>
+        <div class="article-info info-on-archive">
+          
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/操作系统底层/">操作系统底层</a>
+    </div>
+
+
+          
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li></ul>
+    </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
+
+    
+
 </div>
       <footer id="footer">
     <div class="outer">

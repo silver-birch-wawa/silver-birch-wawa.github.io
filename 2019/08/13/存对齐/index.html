@@ -15,18 +15,21 @@
 
 
 
-<meta name="description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
-<meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/about/index.html">
+<meta name="description" content="12345typedef struct &amp;#123;    int a;    double b;    short c;&amp;#125;A; 12345typedef struct &amp;#123;    int a;    short b;    double c;&amp;#125;B; sizeof(A)=24而sizeof(B)=16  A的内存分布：(每一个元素都存在最大元素大小的空间内)    B">
+<meta name="keywords" content="C++,操作系统底层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存对齐">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/08/13/存对齐/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
+<meta property="og:description" content="12345typedef struct &amp;#123;    int a;    double b;    short c;&amp;#125;A; 12345typedef struct &amp;#123;    int a;    short b;    double c;&amp;#125;B; sizeof(A)=24而sizeof(B)=16  A的内存分布：(每一个元素都存在最大元素大小的空间内)    B">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-12T14:32:00.374Z">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-5.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-6.png">
+<meta property="og:updated_time" content="2019-08-13T09:13:54.084Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="一个酒吧废物   graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id2[寄存器A]--&amp;gt;id3[寄存器B]     subgraph one step     id[内存]--&amp;gt;id1[缓存]     id1[缓存]--&amp;gt;id2[寄存器A]     end     subgraph two">
+<meta name="twitter:title" content="内存对齐">
+<meta name="twitter:description" content="12345typedef struct &amp;#123;    int a;    double b;    short c;&amp;#125;A; 12345typedef struct &amp;#123;    int a;    short b;    double c;&amp;#125;B; sizeof(A)=24而sizeof(B)=16  A的内存分布：(每一个元素都存在最大元素大小的空间内)    B">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-5.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -58,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>about | Blog for AI Self-Study</title>
+<title>内存对齐 | Blog for AI Self-Study</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -68,7 +71,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -271,12 +274,12 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-存对齐" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/about/index.html" class="article-date">
-      <time datetime="2019-08-04T14:37:01.000Z" itemprop="datePublished">2019-08-04</time>
+<a href="/2019/08/13/存对齐/" class="article-date">
+      <time datetime="2019-08-13T09:10:00.000Z" itemprop="datePublished">2019-08-13</time>
 </a>
 
 
@@ -292,7 +295,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      about
+      内存对齐
     </h1>
   
 
@@ -300,8 +303,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/操作系统底层/">操作系统底层</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -309,51 +320,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
-
-
-          
-        <center><strong>一个酒吧废物</strong></center>
-
-
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id2[寄存器A]-->id3[寄存器B]
-    subgraph one step
-    id[内存]-->id1[缓存]
-    id1[缓存]-->id2[寄存器A]
-    end
-    subgraph two step
-    id3[寄存器B]-->id4[缓存]  
-    id4[缓存]-->id5[内存]
-    end
-    class id,id1,id2,id3,id4,id5 className;</pre>
-
-
-<p><div id="flowchart-0" class="flow-chart"></div></p>
-<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 开始
-e=>end: 结束
-op=>operation: 我的操作
-cond=>condition: 判断确认？
-  
-st->op->cond
-cond(yes)->e
-cond(no)->op</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+        <hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    double b;</span><br><span class="line">    short c;</span><br><span class="line">&#125;A;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    short b;</span><br><span class="line">    double c;</span><br><span class="line">&#125;B;</span><br></pre></td></tr></table></figure>
+<p><code>sizeof(A)=24而sizeof(B)=16</code></p>
+<blockquote>
+<p>A的内存分布：(每一个元素都存在最大元素大小的空间内)</p>
+</blockquote>
+<p><img src="\images\pasted-5.png" alt="upload successful"></p>
+<blockquote>
+<p>B的内存分布：</p>
+</blockquote>
+<p><img src="\images\pasted-6.png" alt="upload successful"></p>
 
       
     </div>
@@ -361,10 +339,65 @@ cond(no)->op</textarea><textarea id="flowchart-0-options" style="display: none">
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/08/13/存对齐/">内存对齐</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
+        <p><span>发布时间:</span>2019-08-13, 17:10:00</p>
+        <p><span>最后更新:</span>2019-08-13, 17:13:54</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/08/13/存对齐/" title="内存对齐">https://silver-birch-wawa.github.io/2019/08/13/存对齐/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/13/存对齐/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">
+                    __cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/08/13/小端存储/">
+                    大小端存储
+                </a>
+            </div>
+        
+    </nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
 
@@ -382,7 +415,7 @@ cond(no)->op</textarea><textarea id="flowchart-0-options" style="display: none">
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"about　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"内存对齐　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -410,7 +443,7 @@ cond(no)->op</textarea><textarea id="flowchart-0-options" style="display: none">
 -->
 <script>
 var gitment = new Gitment({
-      id: "about",
+      id: "内存对齐",
       owner: 'silver-birch-wawa',
       repo: 'silver-birch-wawa.github.io',
       oauth: {
@@ -423,6 +456,26 @@ gitment.render('git')
 <!-- Gitment代码结束 -->
   
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/" title="上一篇: __cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/08/13/小端存储/" title="下一篇: 大小端存储">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
 
 
 
