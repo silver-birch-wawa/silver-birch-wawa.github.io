@@ -1267,6 +1267,7 @@ body .ui-tooltip {
 .article {
   margin: 30px;
   margin-bottom: 5px;
+  border-radius: 12px;
   position: relative;
   background: rgba(255,255,255,0.45);
   -webkit-transition: all 0.2s ease-in;
