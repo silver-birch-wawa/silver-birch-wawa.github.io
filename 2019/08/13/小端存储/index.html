@@ -91,6 +91,8 @@
 
 
 
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=5d56a3af24b9abfe"></script>
+
 
 
 
@@ -418,6 +420,8 @@
     
     
     
+        <div class="addthis_sharing_toolbox"></div>
+    
 </div>
 
 
@@ -588,5 +592,20 @@ MathJax.Hub.Queue(function() {
 </script>
 
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

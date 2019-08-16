@@ -1,374 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>感知机</title>
-      <link href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
-      <url>/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/</url>
-      
-        <content type="html"><![CDATA[<hr><p>感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面</p><p><img src="\images\pasted-10.png" alt="分类效果"></p><p>点到线的距离公式：</p><p>$d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$</p><p>假设有一超平面，h=w*x+b，其中w=（w0，w1…wm），x=（x0，x1…xm），样本x’到超平面的距离为：</p><p>$d=\frac{w*x’+b}{||w||}$</p><hr><p>输出的模型如下：</p><p>$f(x)=sign(w*x+b)$</p><p>$sign(x)=\begin{cases} 1 \quad\quad\quad x&gt;0<br> -1 \quad\quad\quad x\leq0\end{cases}$</p><p>如果 $ \frac{w\star x’+b}{||w||}&gt;0 $，则y=1。如果&lt;0，则y=-1。这样分类正确的话 $y*\frac{w\star x’+b}{||w||}&gt;0$ 恒成立（||w||是L2范数）</p><hr><h5 id="损失函数："><a href="#损失函数：" class="headerlink" title="损失函数："></a>损失函数：</h5><p>$L(w,b)=-\frac{1}{||w||}\sum_{x_i \in M}y_i(w*x_i+b)$（M集合是误分类点的集合）</p><p>当然因为||$w$||&gt;0所以我们可以去掉它</p><p>$L(w,b)=-\sum_{x_i \in M}y_i(w*x_i+b)$</p><p>感知机分类的最终目的是让最终值=0，所以少除也无所谓，还能降低计算量。(所以有个前提：能收敛到0)</p><hr><h5 id="随机梯度下降算法"><a href="#随机梯度下降算法" class="headerlink" title="随机梯度下降算法"></a>随机梯度下降算法</h5><p>用普通的基于所有样本的梯度和的均值的批量梯度下降法（BGD）是行不通的，原因在于我们的损失函数里面有限定，只有误分类的M集合里面的样本才能参与损失函数的优化。所以我们不能用最普通的批量梯度下降,只能采用随机梯度下降（SGD）</p><p>$\nabla_wL(w,b)=-\sum_{x_i \in M}y_i*x_i$</p><p>$\nabla_bL(w,b)=-\sum_{x_i \in M}y_i$</p><p>$w \gets w+\eta<em>y_i</em>x_i$</p><p>$b \gets b+\eta*y_i$</p><ul><li>xi实际上是(x,y)，yi实际上是{-1，1}，$\eta$是步长。</li></ul><hr><h4 id="计算过程："><a href="#计算过程：" class="headerlink" title="计算过程："></a>计算过程：</h4><ol><li>获取{-1，1}对应的点，初始化w矩阵和b变量的值。</li><li>正确分类的不用管，不正确分类的利用梯度对w和b的值进行更新。</li><li><p>循环带入所有的点，直到满足要求。<br>```<br>例：点x1=（3，3），w0=0，b0=0，y1=1，步长为1</p></li><li><p>y1<em>（w0</em>x1+b0）=0，分类错误。</p></li><li><p>w1=w0+y1*x1=(3，3)^T，b1=b0+y1=1</p></li><li><p>得到线性模型 f（x）=sign（3x+3y+1）(只输出在线的哪一侧)</p></li></ol><p>``` </p><hr><p><img src="\images\pasted-11.gif" alt="线性可分"></p><p><img src="\images\pasted-12.gif" alt="线性不可分"></p><hr><h4 id="对偶形式算法："><a href="#对偶形式算法：" class="headerlink" title="对偶形式算法："></a>对偶形式算法：</h4><p>对偶形式的目的是降低运算量，但是并不是在任何情况下都能降低运算量，而是在特征空间的维度很高时才起到作用。</p><blockquote><p>原：</p></blockquote><p>$w \gets w+\eta<em>y_i</em>x_i$</p><p>$b \gets b+\eta*y_i$</p><blockquote><p>现：</p></blockquote><p>初始值为（0，0）的w和b经过了n次修改后：（$a_i=n_i\eta$）</p><p>$w=\sum_{i=1}^na_iy_ix_i$</p><p>$b=\sum_{i=1}^na_iy_i$</p><p>$sign（w<em>x+b）$，将$w=\sum_{i=1}^na_iy_ix_i$带入得$f(x)=\sum_{i=1}^na_iy_ix_i</em>xj+b$</p><ul><li>第n-1次的参数$a_i$在第2(n-1)轮要再加$\eta$，所以参数$a_i$越大，说明该点位于分割线附近，在更新的时候容易受影响难以正确分类。$a_i$默认初始为0</li></ul><p>$a_i \gets a_i+\eta$    </p><p>$b \gets b+\eta y_i$</p><hr><h4 id="加速的设计："><a href="#加速的设计：" class="headerlink" title="加速的设计："></a>加速的设计：</h4><p>gram矩阵，$G=[x_i<em>x_j]_{N</em>N}$</p><hr><p>很可惜，因为不能解决异或问题躺尸了很多年。。。</p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>new和malloc的区别</title>
-      <link href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-      <url>/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-      
-        <content type="html"><![CDATA[<h4 id="new与malloc的区别"><a href="#new与malloc的区别" class="headerlink" title="new与malloc的区别?"></a>new与malloc的区别?</h4><p>（1）申请的内存所在位置:<br>new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。</p><p>那么自由存储区是否能够是堆，这取决于operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看operator new在哪里为对象分配内存。</p><p><code>在C++中，内存区分为5个区，分别是堆、栈、自由存储区、全局/静态存储区、常量存储区</code>，但是new其实是对malloc的封装，所以只是逻辑上有所区别….</p><p>（2）返回类型安全性：<br>new操作符内存分配成功时，返回的是对象类型的指针，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void <em> ，需要通过强制类型转换将void</em>指针转换成我们需要的类型。</p><p>（3）是否调用构造函数/析构函数：<br>使用new操作符来分配对象内存时会经历三个步骤：<br>第一步：调用operator new 函数（对于数组是operator new[]）分配一块足够大的，原始的，未命名的内存空间以便存储特定类型的对象。<br>第二步：编译器运行相应的构造函数以构造对象，并为其传入初值。<br>第三部：对象构造完成后，返回一个指向该对象的指针。</p><p>使用delete操作符来释放对象内存时会经历两个步骤：<br>第一步：调用对象的析构函数。<br>第二步：编译器调用operator delete(或operator delete[])函数释放内存空间。</p>]]></content>
-      
-      
+<search>
+  <entry>
+    <title><![CDATA[感知机]]></title>
+    <url>%2F2019%2F08%2F15%2F%E6%84%9F%E7%9F%A5%E6%9C%BA%2F</url>
+    <content type="text"><![CDATA[感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面 点到线的距离公式： $d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$ 假设有一超平面，h=w*x+b，其中w=（w0，w1…wm），x=（x0，x1…xm），样本x’到超平面的距离为： $d=\frac{w*x’+b}{||w||}$ 输出的模型如下： $f(x)=sign(w*x+b)$ $sign(x)=\begin{cases} 1 \quad\quad\quad x&gt;0 -1 \quad\quad\quad x\leq0\end{cases}$ 如果 $ \frac{w\star x’+b}{||w||}&gt;0 $，则y=1。如果&lt;0，则y=-1。这样分类正确的话 $y*\frac{w\star x’+b}{||w||}&gt;0$ 恒成立（||w||是L2范数） 损失函数：$L(w,b)=-\frac{1}{||w||}\sum_{x_i \in M}y_i(w*x_i+b)$（M集合是误分类点的集合） 当然因为||$w$||&gt;0所以我们可以去掉它 $L(w,b)=-\sum_{x_i \in M}y_i(w*x_i+b)$ 感知机分类的最终目的是让最终值=0，所以少除也无所谓，还能降低计算量。(所以有个前提：能收敛到0) 随机梯度下降算法用普通的基于所有样本的梯度和的均值的批量梯度下降法（BGD）是行不通的，原因在于我们的损失函数里面有限定，只有误分类的M集合里面的样本才能参与损失函数的优化。所以我们不能用最普通的批量梯度下降,只能采用随机梯度下降（SGD） $\nabla_wL(w,b)=-\sum_{x_i \in M}y_i*x_i$ $\nabla_bL(w,b)=-\sum_{x_i \in M}y_i$ $w \gets w+\etay_ix_i$ $b \gets b+\eta*y_i$ xi实际上是(x,y)，yi实际上是{-1，1}，$\eta$是步长。 计算过程： 获取{-1，1}对应的点，初始化w矩阵和b变量的值。 正确分类的不用管，不正确分类的利用梯度对w和b的值进行更新。 循环带入所有的点，直到满足要求。```例：点x1=（3，3），w0=0，b0=0，y1=1，步长为1 y1（w0x1+b0）=0，分类错误。 w1=w0+y1*x1=(3，3)^T，b1=b0+y1=1 得到线性模型 f（x）=sign（3x+3y+1）(只输出在线的哪一侧) ``` 对偶形式算法：对偶形式的目的是降低运算量，但是并不是在任何情况下都能降低运算量，而是在特征空间的维度很高时才起到作用。 原： $w \gets w+\etay_ix_i$ $b \gets b+\eta*y_i$ 现： 初始值为（0，0）的w和b经过了n次修改后：（$a_i=n_i\eta$） $w=\sum_{i=1}^na_iy_ix_i$ $b=\sum_{i=1}^na_iy_i$ $sign（wx+b）$，将$w=\sum_{i=1}^na_iy_ix_i$带入得$f(x)=\sum_{i=1}^na_iy_ix_ixj+b$ 第n-1次的参数$a_i$在第2(n-1)轮要再加$\eta$，所以参数$a_i$越大，说明该点位于分割线附近，在更新的时候容易受影响难以正确分类。$a_i$默认初始为0 $a_i \gets a_i+\eta$ $b \gets b+\eta y_i$ 加速的设计：gram矩阵，$G=[x_ix_j]_{NN}$ 很可惜，因为不能解决异或问题躺尸了很多年。。。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[new和malloc的区别]]></title>
+    <url>%2F2019%2F08%2F14%2Fnew%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[new与malloc的区别?（1）申请的内存所在位置:new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。 那么自由存储区是否能够是堆，这取决于operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看operator new在哪里为对象分配内存。 在C++中，内存区分为5个区，分别是堆、栈、自由存储区、全局/静态存储区、常量存储区，但是new其实是对malloc的封装，所以只是逻辑上有所区别…. （2）返回类型安全性：new操作符内存分配成功时，返回的是对象类型的指针，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void ，需要通过强制类型转换将void指针转换成我们需要的类型。 （3）是否调用构造函数/析构函数：使用new操作符来分配对象内存时会经历三个步骤：第一步：调用operator new 函数（对于数组是operator new[]）分配一块足够大的，原始的，未命名的内存空间以便存储特定类型的对象。第二步：编译器运行相应的构造函数以构造对象，并为其传入初值。第三部：对象构造完成后，返回一个指向该对象的指针。 使用delete操作符来释放对象内存时会经历两个步骤：第一步：调用对象的析构函数。第二步：编译器调用operator delete(或operator delete[])函数释放内存空间。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
-          <category> 操作系统底层 </category>
-          
+        <category>C++</category>
+        <category>操作系统底层</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-            <tag> 操作系统底层 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>内存垃圾管理（智能指针）</title>
-      <link href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/"/>
-      <url>/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/</url>
-      
-        <content type="html"><![CDATA[<hr><blockquote><p>智能指针：<br><a href="https://blog.csdn.net/u012501459/article/details/48229399">https://blog.csdn.net/u012501459/article/details/48229399</a></p></blockquote><p>C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。</p><ul><li>构造函数中创建类的新对象时，初始化引用计数为1；</li><li>拷贝构造函数复制指针，并使相应的引用计数增加1；</li><li>赋值操作减少左操作数所值对象的引用计数，增加右操作数所指对象的引用计数；</li><li>析构函数使引用计数减少1，并且当引用计数为0时，释放指针说指向的对象；</li></ul><p><img src="\images\pasted-9.png" alt="upload successful"></p><h4 id="Ref-ptr类："><a href="#Ref-ptr类：" class="headerlink" title="Ref_ptr类："></a>Ref_ptr类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//使用int*指针初始化ptr，注意必须要放在初始化列表中</span><br><span class="line">Ref_ptr(int * i):ptr(new Referenced(i))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">//拷贝构造函数，又有一个变量指向了这块内存</span><br><span class="line">Ref_ptr(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    ptr=rhs.ptr;//将右操作数的引用计数对象赋值给左操作数</span><br><span class="line">    ptr-&gt;ref();//将它们的应用计数加1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Ref_ptr r1=new int(4); //调用构造函数</span><br><span class="line">Ref_ptr r2=r1; //调用拷贝构造函数</span><br></pre></td></tr></table></figure><p><img src="\images\pasted-8.png" alt="upload successful"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//赋值操作符，右操作数的引用计数要减1，左操作数的引用计数要加1</span><br><span class="line">Ref_ptr &amp; operator=(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    if(&amp;rhs==this)</span><br><span class="line">        return *this;</span><br><span class="line">    if(ptr-&gt;unref()==0)//赋值操作符，首先将当前类的引用计数减1，因为现在指向它的指针少了一个。</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    ptr=rhs.ptr; //将右操作数的引用计数赋值给当前对象</span><br><span class="line">    ptr-&gt;ref(); //引用计数加1</span><br><span class="line">    return *this;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，引用计数要减1，如果减为0，删除这块内存</span><br><span class="line">~Ref_ptr()</span><br><span class="line">&#123;</span><br><span class="line">    if(ptr-&gt;unref()==0)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="Referenced类："><a href="#Referenced类：" class="headerlink" title="Referenced类："></a>Referenced类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//初始化这个类，引用计数设为1，并且将p指向传入的地址</span><br><span class="line">Referenced(int * pi)</span><br><span class="line">&#123;</span><br><span class="line">    refCount=1;</span><br><span class="line">    p=pi;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//引用计数加1</span><br><span class="line">int ref()</span><br><span class="line">&#123;</span><br><span class="line">    return ++refCount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//引用计数减1</span><br><span class="line">int unref()</span><br><span class="line">&#123;</span><br><span class="line">    return --refCount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，释放掉内存</span><br><span class="line">~Referenced()</span><br><span class="line">&#123;</span><br><span class="line">    cout&lt;&lt;&quot;delete referenced&quot;&lt;&lt;endl;</span><br><span class="line">    delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="好处："><a href="#好处：" class="headerlink" title="好处："></a>好处：</h4><ul><li>智能指针能够帮助我们处理资源泄露问题；</li><li>它也能够帮我们处理空悬指针的问题；</li><li>它还能够帮我们处理比较隐晦的由异常造成的资源泄露。</li></ul>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+        <tag>操作系统底层</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[内存垃圾管理（智能指针）]]></title>
+    <url>%2F2019%2F08%2F14%2F%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[智能指针：https://blog.csdn.net/u012501459/article/details/48229399 C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。 构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增加右操作数所指对象的引用计数； 析构函数使引用计数减少1，并且当引用计数为0时，释放指针说指向的对象； Ref_ptr类：1234567891011121314//使用int*指针初始化ptr，注意必须要放在初始化列表中Ref_ptr(int * i):ptr(new Referenced(i))&#123;&#125;//拷贝构造函数，又有一个变量指向了这块内存Ref_ptr(const Ref_ptr &amp; rhs)&#123; ptr=rhs.ptr;//将右操作数的引用计数对象赋值给左操作数 ptr-&gt;ref();//将它们的应用计数加1&#125;Ref_ptr r1=new int(4); //调用构造函数Ref_ptr r2=r1; //调用拷贝构造函数 123456789101112131415161718192021222324//赋值操作符，右操作数的引用计数要减1，左操作数的引用计数要加1Ref_ptr &amp; operator=(const Ref_ptr &amp; rhs)&#123; if(&amp;rhs==this) return *this; if(ptr-&gt;unref()==0)//赋值操作符，首先将当前类的引用计数减1，因为现在指向它的指针少了一个。 &#123; cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl; delete ptr; &#125; ptr=rhs.ptr; //将右操作数的引用计数赋值给当前对象 ptr-&gt;ref(); //引用计数加1 return *this;&#125;//析构函数，引用计数要减1，如果减为0，删除这块内存~Ref_ptr()&#123; if(ptr-&gt;unref()==0) &#123; cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl; delete ptr; &#125;&#125; Referenced类：12345678910111213141516171819202122232425//初始化这个类，引用计数设为1，并且将p指向传入的地址Referenced(int * pi)&#123; refCount=1; p=pi;&#125;//引用计数加1int ref()&#123; return ++refCount;&#125; //引用计数减1int unref()&#123; return --refCount;&#125;//析构函数，释放掉内存~Referenced()&#123; cout&lt;&lt;&quot;delete referenced&quot;&lt;&lt;endl; delete p;&#125; 好处： 智能指针能够帮助我们处理资源泄露问题； 它也能够帮我们处理空悬指针的问题； 它还能够帮我们处理比较隐晦的由异常造成的资源泄露。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</title>
-      <link href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/"/>
-      <url>/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/</url>
-      
-        <content type="html"><![CDATA[<hr><blockquote><p>基于安全考虑：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_ptr&lt; string&gt; ps (new string (&quot;I reigned lonely as a cloud.”）;</span><br><span class="line">auto_ptr&lt;string&gt; vocation; </span><br><span class="line">vocaticn = ps;</span><br></pre></td></tr></table></figure></p></blockquote><p>因为程序将试图删除同一个对象两次，要避免这种问题，方法有多种：</p><p>（1）定义赋值运算符，使之执行深复制。这样两个指针将指向不同的对象，其中的一个对象是另一个对象的副本，缺点是浪费空间，所以智能指针都未采用此方案。</p><p>（2）建立所有权概念。对于特定的对象，只能有一个智能指针可拥有，这样只有拥有对象的智能指针的析构函数会删除该对象。然后让赋值操作转让所有权。这就是用于auto_ptr和unique_ptr 的策略，但unique_ptr的策略更严格。</p><p>（3）创建智能更高的指针，跟踪引用特定对象的智能指针数。这称为引用计数。例如，赋值时，计数将加1，而指针过期时，计数将减1,。当减为0时才调用delete。这是shared_ptr采用的策略。</p><hr><h2 id="1-unique-ptr："><a href="#1-unique-ptr：" class="headerlink" title="1. unique_ptr："></a>1. unique_ptr：</h2><p>unique_ptr由C++11引入，旨在替代不安全的auto_ptr。<br>unique_ptr不共享它的所管理的对象。它无法复制到其他unique_ptr，无法通过值传递到函数，也无法用于需要副本的任何标准模板库 （STL）算法。只能移动 unique_ptr，即对资源管理权限可以实现转移。</p><p><img src="\images\pasted-7.png" alt="upload successful"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//智能指针的创建  </span><br><span class="line">unique_ptr&lt;int&gt; u_i; //创建空智能指针</span><br><span class="line">u_i.reset(new int(3)); //&quot;绑定”动态对象  </span><br><span class="line">unique_ptr&lt;int&gt; u_i2(new int(4));//创建时指定动态对象</span><br><span class="line">unique_ptr&lt;T,D&gt; u(d);//创建空unique_ptr,执行类型为T的对象，用类型为D的对象d来替代默认的删除器delete</span><br><span class="line"></span><br><span class="line">//所有权的变化  </span><br><span class="line">int *p_i = u_i2.release(); //释放所有权  </span><br><span class="line">unique_ptr&lt;string&gt; u_s(new string(&quot;abc&quot;));  </span><br><span class="line">unique_ptr&lt;string&gt; u_s2 = std::move(u_s); //所有权转移(通过移动语义)，u_s所有权转移后，变成“空指针” </span><br><span class="line">u_s2.reset(u_s.release());//所有权转移</span><br><span class="line">u_s2=nullptr;//显式销毁所指对象，同时智能指针变为空指针。与u_s2.reset()等价</span><br></pre></td></tr></table></figure></p><h2 id="2-auto-ptr：为什么不用它而用unique-ptr"><a href="#2-auto-ptr：为什么不用它而用unique-ptr" class="headerlink" title="2.auto_ptr：为什么不用它而用unique_ptr"></a>2.auto_ptr：为什么不用它而用unique_ptr</h2><p>使用unique_ptr时编译出错，与auto_ptr一样，unique_ptr也采用所有权模型，但在使用unique_ptr时，程序不会等到运行阶段崩溃，而在编译期因下述代码行出现错误。一句话总结就是：避免因潜在的内存问题导致程序崩溃。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">auto_ptr&lt;string&gt; films[5] =&#123;</span><br><span class="line">auto_ptr&lt;string&gt; (new string(&quot;Fowl Balls&quot;)),</span><br><span class="line">auto_ptr&lt;string&gt; (new string(&quot;Duck Walks&quot;)),</span><br><span class="line">auto_ptr&lt;string&gt; (new string(&quot;Chicken Runs&quot;)),</span><br><span class="line">auto_ptr&lt;string&gt; (new string(&quot;Turkey Errors&quot;))</span><br><span class="line">&#125;;</span><br><span class="line">    auto_ptr&lt;string&gt; pwin;</span><br><span class="line">    pwin = films[2]; </span><br><span class="line">    // films[2] loses ownership. 将所有权从films[2]转让给pwin，此时films[2]不再引用该字符串从而变成空指针</span><br><span class="line"></span><br><span class="line">for(int i = 0; i &lt; 4; ++i)</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; *films[i] &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>从上面可见，unique_ptr比auto_ptr更加安全，因为auto_ptr有拷贝语义，拷贝后原象变得无效，再次访问原对象时会导致程序崩溃；unique_ptr则禁止了拷贝语义，但提供了移动语义，即可以使用std::move()进行控制权限的转移<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;string&gt; upt(new string(&quot;lvlv&quot;));</span><br><span class="line">unique_ptr&lt;string&gt; upt1(upt);//编译出错，已禁止拷贝</span><br><span class="line">unique_ptr&lt;string&gt; upt1=upt;//编译出错，已禁止拷贝</span><br><span class="line">unique_ptr&lt;string&gt; upt1=std::move(upt);  //控制权限转移，正确的写法</span><br><span class="line"></span><br><span class="line">auto_ptr&lt;string&gt; apt(new string(&quot;lvlv&quot;));</span><br><span class="line">auto_ptr&lt;string&gt; apt1(apt);//编译通过</span><br><span class="line">auto_ptr&lt;string&gt; apt1=apt;//编译通过</span><br></pre></td></tr></table></figure></p><ul><li>使用shared_ptr时运行正常，因为shared_ptr采用引用计数，pwin和films[2]都指向同一块内存，在释放空间时因为事先要判断引用计数值的大小因此不会出现多次删除一个对象的错误。</li></ul><h2 id="3-shared-ptr"><a href="#3-shared-ptr" class="headerlink" title="3. shared_ptr"></a>3. shared_ptr</h2><p>参看<code>内存垃圾管理（智能指针）</code></p><h2 id="4-weak-ptr"><a href="#4-weak-ptr" class="headerlink" title="4. weak_ptr"></a>4. weak_ptr</h2><p>被设计为与shared_ptr共同工作，可以从一个shared_ptr或者另一个weak_ptr对象构造而来。</p><blockquote><p>循环引用：</p></blockquote><p>一般来讲，解除这种循环引用有下面三种可行的方法：<br>（1）当只剩下最后一个引用的时候需要手动打破循环引用释放对象。<br>（2）当parent的生存期超过children的生存期的时候，children改为使用一个普通指针指向parent。<br>（3）使用弱引用的智能指针打破这种循环引用。<br>虽然这三种方法都可行，但方法1和方法2都需要程序员手动控制，麻烦且容易出错。这里主要介绍一下第三种方法，使用弱引用的智能指针<code>std:weak_ptr</code>来打破循环引用。</p>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr]]></title>
+    <url>%2F2019%2F08%2F14%2FL%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr%2F</url>
+    <content type="text"><![CDATA[基于安全考虑：123auto_ptr&lt; string&gt; ps (new string (&quot;I reigned lonely as a cloud.”）;auto_ptr&lt;string&gt; vocation; vocaticn = ps; 因为程序将试图删除同一个对象两次，要避免这种问题，方法有多种： （1）定义赋值运算符，使之执行深复制。这样两个指针将指向不同的对象，其中的一个对象是另一个对象的副本，缺点是浪费空间，所以智能指针都未采用此方案。 （2）建立所有权概念。对于特定的对象，只能有一个智能指针可拥有，这样只有拥有对象的智能指针的析构函数会删除该对象。然后让赋值操作转让所有权。这就是用于auto_ptr和unique_ptr 的策略，但unique_ptr的策略更严格。 （3）创建智能更高的指针，跟踪引用特定对象的智能指针数。这称为引用计数。例如，赋值时，计数将加1，而指针过期时，计数将减1,。当减为0时才调用delete。这是shared_ptr采用的策略。 1. unique_ptr：unique_ptr由C++11引入，旨在替代不安全的auto_ptr。unique_ptr不共享它的所管理的对象。它无法复制到其他unique_ptr，无法通过值传递到函数，也无法用于需要副本的任何标准模板库 （STL）算法。只能移动 unique_ptr，即对资源管理权限可以实现转移。 123456789101112//智能指针的创建 unique_ptr&lt;int&gt; u_i; //创建空智能指针u_i.reset(new int(3)); //&quot;绑定”动态对象 unique_ptr&lt;int&gt; u_i2(new int(4));//创建时指定动态对象unique_ptr&lt;T,D&gt; u(d); //创建空unique_ptr,执行类型为T的对象，用类型为D的对象d来替代默认的删除器delete//所有权的变化 int *p_i = u_i2.release(); //释放所有权 unique_ptr&lt;string&gt; u_s(new string(&quot;abc&quot;)); unique_ptr&lt;string&gt; u_s2 = std::move(u_s); //所有权转移(通过移动语义)，u_s所有权转移后，变成“空指针” u_s2.reset(u_s.release());//所有权转移u_s2=nullptr;//显式销毁所指对象，同时智能指针变为空指针。与u_s2.reset()等价 2.auto_ptr：为什么不用它而用unique_ptr使用unique_ptr时编译出错，与auto_ptr一样，unique_ptr也采用所有权模型，但在使用unique_ptr时，程序不会等到运行阶段崩溃，而在编译期因下述代码行出现错误。一句话总结就是：避免因潜在的内存问题导致程序崩溃。123456789101112131415161718int main()&#123; auto_ptr&lt;string&gt; films[5] =&#123; auto_ptr&lt;string&gt; (new string(&quot;Fowl Balls&quot;)), auto_ptr&lt;string&gt; (new string(&quot;Duck Walks&quot;)), auto_ptr&lt;string&gt; (new string(&quot;Chicken Runs&quot;)), auto_ptr&lt;string&gt; (new string(&quot;Turkey Errors&quot;)) &#125;; auto_ptr&lt;string&gt; pwin; pwin = films[2]; // films[2] loses ownership. 将所有权从films[2]转让给pwin，此时films[2]不再引用该字符串从而变成空指针 for(int i = 0; i &lt; 4; ++i) &#123; cout &lt;&lt; *films[i] &lt;&lt; endl; &#125; return 0;&#125; 从上面可见，unique_ptr比auto_ptr更加安全，因为auto_ptr有拷贝语义，拷贝后原象变得无效，再次访问原对象时会导致程序崩溃；unique_ptr则禁止了拷贝语义，但提供了移动语义，即可以使用std::move()进行控制权限的转移12345678unique_ptr&lt;string&gt; upt(new string(&quot;lvlv&quot;));unique_ptr&lt;string&gt; upt1(upt); //编译出错，已禁止拷贝unique_ptr&lt;string&gt; upt1=upt; //编译出错，已禁止拷贝unique_ptr&lt;string&gt; upt1=std::move(upt); //控制权限转移，正确的写法auto_ptr&lt;string&gt; apt(new string(&quot;lvlv&quot;));auto_ptr&lt;string&gt; apt1(apt); //编译通过auto_ptr&lt;string&gt; apt1=apt; //编译通过 使用shared_ptr时运行正常，因为shared_ptr采用引用计数，pwin和films[2]都指向同一块内存，在释放空间时因为事先要判断引用计数值的大小因此不会出现多次删除一个对象的错误。 3. shared_ptr参看内存垃圾管理（智能指针） 4. weak_ptr被设计为与shared_ptr共同工作，可以从一个shared_ptr或者另一个weak_ptr对象构造而来。 循环引用： 一般来讲，解除这种循环引用有下面三种可行的方法：（1）当只剩下最后一个引用的时候需要手动打破循环引用释放对象。（2）当parent的生存期超过children的生存期的时候，children改为使用一个普通指针指向parent。（3）使用弱引用的智能指针打破这种循环引用。虽然这三种方法都可行，但方法1和方法2都需要程序员手动控制，麻烦且容易出错。这里主要介绍一下第三种方法，使用弱引用的智能指针std:weak_ptr来打破循环引用。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
-          <category> STL </category>
-          
+        <category>C++</category>
+        <category>STL</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-            <tag> STL </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</title>
-      <link href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-      <url>/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-      
-        <content type="html"><![CDATA[<hr><p>关于函数的调用规则（调用约定），大多数时候是不需要了解的，但是如果需要跨语言的编程，比如VC写的dll要delphi调用，则需要了解。</p><blockquote><p>1.__cdecl         </p></blockquote><p>__cdecl 是 C Declaration  的缩写，表示 C 语言默认的函数调用方法：所有参数从右到左依次入栈，这些参数由调用者清除，称为手动清栈。被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。</p><blockquote><p>2.__stdcall </p></blockquote><p>__stdcall 是 Standard Call 的缩写，是 C++ 的标准调用方式：所有参数从右到左依次入栈，如果是调用类成员的话，最后一个入栈的是 this 指针。这些堆栈中的参数由被调用的函数在返回后清除，使用的指令是 retnX，X 表示参数占用的字节数，CPU 在 ret 之后自动弹出 X 个字节的堆栈空间，称为自动清栈。函数在编译的时候就必须确定参数个数，并且调用者必须严格的控制参数的生成，不能多，不能少，否则返回后会出错。</p><blockquote><p>3.__fastcall         </p></blockquote><p><strong>fastcall 是编译器指定的快速调用方式。由于大多数的函数参数个数很少，使用堆栈传递比较费时。因此 </strong>fastcall 通常规定将前两个（或若干个）参数由寄存器传递，其余参数还是通过堆栈传递。不同编译器编译的程序规定的寄存器不同，返回方式和 __stdcall 相当。</p><blockquote><p>4.__pascal         </p></blockquote><p><strong>pascal 是 Pascal 语言（Delphi）的函数调用方式，也可以在 C/C++ 中使用，参数压栈顺序与前两者相反。返回时的清栈方式与 </strong>stdcall 相同。</p><blockquote><p>5.__thiscall</p></blockquote><p><strong>thiscall 是为了解决类成员调用中 this 指针传递而规定的。</strong>thiscall 要求把 this 指针放在特定寄存器中，该寄存器由编译器决定。VC 使用 ecx，Borland 的 C++ 编译器使用 eax。返回方式和 __stdcall 相当。</p>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+        <tag>STL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别]]></title>
+    <url>%2F2019%2F08%2F14%2Fecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[关于函数的调用规则（调用约定），大多数时候是不需要了解的，但是如果需要跨语言的编程，比如VC写的dll要delphi调用，则需要了解。 1.__cdecl __cdecl 是 C Declaration 的缩写，表示 C 语言默认的函数调用方法：所有参数从右到左依次入栈，这些参数由调用者清除，称为手动清栈。被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。 2.__stdcall __stdcall 是 Standard Call 的缩写，是 C++ 的标准调用方式：所有参数从右到左依次入栈，如果是调用类成员的话，最后一个入栈的是 this 指针。这些堆栈中的参数由被调用的函数在返回后清除，使用的指令是 retnX，X 表示参数占用的字节数，CPU 在 ret 之后自动弹出 X 个字节的堆栈空间，称为自动清栈。函数在编译的时候就必须确定参数个数，并且调用者必须严格的控制参数的生成，不能多，不能少，否则返回后会出错。 3.__fastcall fastcall 是编译器指定的快速调用方式。由于大多数的函数参数个数很少，使用堆栈传递比较费时。因此 fastcall 通常规定将前两个（或若干个）参数由寄存器传递，其余参数还是通过堆栈传递。不同编译器编译的程序规定的寄存器不同，返回方式和 __stdcall 相当。 4.__pascal pascal 是 Pascal 语言（Delphi）的函数调用方式，也可以在 C/C++ 中使用，参数压栈顺序与前两者相反。返回时的清栈方式与 stdcall 相同。 5.__thiscall thiscall 是为了解决类成员调用中 this 指针传递而规定的。thiscall 要求把 this 指针放在特定寄存器中，该寄存器由编译器决定。VC 使用 ecx，Borland 的 C++ 编译器使用 eax。返回方式和 __stdcall 相当。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>内存对齐</title>
-      <link href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/"/>
-      <url>/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/</url>
-      
-        <content type="html"><![CDATA[<hr><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    double b;</span><br><span class="line">    short c;</span><br><span class="line">&#125;A;</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    short b;</span><br><span class="line">    double c;</span><br><span class="line">&#125;B;</span><br></pre></td></tr></table></figure><p><code>sizeof(A)=24而sizeof(B)=16</code></p><blockquote><p>A的内存分布：(每一个元素都存在最大元素大小的空间内)</p></blockquote><p><img src="\images\pasted-5.png" alt="upload successful"></p><blockquote><p>B的内存分布：</p></blockquote><p><img src="\images\pasted-6.png" alt="upload successful"></p>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[内存对齐]]></title>
+    <url>%2F2019%2F08%2F13%2F%E5%AD%98%E5%AF%B9%E9%BD%90%2F</url>
+    <content type="text"><![CDATA[12345typedef struct &#123; int a; double b; short c;&#125;A; 12345typedef struct &#123; int a; short b; double c;&#125;B; sizeof(A)=24而sizeof(B)=16 A的内存分布：(每一个元素都存在最大元素大小的空间内) B的内存分布：]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
-          <category> 操作系统底层 </category>
-          
+        <category>C++</category>
+        <category>操作系统底层</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-            <tag> 操作系统底层 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>大小端存储</title>
-      <link href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/"/>
-      <url>/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/</url>
-      
-        <content type="html"><![CDATA[<hr><p>大端模式，是指数据的高字节保存在内存的低地址中。</p><p><img src="\images\pasted-4.png" alt="upload successful"><br>4个两位16进制数=8*4=32位=4B=1int</p><hr><p>编程判断大小端的两种方法：</p><ol><li>union 判断法</li></ol><p>在union中所有的数据成员共用一个空间，同一时间只能储存其中一个数据成员，所有的数据成员具有相同的起始地址。即上述的union虽然定义了两个成员，但其实这个union只占用了4个字节(32位机器中)，往a成员赋值，然后读取b就相读取a成员的低位第一个字节的值。如果机器使用大端模式，则u.a=1那a的最高字节值为1；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef union &#123;</span><br><span class="line">int i;</span><br><span class="line">char c;</span><br><span class="line">&#125;my_union;</span><br><span class="line"> </span><br><span class="line">int checkSystem1(void)</span><br><span class="line">&#123;</span><br><span class="line">my_union u;</span><br><span class="line">u.i = 1;</span><br><span class="line">return (u.i == u.c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><ol><li>直接判断法</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int checkSystem2(void)</span><br><span class="line">&#123;</span><br><span class="line">int i = 0x12345678;</span><br><span class="line">char *c = (char*)&amp;i;</span><br><span class="line">return ((c[0] == 0x78) &amp;&amp; (c[1] == 0x56) &amp;&amp; (c[2] == 0x34) &amp;&amp; (c[3] == 0x12));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+        <tag>操作系统底层</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[大小端存储]]></title>
+    <url>%2F2019%2F08%2F13%2F%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8%2F</url>
+    <content type="text"><![CDATA[大端模式，是指数据的高字节保存在内存的低地址中。 4个两位16进制数=8*4=32位=4B=1int 编程判断大小端的两种方法： union 判断法 在union中所有的数据成员共用一个空间，同一时间只能储存其中一个数据成员，所有的数据成员具有相同的起始地址。即上述的union虽然定义了两个成员，但其实这个union只占用了4个字节(32位机器中)，往a成员赋值，然后读取b就相读取a成员的低位第一个字节的值。如果机器使用大端模式，则u.a=1那a的最高字节值为1；1234567891011typedef union &#123; int i; char c;&#125;my_union; int checkSystem1(void)&#123; my_union u; u.i = 1; return (u.i == u.c);&#125; 直接判断法 123456int checkSystem2(void)&#123; int i = 0x12345678; char *c = (char*)&amp;i; return ((c[0] == 0x78) &amp;&amp; (c[1] == 0x56) &amp;&amp; (c[2] == 0x34) &amp;&amp; (c[3] == 0x12));&#125;]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
-          <category> 操作系统底层 </category>
-          
+        <category>C++</category>
+        <category>操作系统底层</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-            <tag> 操作系统底层 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>指针的形参</title>
-      <link href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/"/>
-      <url>/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/</url>
-      
-        <content type="html"><![CDATA[<hr><p>函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）</p><p><img src="\images\pasted-3.png" alt="upload successful"></p><h4 id="p形参的情况："><a href="#p形参的情况：" class="headerlink" title="*p形参的情况："></a>*p形参的情况：</h4><ul><li>一开始:</li></ul><pre class="mermaid">graph LR    classDef className fill:white,stroke:#333,stroke-width:1px;    id3[*p 形参]-->id1[7]    subgraph arr数组    id[10]-->id1[7]    id1[7]-->id2[5]    end    subgraph *p    id3[*p 形参]    end    class id,id1,id2,id3 className;</pre><ul><li>最后:</li></ul><pre class="mermaid">graph LR    classDef className fill:white,stroke:#333,stroke-width:1px;    id4[*p]-->id1[3]    id3[*p 形参]-->id[10]    subgraph *p 形参    id3[*p 形参]    end    subgraph *p    id4[*p]    end        subgraph arr数组    id[10]-->id1[3]    id1[3]-->id2[5]    end    class id,id1,id2,id3,id4 className;</pre><ul><li>注意：<code>*p--=3</code>实际上是<code>*p=3</code>，然后<code>(p--)</code></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *p)&#123;</span><br><span class="line">return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">int *p=arr+1;</span><br><span class="line">printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="amp-p引用的情况："><a href="#amp-p引用的情况：" class="headerlink" title="*&amp;p引用的情况："></a>*&amp;p引用的情况：</h4><ul><li>一开始:</li></ul><pre class="mermaid">graph LR    classDef className fill:white,stroke:#333,stroke-width:1px;    id3[*&p]-->id1[7]    subgraph arr数组    id[10]-->id1[7]    id1[7]-->id2[5]    end    subgraph *&p    id3[*&p]    end    class id,id1,id2,id3 className;</pre><ul><li>最后:</li></ul><pre class="mermaid">graph LR    classDef className fill:white,stroke:#333,stroke-width:1px;    id4[*p]-->id[10]    id3[*&p]-->id[10]    subgraph *&p    id3[*&p]    end    subgraph *p    id4[*p]    end        subgraph arr数组    id[10]-->id1[3]    id1[3]-->id2[5]    end    class id,id1,id2,id3,id4 className;</pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *&amp;p)&#123;</span><br><span class="line">    return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">    int *p=arr+1;</span><br><span class="line">    printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为12</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+        <tag>操作系统底层</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[指针的形参]]></title>
+    <url>%2F2019%2F08%2F13%2F%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82%2F</url>
+    <content type="text"><![CDATA[函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置） *p形参的情况： 一开始: graph LR classDef className fill:white,stroke:#333,stroke-width:1px; id3[*p 形参]-->id1[7] subgraph arr数组 id[10]-->id1[7] id1[7]-->id2[5] end subgraph *p id3[*p 形参] end class id,id1,id2,id3 className; 最后: graph LR classDef className fill:white,stroke:#333,stroke-width:1px; id4[*p]-->id1[3] id3[*p 形参]-->id[10] subgraph *p 形参 id3[*p 形参] end subgraph *p id4[*p] end subgraph arr数组 id[10]-->id1[3] id1[3]-->id2[5] end class id,id1,id2,id3,id4 className; 注意：*p--=3实际上是*p=3，然后(p--) 123456789101112#include&lt;iostream&gt;using namespace std;int func(int *p)&#123; return (*p--=3)-1;&#125;int main()&#123; int arr[]=&#123;10,7,5&#125;; int *p=arr+1; printf(&quot;%d&quot;,func(p)+*p); // 答案为5&#125; *&amp;p引用的情况： 一开始: graph LR classDef className fill:white,stroke:#333,stroke-width:1px; id3[*&p]-->id1[7] subgraph arr数组 id[10]-->id1[7] id1[7]-->id2[5] end subgraph *&p id3[*&p] end class id,id1,id2,id3 className; 最后: graph LR classDef className fill:white,stroke:#333,stroke-width:1px; id4[*p]-->id[10] id3[*&p]-->id[10] subgraph *&p id3[*&p] end subgraph *p id4[*p] end subgraph arr数组 id[10]-->id1[3] id1[3]-->id2[5] end class id,id1,id2,id3,id4 className; 123456789101112#include&lt;iostream&gt;using namespace std;int func(int *&amp;p)&#123; return (*p--=3)-1;&#125;int main()&#123; int arr[]=&#123;10,7,5&#125;; int *p=arr+1; printf(&quot;%d&quot;,func(p)+*p); // 答案为12&#125;]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>#ifndef/#define/#endif</title>
-      <link href="/2019/08/13/ifndef-define-endif/"/>
-      <url>/2019/08/13/ifndef-define-endif/</url>
-      
-        <content type="html"><![CDATA[<p>在c语言中，对同一个变量或者函数进行多次声明是不会报错的。所以如果h文件里只是进行了声明工作，即使不使用# ifndef宏定义，多个c文件包含同一个h文件也不会报错。</p><p>但是在c++语言中，#ifdef的作用域只是在单个文件中。所以如果h文件里定义了全局变量，即使采用#ifdef宏定义，多个c文件包含同一个h文件还是会出现全局变量重定义的错误。</p><p>使用#ifndef可以避免下面这种错误：如果在h文件中定义了全局变量，一个c文件包含同一个h文件多次，如果不加#ifndef宏定义，会出现变量重复定义的错误；如果加了#ifndef，则不会出现这种错误。</p><p>其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ifndef x                 //先测试x是否被宏定义过</span><br><span class="line">#define x</span><br><span class="line">   程序段1blabla~    //如果x没有被宏定义过，定义x，并编译程序段 1</span><br><span class="line">#endif   </span><br><span class="line">　　程序段2blabla~　　 //如果x已经定义过了则编译程序段2的语句，“忽视”程序段 1</span><br></pre></td></tr></table></figure><blockquote><p>循环引用的后果：</p></blockquote><p>有些头文件重复引用只是增加了编译工作的工作量，不会引起太大的问题，仅仅是编译效率低一些，但是对于大工程而言编译效率低下那将是一件多么痛苦的事情。</p><p>有些头文件重复包含，会引起错误，比如在头文件中定义了全局变量(虽然这种方式不被推荐，但确实是C规范允许的)这种会引起重复定义。</p>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[#ifndef/#define/#endif]]></title>
+    <url>%2F2019%2F08%2F13%2Fifndef-define-endif%2F</url>
+    <content type="text"><![CDATA[在c语言中，对同一个变量或者函数进行多次声明是不会报错的。所以如果h文件里只是进行了声明工作，即使不使用# ifndef宏定义，多个c文件包含同一个h文件也不会报错。 但是在c++语言中，#ifdef的作用域只是在单个文件中。所以如果h文件里定义了全局变量，即使采用#ifdef宏定义，多个c文件包含同一个h文件还是会出现全局变量重定义的错误。 使用#ifndef可以避免下面这种错误：如果在h文件中定义了全局变量，一个c文件包含同一个h文件多次，如果不加#ifndef宏定义，会出现变量重复定义的错误；如果加了#ifndef，则不会出现这种错误。 其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用。 12345#ifndef x //先测试x是否被宏定义过#define x 程序段1blabla~ //如果x没有被宏定义过，定义x，并编译程序段 1#endif 程序段2blabla~ //如果x已经定义过了则编译程序段2的语句，“忽视”程序段 1 循环引用的后果： 有些头文件重复引用只是增加了编译工作的工作量，不会引起太大的问题，仅仅是编译效率低一些，但是对于大工程而言编译效率低下那将是一件多么痛苦的事情。 有些头文件重复包含，会引起错误，比如在头文件中定义了全局变量(虽然这种方式不被推荐，但确实是C规范允许的)这种会引起重复定义。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>volatile</title>
-      <link href="/2019/08/13/olatile/"/>
-      <url>/2019/08/13/olatile/</url>
-      
-        <content type="html"><![CDATA[<h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><p>volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。</p><h4 id="volatile和编译器的优化有关："><a href="#volatile和编译器的优化有关：" class="headerlink" title="volatile和编译器的优化有关："></a>volatile和编译器的优化有关：</h4><p>在本次线程内，当读取一个变量时，为了提高读取速度，编译器进行优化时有时会先把变量读取到一个寄存器中；以后，再读取变量值时，就直接从寄存器中读取；当变量值在本线程里改变时，会同时把变量的新值copy到该寄存器中，以保持一致。 </p><p>当变量因别的线程值发生改变，上面寄存器的值不会相应改变，从而造成应用程序读取的值和实际的变量值不一致。</p>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[volatile]]></title>
+    <url>%2F2019%2F08%2F13%2Folatile%2F</url>
+    <content type="text"><![CDATA[介绍：volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。 volatile和编译器的优化有关：在本次线程内，当读取一个变量时，为了提高读取速度，编译器进行优化时有时会先把变量读取到一个寄存器中；以后，再读取变量值时，就直接从寄存器中读取；当变量值在本线程里改变时，会同时把变量的新值copy到该寄存器中，以保持一致。 当变量因别的线程值发生改变，上面寄存器的值不会相应改变，从而造成应用程序读取的值和实际的变量值不一致。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>内联函数</title>
-      <link href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/"/>
-      <url>/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/</url>
-      
-        <content type="html"><![CDATA[<hr><h4 id="函数调用原理："><a href="#函数调用原理：" class="headerlink" title="函数调用原理："></a>函数调用原理：</h4><p>执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。</p><hr><p>内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline double square(double x)&#123;return x*x;&#125;</span><br></pre></td></tr></table></figure></p><hr><blockquote><p>内联函数与宏定义的区别:</p></blockquote><p>使用宏和内联函数都可以节省在函数调用方面所带来的时间和空间开销。二者都采用了空间换时间的方式，在其调用处进行展开：<br>(1)  在预编译时期，宏定义在调用处执行字符串的原样替换。在编译时期，内联函数在调用处展开，同时进行参数类型检查。<br>(2)  内联函数首先是函数，可以像调用普通函数一样调用内联函数。而宏定义往往需要添加很多括号防止歧义，编写更加复杂。<br>(3)  内联函数可以作为某个类的成员函数，这样可以使用类的保护成员和私有成员。而当一个表达式涉及到类保护成员或私有成员时，宏就不能实现了(无法将this指针放在合适位置)。</p><p>可以用内联函数完全替代宏。<br>在编写内联函数时，函数体应该短小而简洁，不应该包含循环等较复杂结构，否则编译器不会将其当作内联函数看待，而是把它决议成为一个静态函数。</p><p>有些编译器甚至会优化内联函数，通常为避免一些不必要拷贝和构造，提高工作效率。</p><p>频繁的调用内联函数和宏定义容易造成代码膨胀，消耗更大的内存而造成过多的换页操作。</p>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[内联函数]]></title>
+    <url>%2F2019%2F08%2F13%2F%E8%81%94%E5%87%BD%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[函数调用原理：执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。 内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。1inline double square(double x)&#123;return x*x;&#125; 内联函数与宏定义的区别: 使用宏和内联函数都可以节省在函数调用方面所带来的时间和空间开销。二者都采用了空间换时间的方式，在其调用处进行展开：(1) 在预编译时期，宏定义在调用处执行字符串的原样替换。在编译时期，内联函数在调用处展开，同时进行参数类型检查。(2) 内联函数首先是函数，可以像调用普通函数一样调用内联函数。而宏定义往往需要添加很多括号防止歧义，编写更加复杂。(3) 内联函数可以作为某个类的成员函数，这样可以使用类的保护成员和私有成员。而当一个表达式涉及到类保护成员或私有成员时，宏就不能实现了(无法将this指针放在合适位置)。 可以用内联函数完全替代宏。在编写内联函数时，函数体应该短小而简洁，不应该包含循环等较复杂结构，否则编译器不会将其当作内联函数看待，而是把它决议成为一个静态函数。 有些编译器甚至会优化内联函数，通常为避免一些不必要拷贝和构造，提高工作效率。 频繁的调用内联函数和宏定义容易造成代码膨胀，消耗更大的内存而造成过多的换页操作。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>虚函数</title>
-      <link href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/"/>
-      <url>/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/</url>
-      
-        <content type="html"><![CDATA[<p><a href="https://blog.csdn.net/zwe7616175/article/details/81334711">https://blog.csdn.net/zwe7616175/article/details/81334711</a><br><a href="https://zhidao.baidu.com/question/123304290.html">https://zhidao.baidu.com/question/123304290.html</a></p><hr><blockquote><p>说明：</p></blockquote><p>使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关联的时间开销很少，提高了多态性的效率。</p><p><img src="\images\pasted-2.png" alt="upload successful"></p><p>编译器生成的析构函数都是非虚的，除非是一个子类，其父类有个虚析构函数，此时的虚函数特性继承自基类。有虚函数的类，一般情况下要定义一个虚析构函数。</p><p>纯虚函数不能new。</p><hr><blockquote><p>构造函数不能声明为虚函数的原因？</p></blockquote><ol><li><p>构造一个对象时，必须知道对象实际类型，而虚函数是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功，编译器就无法知道对象的实际类型，是该类本身，还是派生类，还是其他。</p></li><li><p>虚函数的执行依赖于虚函数表，而虚函数表是在构造函数中进行初始化的，即初始化虚表指针（vptr），使得正确指向虚函数表。而在构造对象期间，虚函数表（vtable）还没有被初始化，将无法进行。</p></li></ol><blockquote><p>什么情况下，类的析构函数应该声明为虚函数？为什么？</p></blockquote><p>类A中有了虚函数就会在类的数据成员的最前面添加一个vfptr指针(void** vfptr)，这个指针用来指向一个vtable表（一个函数指针数组）（一个类只有一个该表），该表存储着当前类的所有虚函数的地址。这样vfptr就成为了一个类似成员变量的存在。访问虚函数的时候通过vfptr间址找到vtable表，再间址进而找到要调用的函数。这样就在一定程度上摆脱了类型制约。</p><p>当B类继承A类的时候，因为A中有虚函数，编译器就自动的给B类添加vfprt指针和vtable表。也可以理解为B类继承来了A类中的那个vptr指针成员。（B对象的vfptr浅拷贝到A对象的vfptr）因此，A对象的vfptr所指向的是B对象的虚函数表，而B的析构函数位于书函数表0的位置，因此，这样就可以通过A类对象的指针d，找到B类对象的析构函数，从而在delete d;时，可以销毁B对象，而不会产生内存泄漏和异常。</p><ul><li>简单得来讲：析构函数设为虚函数的原因是为了防止内存泄露。在继承体系中，当基类的指针或引用指向派生类，用基类delete时，如果基类的析构函数没有声明为虚函数，只能析构基类对象，派生类对象将无法析构。因为普通函数受类型的制约，（因为没有vptr指针）使用哪个类的指针调用函数，那么所调用的就是那个累的函数。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># bug复现</span><br><span class="line">a* aa= new b(); // b继承a</span><br><span class="line">delete aa;</span><br><span class="line">// 打印（执行） a 的析构函数，不执行b的</span><br></pre></td></tr></table></figure></li></ul><p>所以需要将基类的析构函数声明为虚函数，当撤销基类对象的同时也撤销派生类的对象，这个过程是动态关联完成的。</p><hr><blockquote><p>内联函数不能是虚函数</p></blockquote><p>内联函数会在预编译时会进行代码展开，省略函数调用，因此内联函数不能是虚函数。虽然使用inline和virtual共同修饰一个函数时能够通过编译，并在调用时会表现出虚函数的性质，但这是因为编译器在函数声明中遇到virtual关键字时，会选择忽略inline关键字，不进行代码展开。</p><blockquote><p>静态函数不能声明为虚函数</p></blockquote><p>虚函数体现了对象在运行时的多态性，而静态函数属于整个类，不属于某个对象，不能声明为虚函数。</p>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[虚函数]]></title>
+    <url>%2F2019%2F08%2F13%2F%E8%99%9A%E5%87%BD%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[https://blog.csdn.net/zwe7616175/article/details/81334711https://zhidao.baidu.com/question/123304290.html 说明： 使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关联的时间开销很少，提高了多态性的效率。 编译器生成的析构函数都是非虚的，除非是一个子类，其父类有个虚析构函数，此时的虚函数特性继承自基类。有虚函数的类，一般情况下要定义一个虚析构函数。 纯虚函数不能new。 构造函数不能声明为虚函数的原因？ 构造一个对象时，必须知道对象实际类型，而虚函数是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功，编译器就无法知道对象的实际类型，是该类本身，还是派生类，还是其他。 虚函数的执行依赖于虚函数表，而虚函数表是在构造函数中进行初始化的，即初始化虚表指针（vptr），使得正确指向虚函数表。而在构造对象期间，虚函数表（vtable）还没有被初始化，将无法进行。 什么情况下，类的析构函数应该声明为虚函数？为什么？ 类A中有了虚函数就会在类的数据成员的最前面添加一个vfptr指针(void** vfptr)，这个指针用来指向一个vtable表（一个函数指针数组）（一个类只有一个该表），该表存储着当前类的所有虚函数的地址。这样vfptr就成为了一个类似成员变量的存在。访问虚函数的时候通过vfptr间址找到vtable表，再间址进而找到要调用的函数。这样就在一定程度上摆脱了类型制约。 当B类继承A类的时候，因为A中有虚函数，编译器就自动的给B类添加vfprt指针和vtable表。也可以理解为B类继承来了A类中的那个vptr指针成员。（B对象的vfptr浅拷贝到A对象的vfptr）因此，A对象的vfptr所指向的是B对象的虚函数表，而B的析构函数位于书函数表0的位置，因此，这样就可以通过A类对象的指针d，找到B类对象的析构函数，从而在delete d;时，可以销毁B对象，而不会产生内存泄漏和异常。 简单得来讲：析构函数设为虚函数的原因是为了防止内存泄露。在继承体系中，当基类的指针或引用指向派生类，用基类delete时，如果基类的析构函数没有声明为虚函数，只能析构基类对象，派生类对象将无法析构。因为普通函数受类型的制约，（因为没有vptr指针）使用哪个类的指针调用函数，那么所调用的就是那个累的函数。1234# bug复现a* aa= new b(); // b继承adelete aa;// 打印（执行） a 的析构函数，不执行b的 所以需要将基类的析构函数声明为虚函数，当撤销基类对象的同时也撤销派生类的对象，这个过程是动态关联完成的。 内联函数不能是虚函数 内联函数会在预编译时会进行代码展开，省略函数调用，因此内联函数不能是虚函数。虽然使用inline和virtual共同修饰一个函数时能够通过编译，并在调用时会表现出虚函数的性质，但这是因为编译器在函数声明中遇到virtual关键字时，会选择忽略inline关键字，不进行代码展开。 静态函数不能声明为虚函数 虚函数体现了对象在运行时的多态性，而静态函数属于整个类，不属于某个对象，不能声明为虚函数。]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>C++编译过程</title>
-      <link href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/"/>
-      <url>/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<pre class="mermaid">graph TD    classDef className fill:white,stroke:#333,stroke-width:1px;    id(预处理,做优化,生成.i文件)-->id1[编译器,生成.s文件]    id1[编译器,生成.s文件]-->id2[汇编器,生成.o文件]    id2[汇编器,生成.o文件]-->id3[链接器,连接库文件和其他目标文件]    id3[链接器,连接库文件和其他目标文件]-->id4(生成可执行文件)    class id,id1,id2,id3,id4 className;</pre><h4 id="C-预处理阶段主要完成的工作："><a href="#C-预处理阶段主要完成的工作：" class="headerlink" title="C++预处理阶段主要完成的工作："></a>C++预处理阶段主要完成的工作：</h4><p>处理#开始的预编译指令：<br>（1）宏定义(#define)：对宏定义进行字符串替换。<br>（2）文件包含(#include)：文件包含命令把指定头文件插入该命令行位置取代该命令行，从而把指定的文件和当前的源程序文件连成一个源文件。<br>（3）条件编译(#ifdef)：当满足某条件时语句进行编译，而当条件不满足时则编译另一组语句。条件编译对程序的移植和调试是很有用的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#ifndef  Linux</span><br><span class="line">linux平台下运行的函数</span><br><span class="line">#else</span><br><span class="line">#ifndef  windows</span><br><span class="line">Windows平台下运行的函数</span><br><span class="line">#endif         </span><br><span class="line">#endif</span><br></pre></td></tr></table></figure></p><h4 id="汇编阶段："><a href="#汇编阶段：" class="headerlink" title="汇编阶段："></a>汇编阶段：</h4><p>直接生成了汇编代码</p><h4 id="链接器阶段"><a href="#链接器阶段" class="headerlink" title="链接器阶段"></a>链接器阶段</h4><p>（1）函数重载：同名函数，不同函数输入变量/输出变量的类型/不同功能。<br>（2）inline函数：如果函数体不太大，对此函数的所有调用都以函数本体去替代，注意inline只是对编译器的一个建议申请，不是强制命令<br>（3）模板处理：函数定义（包括具现化后的函数模板，类模板的成员函数），变量定义（包括函数模板的静态数据变量，类模板的静态数据变量，类模板的全局对象等）<br>（4）虚函数：每一个多态class都有一份虚函数表，定义或继承了虚函数的对象会有一个隐含成员：指向虚表的指针vptr，在构造或析构对象的时候，编译器生成的代码会修改这个指针。按道理说，一个多态class的虚表应该恰好被一个目标文件定义，这样链接就不会有错，但c++编译器有时无法判断是否应该在当前编译单元生成虚表定义，为保险起见，只能每个编译单元都生成虚表，然后交给链接器来消除重复数据。</p><ul><li>C++使用的也是C语言的单遍编译的方式，从头到尾扫描一遍源码，一边解析源码，一边即刻生成目标代码</li></ul>]]></content>
-      
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C++编译过程]]></title>
+    <url>%2F2019%2F08%2F12%2F-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[graph TD classDef className fill:white,stroke:#333,stroke-width:1px; id(预处理,做优化,生成.i文件)-->id1[编译器,生成.s文件] id1[编译器,生成.s文件]-->id2[汇编器,生成.o文件] id2[汇编器,生成.o文件]-->id3[链接器,连接库文件和其他目标文件] id3[链接器,连接库文件和其他目标文件]-->id4(生成可执行文件) class id,id1,id2,id3,id4 className; C++预处理阶段主要完成的工作：处理#开始的预编译指令：（1）宏定义(#define)：对宏定义进行字符串替换。（2）文件包含(#include)：文件包含命令把指定头文件插入该命令行位置取代该命令行，从而把指定的文件和当前的源程序文件连成一个源文件。（3）条件编译(#ifdef)：当满足某条件时语句进行编译，而当条件不满足时则编译另一组语句。条件编译对程序的移植和调试是很有用的。1234567#ifndef Linux linux平台下运行的函数 #else #ifndef windows Windows平台下运行的函数 #endif #endif 汇编阶段：直接生成了汇编代码 链接器阶段（1）函数重载：同名函数，不同函数输入变量/输出变量的类型/不同功能。（2）inline函数：如果函数体不太大，对此函数的所有调用都以函数本体去替代，注意inline只是对编译器的一个建议申请，不是强制命令（3）模板处理：函数定义（包括具现化后的函数模板，类模板的成员函数），变量定义（包括函数模板的静态数据变量，类模板的静态数据变量，类模板的全局对象等）（4）虚函数：每一个多态class都有一份虚函数表，定义或继承了虚函数的对象会有一个隐含成员：指向虚表的指针vptr，在构造或析构对象的时候，编译器生成的代码会修改这个指针。按道理说，一个多态class的虚表应该恰好被一个目标文件定义，这样链接就不会有错，但c++编译器有时无法判断是否应该在当前编译单元生成虚表定义，为保险起见，只能每个编译单元都生成虚表，然后交给链接器来消除重复数据。 C++使用的也是C语言的单遍编译的方式，从头到尾扫描一遍源码，一边解析源码，一边即刻生成目标代码]]></content>
       <categories>
-          
-          <category> C++ </category>
-          
+        <category>C++</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2019/08/11/hello-world/"/>
-      <url>/2019/08/11/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p id="1"></p><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p><p><a href="#1">第一段</a></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 随笔 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>特征工程-特征归一化</title>
-      <link href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/"/>
-      <url>/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/</url>
-      
-        <content type="html"><![CDATA[<h2 id="为什么要归一化？"><a href="#为什么要归一化？" class="headerlink" title="为什么要归一化？"></a>为什么要归一化？</h2><p>在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。</p><p><div align="center">![upload successful](\images\pasted-1.png)</div></p><h3 id="逻辑回归一定要归一化么？"><a href="#逻辑回归一定要归一化么？" class="headerlink" title="逻辑回归一定要归一化么？"></a>逻辑回归一定要归一化么？</h3><p>如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。</p><h2 id="归一化的方法"><a href="#归一化的方法" class="headerlink" title="归一化的方法"></a>归一化的方法</h2><ol><li>线性函数归一化（适用于简单数值）：$X=\frac{X-X_{min}}{X_{max}-X_{min}}$</li><li>0均值归一化：$z=\frac{x-u}{\sigma}$</li></ol>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Machine Learning </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F08%2F11%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick Start Create a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment 第一段]]></content>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[特征工程-特征归一化]]></title>
+    <url>%2F2019%2F08%2F06%2F%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%2F</url>
+    <content type="text"><![CDATA[为什么要归一化？在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。 ![upload successful](\images\pasted-1.png) 逻辑回归一定要归一化么？如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。 归一化的方法 线性函数归一化（适用于简单数值）：$X=\frac{X-X_{min}}{X_{max}-X_{min}}$ 0均值归一化：$z=\frac{x-u}{\sigma}$]]></content>
+      <tags>
+        <tag>Machine Learning</tag>
+      </tags>
+  </entry>
 </search>
