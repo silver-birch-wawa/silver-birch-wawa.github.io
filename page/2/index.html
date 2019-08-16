@@ -277,6 +277,85 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-联函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/联函数/" class="article-date">
+      <time datetime="2019-08-13T01:41:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/联函数/">内联函数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<h4 id="函数调用原理："><a href="#函数调用原理：" class="headerlink" title="函数调用原理："></a>函数调用原理：</h4><p>执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。</p>
+<hr>
+<p>内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline double square(double x)&#123;return x*x;&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<blockquote>
+<p>内联函数与宏定义的区别:</p>
+</blockquote>
+<p>使用宏和内联函数都可以节省在函数调用方面所带来的时间和空间开销。二者都采用了空间换时间的方式，在其调用处进行展开：<br>(1)  在预编译时期，宏定义在调用处执行字符串的原样替换。在编译时期，内联函数在调用处展开，同时进行参数类型检查。<br>(2)  内联函数首先是函数，可以像调用普通函数一样调用内联函数。而宏定义往往需要添加很多括号防止歧义，编写更加复杂。<br>(3)  内联函数可以作为某个类的成员函数，这样可以使用类的保护成员和私有成员。而当一个表达式涉及到类保护成员或私有成员时，宏就不能实现了(无法将this指针放在合适位置)。</p>
+<p>可以用内联函数完全替代宏。<br>在编写内联函数时，函数体应该短小而简洁，不应该包含循环等较复杂结构，否则编译器不会将其当作内联函数看待，而是把它决议成为一个静态函数。</p>
+<p>有些编译器甚至会优化内联函数，通常为避免一些不必要拷贝和构造，提高工作效率。</p>
+<p>频繁的调用内联函数和宏定义容易造成代码膨胀，消耗更大的内存而造成过多的换页操作。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-虚函数" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -575,7 +654,7 @@
 </div></p>
 <h3 id="逻辑回归一定要归一化么？"><a href="#逻辑回归一定要归一化么？" class="headerlink" title="逻辑回归一定要归一化么？"></a>逻辑回归一定要归一化么？</h3><p>如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。</p>
 <h2 id="归一化的方法"><a href="#归一化的方法" class="headerlink" title="归一化的方法"></a>归一化的方法</h2><ol>
-<li>线性函数归一化（适用于简单数值）：$X=\frac{X-X<em>{min}}{X</em>{max}-X_{min}}$</li>
+<li>线性函数归一化（适用于简单数值）：$X=\frac{X-X_{min}}{X_{max}-X_{min}}$</li>
 <li>0均值归一化：$z=\frac{x-u}{\sigma}$</li>
 </ol>
 

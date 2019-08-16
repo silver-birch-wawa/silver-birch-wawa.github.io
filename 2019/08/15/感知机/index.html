@@ -15,21 +15,22 @@
 
 
 
-<meta name="description" content="智能指针：https://blog.csdn.net/u012501459/article/details/48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
-<meta name="keywords" content="C++">
+<meta name="description" content="感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面  点到线的距离公式： $d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$ 假设有一超平面，h=w*x+b，其中">
+<meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存垃圾管理（智能指针）">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/08/14/垃圾管理（智能指针）/index.html">
+<meta property="og:title" content="感知机">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/08/15/感知机/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="智能指针：https://blog.csdn.net/u012501459/article/details/48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
+<meta property="og:description" content="感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面  点到线的距离公式： $d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$ 假设有一超平面，h=w*x+b，其中">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-9.png">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-8.png">
-<meta property="og:updated_time" content="2019-08-14T13:02:14.756Z">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-10.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-11.gif">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-12.gif">
+<meta property="og:updated_time" content="2019-08-16T03:30:07.253Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内存垃圾管理（智能指针）">
-<meta name="twitter:description" content="智能指针：https://blog.csdn.net/u012501459/article/details/48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
-<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-9.png">
+<meta name="twitter:title" content="感知机">
+<meta name="twitter:description" content="感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面  点到线的距离公式： $d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$ 假设有一超平面，h=w*x+b，其中">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-10.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -61,7 +62,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>内存垃圾管理（智能指针） | Blog for AI Self-Study</title>
+<title>感知机 | Blog for AI Self-Study</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -274,12 +275,12 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-垃圾管理（智能指针）" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-感知机" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/2019/08/14/垃圾管理（智能指针）/" class="article-date">
-      <time datetime="2019-08-14T12:59:00.000Z" itemprop="datePublished">2019-08-14</time>
+<a href="/2019/08/15/感知机/" class="article-date">
+      <time datetime="2019-08-15T14:05:13.000Z" itemprop="datePublished">2019-08-15</time>
 </a>
 
 
@@ -295,7 +296,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      内存垃圾管理（智能指针）
+      感知机
     </h1>
   
 
@@ -303,16 +304,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -321,26 +314,71 @@
       
           
         <hr>
-<blockquote>
-<p>智能指针：<br><a href="https://blog.csdn.net/u012501459/article/details/48229399">https://blog.csdn.net/u012501459/article/details/48229399</a></p>
-</blockquote>
-<p>C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。</p>
+<p>感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面</p>
+<p><img src="\images\pasted-10.png" alt="分类效果"></p>
+<p>点到线的距离公式：</p>
+<p>$d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$</p>
+<p>假设有一超平面，h=w*x+b，其中w=（w0，w1…wm），x=（x0，x1…xm），样本x’到超平面的距离为：</p>
+<p>$d=\frac{w*x’+b}{||w||}$</p>
+<hr>
+<p>输出的模型如下：</p>
+<p>$f(x)=sign(w*x+b)$</p>
+<p>$sign(x)=\begin{cases} 1 \quad\quad\quad x&gt;0<br> -1 \quad\quad\quad x\leq0\end{cases}$</p>
+<p>如果 $ \frac{w\star x’+b}{||w||}&gt;0 $，则y=1。如果&lt;0，则y=-1。这样分类正确的话 $y*\frac{w\star x’+b}{||w||}&gt;0$ 恒成立（||w||是L2范数）</p>
+<hr>
+<h5 id="损失函数："><a href="#损失函数：" class="headerlink" title="损失函数："></a>损失函数：</h5><p>$L(w,b)=-\frac{1}{||w||}\sum_{x_i \in M}y_i(w*x_i+b)$（M集合是误分类点的集合）</p>
+<p>当然因为||$w$||&gt;0所以我们可以去掉它</p>
+<p>$L(w,b)=-\sum_{x_i \in M}y_i(w*x_i+b)$</p>
+<p>感知机分类的最终目的是让最终值=0，所以少除也无所谓，还能降低计算量。(所以有个前提：能收敛到0)</p>
+<hr>
+<h5 id="随机梯度下降算法"><a href="#随机梯度下降算法" class="headerlink" title="随机梯度下降算法"></a>随机梯度下降算法</h5><p>用普通的基于所有样本的梯度和的均值的批量梯度下降法（BGD）是行不通的，原因在于我们的损失函数里面有限定，只有误分类的M集合里面的样本才能参与损失函数的优化。所以我们不能用最普通的批量梯度下降,只能采用随机梯度下降（SGD）</p>
+<p>$\nabla_wL(w,b)=-\sum_{x_i \in M}y_i*x_i$</p>
+<p>$\nabla_bL(w,b)=-\sum_{x_i \in M}y_i$</p>
+<p>$w \gets w+\eta<em>y_i</em>x_i$</p>
+<p>$b \gets b+\eta*y_i$</p>
 <ul>
-<li>构造函数中创建类的新对象时，初始化引用计数为1；</li>
-<li>拷贝构造函数复制指针，并使相应的引用计数增加1；</li>
-<li>赋值操作减少左操作数所值对象的引用计数，增加右操作数所指对象的引用计数；</li>
-<li>析构函数使引用计数减少1，并且当引用计数为0时，释放指针说指向的对象；</li>
+<li>xi实际上是(x,y)，yi实际上是{-1，1}，$\eta$是步长。</li>
 </ul>
-<p><img src="\images\pasted-9.png" alt="upload successful"></p>
-<h4 id="Ref-ptr类："><a href="#Ref-ptr类：" class="headerlink" title="Ref_ptr类："></a>Ref_ptr类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//使用int*指针初始化ptr，注意必须要放在初始化列表中</span><br><span class="line">Ref_ptr(int * i):ptr(new Referenced(i))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">//拷贝构造函数，又有一个变量指向了这块内存</span><br><span class="line">Ref_ptr(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    ptr=rhs.ptr;//将右操作数的引用计数对象赋值给左操作数</span><br><span class="line">    ptr-&gt;ref();//将它们的应用计数加1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Ref_ptr r1=new int(4); //调用构造函数</span><br><span class="line">Ref_ptr r2=r1; //调用拷贝构造函数</span><br></pre></td></tr></table></figure>
-<p><img src="\images\pasted-8.png" alt="upload successful"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//赋值操作符，右操作数的引用计数要减1，左操作数的引用计数要加1</span><br><span class="line">Ref_ptr &amp; operator=(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    if(&amp;rhs==this)</span><br><span class="line">        return *this;</span><br><span class="line">    if(ptr-&gt;unref()==0)//赋值操作符，首先将当前类的引用计数减1，因为现在指向它的指针少了一个。</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    ptr=rhs.ptr; //将右操作数的引用计数赋值给当前对象</span><br><span class="line">    ptr-&gt;ref(); //引用计数加1</span><br><span class="line">    return *this;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，引用计数要减1，如果减为0，删除这块内存</span><br><span class="line">~Ref_ptr()</span><br><span class="line">&#123;</span><br><span class="line">    if(ptr-&gt;unref()==0)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Referenced类："><a href="#Referenced类：" class="headerlink" title="Referenced类："></a>Referenced类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//初始化这个类，引用计数设为1，并且将p指向传入的地址</span><br><span class="line">Referenced(int * pi)</span><br><span class="line">&#123;</span><br><span class="line">    refCount=1;</span><br><span class="line">    p=pi;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//引用计数加1</span><br><span class="line">int ref()</span><br><span class="line">&#123;</span><br><span class="line">    return ++refCount;</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line">//引用计数减1</span><br><span class="line">int unref()</span><br><span class="line">&#123;</span><br><span class="line">    return --refCount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，释放掉内存</span><br><span class="line">~Referenced()</span><br><span class="line">&#123;</span><br><span class="line">    cout&lt;&lt;&quot;delete referenced&quot;&lt;&lt;endl;</span><br><span class="line">    delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="好处："><a href="#好处：" class="headerlink" title="好处："></a>好处：</h4><ul>
-<li>智能指针能够帮助我们处理资源泄露问题；</li>
-<li>它也能够帮我们处理空悬指针的问题；</li>
-<li>它还能够帮我们处理比较隐晦的由异常造成的资源泄露。</li>
+<hr>
+<h4 id="计算过程："><a href="#计算过程：" class="headerlink" title="计算过程："></a>计算过程：</h4><ol>
+<li>获取{-1，1}对应的点，初始化w矩阵和b变量的值。</li>
+<li>正确分类的不用管，不正确分类的利用梯度对w和b的值进行更新。</li>
+<li><p>循环带入所有的点，直到满足要求。<br>```<br>例：点x1=（3，3），w0=0，b0=0，y1=1，步长为1</p>
+</li>
+<li><p>y1<em>（w0</em>x1+b0）=0，分类错误。</p>
+</li>
+<li><p>w1=w0+y1*x1=(3，3)^T，b1=b0+y1=1</p>
+</li>
+<li><p>得到线性模型 f（x）=sign（3x+3y+1）(只输出在线的哪一侧)</p>
+</li>
+</ol>
+<p>``` </p>
+<hr>
+<p><img src="\images\pasted-11.gif" alt="线性可分"></p>
+<p><img src="\images\pasted-12.gif" alt="线性不可分"></p>
+<hr>
+<h4 id="对偶形式算法："><a href="#对偶形式算法：" class="headerlink" title="对偶形式算法："></a>对偶形式算法：</h4><p>对偶形式的目的是降低运算量，但是并不是在任何情况下都能降低运算量，而是在特征空间的维度很高时才起到作用。</p>
+<blockquote>
+<p>原：</p>
+</blockquote>
+<p>$w \gets w+\eta<em>y_i</em>x_i$</p>
+<p>$b \gets b+\eta*y_i$</p>
+<blockquote>
+<p>现：</p>
+</blockquote>
+<p>初始值为（0，0）的w和b经过了n次修改后：（$a_i=n_i\eta$）</p>
+<p>$w=\sum_{i=1}^na_iy_ix_i$</p>
+<p>$b=\sum_{i=1}^na_iy_i$</p>
+<p>$sign（w<em>x+b）$，将$w=\sum_{i=1}^na_iy_ix_i$带入得$f(x)=\sum_{i=1}^na_iy_ix_i</em>xj+b$</p>
+<ul>
+<li>第n-1次的参数$a_i$在第2(n-1)轮要再加$\eta$，所以参数$a_i$越大，说明该点位于分割线附近，在更新的时候容易受影响难以正确分类。$a_i$默认初始为0</li>
 </ul>
+<p>$a_i \gets a_i+\eta$    </p>
+<p>$b \gets b+\eta y_i$</p>
+<hr>
+<h4 id="加速的设计："><a href="#加速的设计：" class="headerlink" title="加速的设计："></a>加速的设计：</h4><p>gram矩阵，$G=[x_i<em>x_j]_{N</em>N}$</p>
+<hr>
+<p>很可惜，因为不能解决异或问题躺尸了很多年。。。</p>
 
       
     </div>
@@ -349,13 +387,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></p>
+        <p><span>本文标题:</span><a href="/2019/08/15/感知机/">感知机</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
-        <p><span>发布时间:</span>2019-08-14, 20:59:00</p>
-        <p><span>最后更新:</span>2019-08-14, 21:02:14</p>
+        <p><span>发布时间:</span>2019-08-15, 22:05:13</p>
+        <p><span>最后更新:</span>2019-08-16, 11:30:07</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/08/14/垃圾管理（智能指针）/" title="内存垃圾管理（智能指针）">https://silver-birch-wawa.github.io/2019/08/14/垃圾管理（智能指针）/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/14/垃圾管理（智能指针）/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/08/15/感知机/" title="感知机">https://silver-birch-wawa.github.io/2019/08/15/感知机/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/15/感知机/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -367,16 +405,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/08/14/new和malloc的区别/">
-                    new和malloc的区别
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">
-                    STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr
+                <a href="/2019/08/14/new和malloc的区别/">
+                    new和malloc的区别
                 </a>
             </div>
         
@@ -388,7 +420,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ref-ptr类："><span class="toc-number">1.</span> <span class="toc-text">Ref_ptr类：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Referenced类："><span class="toc-number">2.</span> <span class="toc-text">Referenced类：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#好处："><span class="toc-number">3.</span> <span class="toc-text">好处：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#损失函数："><span class="toc-number">1.</span> <span class="toc-text">损失函数：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#随机梯度下降算法"><span class="toc-number">2.</span> <span class="toc-text">随机梯度下降算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算过程："><span class="toc-number"></span> <span class="toc-text">计算过程：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对偶形式算法："><span class="toc-number"></span> <span class="toc-text">对偶形式算法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加速的设计："><span class="toc-number"></span> <span class="toc-text">加速的设计：</span></a>
         
     </div>
     <style>
@@ -424,7 +456,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"内存垃圾管理（智能指针）　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"感知机　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -452,7 +484,7 @@
 -->
 <script>
 var gitment = new Gitment({
-      id: "内存垃圾管理（智能指针）",
+      id: "感知机",
       owner: 'silver-birch-wawa',
       repo: 'silver-birch-wawa.github.io',
       oauth: {
@@ -470,15 +502,13 @@ gitment.render('git')
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/08/14/new和malloc的区别/" title="上一篇: new和malloc的区别">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/" title="下一篇: STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr">
+            <a href="/2019/08/14/new和malloc的区别/" title="下一篇: new和malloc的区别">
                 <i class="fa fa-angle-right"></i>
             </a>
         

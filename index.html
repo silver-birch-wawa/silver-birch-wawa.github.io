@@ -277,6 +277,131 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-感知机" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/15/感知机/" class="article-date">
+      <time datetime="2019-08-15T14:05:13.000Z" itemprop="datePublished">2019-08-15</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/15/感知机/">感知机</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面</p>
+<p><img src="\images\pasted-10.png" alt="分类效果"></p>
+<p>点到线的距离公式：</p>
+<p>$d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$</p>
+<p>假设有一超平面，h=w*x+b，其中w=（w0，w1…wm），x=（x0，x1…xm），样本x’到超平面的距离为：</p>
+<p>$d=\frac{w*x’+b}{||w||}$</p>
+<hr>
+<p>输出的模型如下：</p>
+<p>$f(x)=sign(w*x+b)$</p>
+<p>$sign(x)=\begin{cases} 1 \quad\quad\quad x&gt;0<br> -1 \quad\quad\quad x\leq0\end{cases}$</p>
+<p>如果 $ \frac{w\star x’+b}{||w||}&gt;0 $，则y=1。如果&lt;0，则y=-1。这样分类正确的话 $y*\frac{w\star x’+b}{||w||}&gt;0$ 恒成立（||w||是L2范数）</p>
+<hr>
+<h5 id="损失函数："><a href="#损失函数：" class="headerlink" title="损失函数："></a>损失函数：</h5><p>$L(w,b)=-\frac{1}{||w||}\sum_{x_i \in M}y_i(w*x_i+b)$（M集合是误分类点的集合）</p>
+<p>当然因为||$w$||&gt;0所以我们可以去掉它</p>
+<p>$L(w,b)=-\sum_{x_i \in M}y_i(w*x_i+b)$</p>
+<p>感知机分类的最终目的是让最终值=0，所以少除也无所谓，还能降低计算量。(所以有个前提：能收敛到0)</p>
+<hr>
+<h5 id="随机梯度下降算法"><a href="#随机梯度下降算法" class="headerlink" title="随机梯度下降算法"></a>随机梯度下降算法</h5><p>用普通的基于所有样本的梯度和的均值的批量梯度下降法（BGD）是行不通的，原因在于我们的损失函数里面有限定，只有误分类的M集合里面的样本才能参与损失函数的优化。所以我们不能用最普通的批量梯度下降,只能采用随机梯度下降（SGD）</p>
+<p>$\nabla_wL(w,b)=-\sum_{x_i \in M}y_i*x_i$</p>
+<p>$\nabla_bL(w,b)=-\sum_{x_i \in M}y_i$</p>
+<p>$w \gets w+\eta<em>y_i</em>x_i$</p>
+<p>$b \gets b+\eta*y_i$</p>
+<ul>
+<li>xi实际上是(x,y)，yi实际上是{-1，1}，$\eta$是步长。</li>
+</ul>
+<hr>
+<h4 id="计算过程："><a href="#计算过程：" class="headerlink" title="计算过程："></a>计算过程：</h4><ol>
+<li>获取{-1，1}对应的点，初始化w矩阵和b变量的值。</li>
+<li>正确分类的不用管，不正确分类的利用梯度对w和b的值进行更新。</li>
+<li><p>循环带入所有的点，直到满足要求。<br>```<br>例：点x1=（3，3），w0=0，b0=0，y1=1，步长为1</p>
+</li>
+<li><p>y1<em>（w0</em>x1+b0）=0，分类错误。</p>
+</li>
+<li><p>w1=w0+y1*x1=(3，3)^T，b1=b0+y1=1</p>
+</li>
+<li><p>得到线性模型 f（x）=sign（3x+3y+1）(只输出在线的哪一侧)</p>
+</li>
+</ol>
+<p>``` </p>
+<hr>
+<p><img src="\images\pasted-11.gif" alt="线性可分"></p>
+<p><img src="\images\pasted-12.gif" alt="线性不可分"></p>
+<hr>
+<h4 id="对偶形式算法："><a href="#对偶形式算法：" class="headerlink" title="对偶形式算法："></a>对偶形式算法：</h4><p>对偶形式的目的是降低运算量，但是并不是在任何情况下都能降低运算量，而是在特征空间的维度很高时才起到作用。</p>
+<blockquote>
+<p>原：</p>
+</blockquote>
+<p>$w \gets w+\eta<em>y_i</em>x_i$</p>
+<p>$b \gets b+\eta*y_i$</p>
+<blockquote>
+<p>现：</p>
+</blockquote>
+<p>初始值为（0，0）的w和b经过了n次修改后：（$a_i=n_i\eta$）</p>
+<p>$w=\sum_{i=1}^na_iy_ix_i$</p>
+<p>$b=\sum_{i=1}^na_iy_i$</p>
+<p>$sign（w<em>x+b）$，将$w=\sum_{i=1}^na_iy_ix_i$带入得$f(x)=\sum_{i=1}^na_iy_ix_i</em>xj+b$</p>
+<ul>
+<li>第n-1次的参数$a_i$在第2(n-1)轮要再加$\eta$，所以参数$a_i$越大，说明该点位于分割线附近，在更新的时候容易受影响难以正确分类。$a_i$默认初始为0</li>
+</ul>
+<p>$a_i \gets a_i+\eta$    </p>
+<p>$b \gets b+\eta y_i$</p>
+<hr>
+<h4 id="加速的设计："><a href="#加速的设计：" class="headerlink" title="加速的设计："></a>加速的设计：</h4><p>gram矩阵，$G=[x_i<em>x_j]_{N</em>N}$</p>
+<hr>
+<p>很可惜，因为不能解决异或问题躺尸了很多年。。。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-new和malloc的区别" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1035,85 +1160,6 @@
         <h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><p>volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。</p>
 <h4 id="volatile和编译器的优化有关："><a href="#volatile和编译器的优化有关：" class="headerlink" title="volatile和编译器的优化有关："></a>volatile和编译器的优化有关：</h4><p>在本次线程内，当读取一个变量时，为了提高读取速度，编译器进行优化时有时会先把变量读取到一个寄存器中；以后，再读取变量值时，就直接从寄存器中读取；当变量值在本线程里改变时，会同时把变量的新值copy到该寄存器中，以保持一致。 </p>
 <p>当变量因别的线程值发生改变，上面寄存器的值不会相应改变，从而造成应用程序读取的值和实际的变量值不一致。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-联函数" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/13/联函数/" class="article-date">
-      <time datetime="2019-08-13T01:41:00.000Z" itemprop="datePublished">2019-08-13</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/13/联函数/">内联函数</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<h4 id="函数调用原理："><a href="#函数调用原理：" class="headerlink" title="函数调用原理："></a>函数调用原理：</h4><p>执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。</p>
-<hr>
-<p>内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline double square(double x)&#123;return x*x;&#125;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<blockquote>
-<p>内联函数与宏定义的区别:</p>
-</blockquote>
-<p>使用宏和内联函数都可以节省在函数调用方面所带来的时间和空间开销。二者都采用了空间换时间的方式，在其调用处进行展开：<br>(1)  在预编译时期，宏定义在调用处执行字符串的原样替换。在编译时期，内联函数在调用处展开，同时进行参数类型检查。<br>(2)  内联函数首先是函数，可以像调用普通函数一样调用内联函数。而宏定义往往需要添加很多括号防止歧义，编写更加复杂。<br>(3)  内联函数可以作为某个类的成员函数，这样可以使用类的保护成员和私有成员。而当一个表达式涉及到类保护成员或私有成员时，宏就不能实现了(无法将this指针放在合适位置)。</p>
-<p>可以用内联函数完全替代宏。<br>在编写内联函数时，函数体应该短小而简洁，不应该包含循环等较复杂结构，否则编译器不会将其当作内联函数看待，而是把它决议成为一个静态函数。</p>
-<p>有些编译器甚至会优化内联函数，通常为避免一些不必要拷贝和构造，提高工作效率。</p>
-<p>频繁的调用内联函数和宏定义容易造成代码膨胀，消耗更大的内存而造成过多的换页操作。</p>
 
       
     </div>
