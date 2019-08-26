@@ -18,7 +18,7 @@ $('figure.highlight.plain .code pre').each(function(){
     
 })
 // 保护知识产权
-if(document.domain=='localhost'){
+if(document.domain!='localhost'){
     var copyright="";
     // 如果在首页无法找到copyright的话
     if(window.location.protocol + '//' + window.location.host+'/'!=window.document.location.href){
