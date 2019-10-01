@@ -4,7 +4,7 @@ copy_count=0;
 $('figure.highlight.plain .code pre').each(function(){
     var my=$(this);
     var father=$(this).parent('figure')
-    my.parent().prev().before("<button style='width:105%' class='btn-cp"+copy_count+"'>Copy</button>");
+    my.parent().prev().before("<button style='width:36px' class='btn-cp"+copy_count+"'>Copy</button>");
     var mycount=copy_count;
     copy_count+=1;
 
@@ -34,7 +34,7 @@ if(document.domain!='localhost'){
             if (!clipboardData) { // for chrome  
                 clipboardData = e.originalEvent.clipboardData;  
             }
-            console.log("copy success.");
+            // console.log("copy success.");
         
             //替换
             var selection = window.getSelection().toString();

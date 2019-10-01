@@ -279,6 +279,153 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-ifndef-define-endif" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/ifndef-define-endif/" class="article-date">
+      <time datetime="2019-08-13T03:04:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在c语言中，对同一个变量或者函数进行多次声明是不会报错的。所以如果h文件里只是进行了声明工作，即使不使用# ifndef宏定义，多个c文件包含同一个h文件也不会报错。</p>
+<p>但是在c++语言中，#ifdef的作用域只是在单个文件中。所以如果h文件里定义了全局变量，即使采用#ifdef宏定义，多个c文件包含同一个h文件还是会出现全局变量重定义的错误。</p>
+<p>使用#ifndef可以避免下面这种错误：如果在h文件中定义了全局变量，一个c文件包含同一个h文件多次，如果不加#ifndef宏定义，会出现变量重复定义的错误；如果加了#ifndef，则不会出现这种错误。</p>
+<p>其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ifndef x                 //先测试x是否被宏定义过</span><br><span class="line">#define x</span><br><span class="line">   程序段1blabla~    //如果x没有被宏定义过，定义x，并编译程序段 1</span><br><span class="line">#endif   </span><br><span class="line">　　程序段2blabla~　　 //如果x已经定义过了则编译程序段2的语句，“忽视”程序段 1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>循环引用的后果：</p>
+</blockquote>
+<p>有些头文件重复引用只是增加了编译工作的工作量，不会引起太大的问题，仅仅是编译效率低一些，但是对于大工程而言编译效率低下那将是一件多么痛苦的事情。</p>
+<p>有些头文件重复包含，会引起错误，比如在头文件中定义了全局变量(虽然这种方式不被推荐，但确实是C规范允许的)这种会引起重复定义。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-olatile" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/olatile/" class="article-date">
+      <time datetime="2019-08-13T03:00:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/olatile/">volatile</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><p>volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。</p>
+<h4 id="volatile和编译器的优化有关："><a href="#volatile和编译器的优化有关：" class="headerlink" title="volatile和编译器的优化有关："></a>volatile和编译器的优化有关：</h4><p>在本次线程内，当读取一个变量时，为了提高读取速度，编译器进行优化时有时会先把变量读取到一个寄存器中；以后，再读取变量值时，就直接从寄存器中读取；当变量值在本线程里改变时，会同时把变量的新值copy到该寄存器中，以保持一致。 </p>
+<p>当变量因别的线程值发生改变，上面寄存器的值不会相应改变，从而造成应用程序读取的值和实际的变量值不一致。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-联函数" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -587,6 +734,7 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
 <p><a href="#1">第一段</a></p>
+<p><img src="\\images\pasted-26.png\" alt="upload successful"></p>
 
       
     </div>
@@ -624,7 +772,7 @@
     <div class="article-meta">
       <!-- 添加代码  -->
 <a href="/2019/08/06/特征工程-特征归一化/" class="article-date">
-      <time datetime="2019-08-06T04:17:32.000Z" itemprop="datePublished">2019-08-06</time>
+      <time datetime="2019-08-06T04:17:00.000Z" itemprop="datePublished">2019-08-06</time>
 </a>
 
 
@@ -666,6 +814,10 @@
     <div class="article-info article-info-index">
       
       
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    </div>
+
 
       
     <div class="article-tag tagcloud">
