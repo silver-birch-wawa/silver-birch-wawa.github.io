@@ -15,20 +15,20 @@
 
 
 
-<meta name="description" content="函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）  *p形参的情况： 一开始:  graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id3[*p 形参]--&amp;gt;id1[7]     subgraph arr数组     id[10]--&amp;gt;id1[7]     id1">
-<meta name="keywords" content="C++">
+<meta name="description" content="有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。  状态空间  我们用一个三元组(m，c，b)来表示河岸上的状态，其中">
+<meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="指针的形参">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/08/13/指针的形参/index.html">
+<meta property="og:title" content="传教士和野人问题（M-C问题）">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/10/12/传教士和野人问题（M-C问题）/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）  *p形参的情况： 一开始:  graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id3[*p 形参]--&amp;gt;id1[7]     subgraph arr数组     id[10]--&amp;gt;id1[7]     id1">
+<meta property="og:description" content="有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。  状态空间  我们用一个三元组(m，c，b)来表示河岸上的状态，其中">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-3.png">
-<meta property="og:updated_time" content="2019-08-13T08:36:49.344Z">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-35.png">
+<meta property="og:updated_time" content="2019-10-12T12:46:40.422Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="指针的形参">
-<meta name="twitter:description" content="函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）  *p形参的情况： 一开始:  graph LR     classDef className fill:white,stroke:#333,stroke-width:1px;     id3[*p 形参]--&amp;gt;id1[7]     subgraph arr数组     id[10]--&amp;gt;id1[7]     id1">
-<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-3.png">
+<meta name="twitter:title" content="传教士和野人问题（M-C问题）">
+<meta name="twitter:description" content="有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。  状态空间  我们用一个三元组(m，c，b)来表示河岸上的状态，其中">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-35.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -60,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>指针的形参 | Blog for AI Self-Study</title>
+<title>传教士和野人问题（M-C问题） | Blog for AI Self-Study</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -275,12 +275,12 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-指针的形参" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-传教士和野人问题（M-C问题）" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/2019/08/13/指针的形参/" class="article-date">
-      <time datetime="2019-08-13T03:11:00.000Z" itemprop="datePublished">2019-08-13</time>
+<a href="/2019/10/12/传教士和野人问题（M-C问题）/" class="article-date">
+      <time datetime="2019-10-12T12:44:00.000Z" itemprop="datePublished">2019-10-12</time>
 </a>
 
 
@@ -296,7 +296,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      指针的形参
+      传教士和野人问题（M-C问题）
     </h1>
   
 
@@ -305,13 +305,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -322,89 +322,35 @@
       
           
         <hr>
-<p>函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）</p>
-<p><img src="\images\pasted-3.png" alt="upload successful"></p>
-<h4 id="p形参的情况："><a href="#p形参的情况：" class="headerlink" title="*p形参的情况："></a>*p形参的情况：</h4><ul>
-<li>一开始:</li>
-</ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id3[*p 形参]-->id1[7]
-    subgraph arr数组
-    id[10]-->id1[7]
-    id1[7]-->id2[5]
-    end
-    subgraph *p
-    id3[*p 形参]
-    end
-    class id,id1,id2,id3 className;</pre>
-
+<p>有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。</p>
+<blockquote>
+<p>状态空间</p>
+</blockquote>
+<p>我们用一个三元组(m，c，b)来表示河岸上的状态，其中m、c分别代表某一岸上传教士与野人的数目，b=1表示船在这一岸，b=0则表示船不在</p>
+<p>约束条件是: 两岸上M≥C, 船上M+C≤2</p>
+<p>（mi，ci）为船上的传教士和野人数量</p>
+<p>左岸初态为（3,3,1），终态为（0,0,0）</p>
+<p><img src="\images\pasted-35.png" alt="upload successful"></p>
+<hr>
+<blockquote>
+<p>为什么不能直接暴力穷举然后剪枝？</p>
+</blockquote>
+<p>因为可能运过去两个人，然后又把同样的两个人运回来了(或者使用别的形式但是依旧是空转)，所以要杜绝这种可能，当然最好的方法就是使用带有记忆的状态，如果之前遇到过这种状态那就拒绝执行return。</p>
+<p>所以….如何实现去重的目标？？？</p>
+<p>答：set<string/int>，我采取的是单个状态采用int，记录路径经过的状态采用string（中间用空格隔开）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;set&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int N;</span><br><span class="line">set&lt;string&gt;ans;</span><br><span class="line">void print(vector&lt;int&gt;way)&#123;</span><br><span class="line">    int i=0;</span><br><span class="line">    string h;</span><br><span class="line">    for(i=1;i&lt;way.size();i++)&#123;</span><br><span class="line">        printf(&quot;%03d   &quot;,way[i]);</span><br><span class="line">        if(way[i]&lt;100)&#123;</span><br><span class="line">            h+=&quot;0&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        h+=to_string(way[i]);</span><br><span class="line">        h+=&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;&quot;\n-------&quot;&lt;&lt;endl;</span><br><span class="line">    ans.insert(h);</span><br><span class="line">&#125;</span><br><span class="line">void dfs(int pre,int ni,int nj,int c,set&lt;int&gt;s,vector&lt;int&gt;way)&#123;</span><br><span class="line">    // set insert</span><br><span class="line">    int now=ni*100+nj*10+c;</span><br><span class="line">    s.insert(pre);    </span><br><span class="line">    if(s.count(now)||(N-ni)&lt;0||(N-nj)&lt;0||ni&lt;0||nj&lt;0||(ni&lt;nj&amp;&amp;ni!=0)||((N-ni)&lt;(N-nj)&amp;&amp;(N-ni)!=0))&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    if(pre==0)&#123;</span><br><span class="line">        // 如果上一轮就截止了</span><br><span class="line">        print(way);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    way.push_back(pre);</span><br><span class="line">    if(c==1)&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,0,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni-1,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-1,0,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni-2,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-2,0,s,way);</span><br><span class="line">        dfs(now,ni-1,nj-1,0,s,way);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,1,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni+1,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+1,1,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni+2,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+2,1,s,way);</span><br><span class="line">        dfs(now,ni+1,nj+1,1,s,way);        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int chooseN;</span><br><span class="line">    int c=1;</span><br><span class="line">    // init num and ship side 1 means left and 0 means right</span><br><span class="line">    int ni,nj;</span><br><span class="line">    // Ni(传教士),Nj(野人) on the left side.</span><br><span class="line">    int pre=-1;</span><br><span class="line">    set&lt;int&gt;s;</span><br><span class="line">    //cin&gt;&gt;chooseN;</span><br><span class="line">    chooseN=3;</span><br><span class="line">    N=nj=ni=chooseN;</span><br><span class="line">    vector&lt;int&gt;way;</span><br><span class="line">    dfs(pre,ni,nj,c,s,way);</span><br><span class="line">    cout&lt;&lt;&quot;\nfinally , the answer is:\n\n&quot;;</span><br><span class="line">    for(auto it=ans.begin();it!=ans.end();it++)&#123;</span><br><span class="line">        cout&lt;&lt;*it&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line"></span><br><span class="line">finally , the answer is:</span><br><span class="line"></span><br><span class="line">331 220 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 220 321 300 311 110 221 020 031 010 111</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 111</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="传说中的基于A-算法的解法："><a href="#传说中的基于A-算法的解法：" class="headerlink" title="传说中的基于A*算法的解法："></a>传说中的基于A*算法的解法：</h4><p>评估函数的建立：</p>
+<script type="math/tex; mode=display">f=d+h=d+M+N-2*B</script><p>M 表示左岸的传教士的人数，N 表示左岸野人的数目，B 取值为0或1 ，1 表示船在左岸，0 表示船在右岸。d 表示节点的深度。</p>
 <ul>
-<li>最后:</li>
+<li>下面我们来证明h(n)＝M+C-2B是满足A*条件的：</li>
 </ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id4[*p]-->id1[3]
-    id3[*p 形参]-->id[10]
+<p>我们分两种情况考虑。<br>（1）先考虑船在左岸的情况。如果<code>不考虑限制条件</code>，也就是说，船一次可以将三人从左岸运到右岸，然后再有一个人将船送回来。这样，船一个来回可以运过河2人，而船仍然在左岸。而最后剩下的三个人，则可以一次将他们全部从左岸运到右岸。所以，在不考虑限制条件的情况下，也至少需要摆渡[(M+N-3)/2]*2+1次。其中分子上的”－3”表示剩下三个留待最后一次运过去。除以”2”是因为一个来回可以运过去2人，需要[(M+N-3)/2]个来回，而”来回”数不能是小数，需要向上取整，这个用符号[ ]表示。而乘以”2”是因为一个来回相当于两次摆渡，所以要乘以2。而最后的”＋1”，则表示将剩下的3个运过去，需要一次摆渡。</p>
+<p>化简得：需要 M+N-2次单向摆渡</p>
+<p>（2）再考虑船在右岸的情况。同样不考虑限制条件。船在右岸，需要一个人将船运到左岸。因此对于状态(M，N，0)来说，其所需要的最少摆渡数，相当于船在左岸时状态(M+1，N，1)或(M，N+1，1)所需要的最少摆渡数，再加上第一次将船从右岸送到左岸的一次摆渡数。因此所需要的最少摆渡数为：(M+N+1)-2+1。其中(M+N+1)的”＋1”表示送船回到左岸的那个人，而最后边的”＋1”，表示送船到左岸时的一次摆渡。</p>
+<p>化简有：(M+N+1)-2+1=M+N。</p>
+<p>综合船在左岸和船在右岸两种情况下，所需要的最少摆渡次数用一个式子表示为：$M+N-2B$ ，其中B＝1表示船在左岸，B＝0表示船在右岸。该摆渡次数是在不考虑限制条件下，推出的最少所需要的摆渡次数。</p>
 
-    subgraph *p 形参
-    id3[*p 形参]
-    end
-
-    subgraph *p
-    id4[*p]
-    end    
-
-    subgraph arr数组
-    id[10]-->id1[3]
-    id1[3]-->id2[5]
-    end
-
-    class id,id1,id2,id3,id4 className;</pre>
-
-<ul>
-<li>注意：<code>*p--=3</code>实际上是<code>*p=3</code>，然后<code>(p--)</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *p)&#123;</span><br><span class="line">	return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">	int *p=arr+1;</span><br><span class="line">	printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="amp-p引用的情况："><a href="#amp-p引用的情况：" class="headerlink" title="*&amp;p引用的情况："></a>*&amp;p引用的情况：</h4><ul>
-<li>一开始:</li>
-</ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id3[*&p]-->id1[7]
-    subgraph arr数组
-    id[10]-->id1[7]
-    id1[7]-->id2[5]
-    end
-    subgraph *&p
-    id3[*&p]
-    end
-    class id,id1,id2,id3 className;</pre>
-
-<ul>
-<li>最后:</li>
-</ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id4[*p]-->id[10]
-    id3[*&p]-->id[10]
-
-    subgraph *&p
-    id3[*&p]
-    end
-
-    subgraph *p
-    id4[*p]
-    end    
-
-    subgraph arr数组
-    id[10]-->id1[3]
-    id1[3]-->id2[5]
-    end
-
-    class id,id1,id2,id3,id4 className;</pre>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *&amp;p)&#123;</span><br><span class="line">    return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">    int *p=arr+1;</span><br><span class="line">    printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为12</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -412,13 +358,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/08/13/指针的形参/">指针的形参</a></p>
+        <p><span>本文标题:</span><a href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
-        <p><span>发布时间:</span>2019-08-13, 11:11:00</p>
-        <p><span>最后更新:</span>2019-08-13, 16:36:49</p>
+        <p><span>发布时间:</span>2019-10-12, 20:44:00</p>
+        <p><span>最后更新:</span>2019-10-12, 20:46:40</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/08/13/指针的形参/" title="指针的形参">https://silver-birch-wawa.github.io/2019/08/13/指针的形参/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/13/指针的形参/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/10/12/传教士和野人问题（M-C问题）/" title="传教士和野人问题（M-C问题）">https://silver-birch-wawa.github.io/2019/10/12/传教士和野人问题（M-C问题）/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/10/12/传教士和野人问题（M-C问题）/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -431,15 +377,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/08/13/小端存储/">
-                    大小端存储
+                <a href="/2019/10/12/常见的几种决策树/">
+                    常见的几种决策树
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/08/13/ifndef-define-endif/">
-                    #ifndef/#define/#endif
+                <a href="/2019/10/01/红黑树/">
+                    红黑树
                 </a>
             </div>
         
@@ -451,7 +397,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#p形参的情况："><span class="toc-number">1.</span> <span class="toc-text">*p形参的情况：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#amp-p引用的情况："><span class="toc-number">2.</span> <span class="toc-text">*&amp;p引用的情况：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#传说中的基于A-算法的解法："><span class="toc-number">1.</span> <span class="toc-text">传说中的基于A*算法的解法：</span></a></li></ol>
         
     </div>
     <style>
@@ -486,7 +432,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"指针的形参　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://silver-birch-wawa.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"传教士和野人问题（M-C问题）　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://silver-birch-wawa.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
     
@@ -512,7 +458,7 @@
 -->
 <script>
 var gitment = new Gitment({
-      id: "指针的形参",
+      id: "传教士和野人问题（M-C问题）",
       owner: 'silver-birch-wawa',
       repo: 'silver-birch-wawa.github.io',
       oauth: {
@@ -530,7 +476,7 @@ gitment.render('git')
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/08/13/小端存储/" title="上一篇: 大小端存储">
+            <a href="/2019/10/12/常见的几种决策树/" title="上一篇: 常见的几种决策树">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -538,7 +484,7 @@ gitment.render('git')
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/08/13/ifndef-define-endif/" title="下一篇: #ifndef/#define/#endif">
+            <a href="/2019/10/01/红黑树/" title="下一篇: 红黑树">
                 <i class="fa fa-angle-right"></i>
             </a>
         

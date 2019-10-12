@@ -200,7 +200,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -279,12 +279,317 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-C维" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/10/12/C维/" class="article-date">
+      <time datetime="2019-10-12T13:00:00.000Z" itemprop="datePublished">2019-10-12</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/12/C维/">VC维</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>VC 维是衡量函数类的复杂度的一种方式，通过评估函数类中函数的弯曲程度实现。WIKI上的解释是：空间中的点在经过排列之后，能够被模型f打散(shatter)的最大数量。</p>
+<p>通过$y=a_0+a_1^Tx$将平面分割为两部分，如果满足平面中任意N个点（无论如何取值）总能被一条直线分开，而N+1个点却不行，则称该函数情况下的VC维为N。</p>
+<p><img src="\images\pasted-39.png" alt="upload successful"></p>
+<p>举个无穷的VC维的例子：</p>
+<script type="math/tex; mode=display">f(x,a)=I(sina*x)</script><p><img src="\images\pasted-40.png" alt="upload successful"></p>
+<p>从这两个例子，可以看出VC维刻画了函数的弯曲程度，越弯曲其VC维越大。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-常见的几种决策树" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/10/12/常见的几种决策树/" class="article-date">
+      <time datetime="2019-10-12T12:47:00.000Z" itemprop="datePublished">2019-10-12</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><a href="https://www.cnblogs.com/pinard/p/6053344.html">https://www.cnblogs.com/pinard/p/6053344.html</a><br><a href="https://blog.csdn.net/a857553315/article/details/95620881">https://blog.csdn.net/a857553315/article/details/95620881</a></p>
+<hr>
+<h3 id="特征选择："><a href="#特征选择：" class="headerlink" title="特征选择："></a>特征选择：</h3><p>如果瞎猜中的概率与特征选择出来的概率相差无几，那么就可以放弃该特征了。特征选择的标准是信息增益或信息增益比。</p>
+<hr>
+<blockquote>
+<p>ID3算法与信息增益：（木有剪枝，只能处理离散数据）</p>
+</blockquote>
+<p>得知特征X的信息而使输出的分类Y的不确定性减少的程度。</p>
+<p>条件熵：$H(Y|X)=\sum_{n}^{i=1}p_iH(Y|X=x_i)$</p>
+<p>信息增益：$g(D,A)=H(D)-H(D|A)$，D是数据集，A是特征。</p>
+<hr>
+<h4 id="计算过程："><a href="#计算过程：" class="headerlink" title="计算过程："></a>计算过程：</h4><p>（1）计算数据集D的经验熵：</p>
+<p>$H(D)=-\sum_{k=1}^{K}\frac{|C_k|}{|D|}log_2\frac{|C_k|}{|D|}$ ，k为第一级特征{纹理，色泽，触感}</p>
+<p>（2）计算条件熵：</p>
+<p>$H(D|A)=\sum_{i=1}^{n}\frac{|D_i|}{D}H(D_i)=\sum_{i=1}^{n}\frac{|D_i|}{|D|}\sum_{k=1}^{K}\frac{|D_{ik}|}{D_i}log_2\frac{|D_{ik}|}{|D_i|}$</p>
+<p>i为第一级特征{ 纹理 / 色泽 / 触感 }，ik为纹理中的第二级特征{ 清晰，模糊，稍糊 }</p>
+<p>（3）$g(D,A)=H(D)-H(D|A)$，越大越好。</p>
+<ul>
+<li>ID3算法就是完全依赖信息增益，但是信息增益明显对多个取值的特征有偏好，所以出现了使用增益率的C4.5算法。</li>
+</ul>
+<hr>
+<blockquote>
+<p>C4.5算法与增益率（后剪枝，可以处理连续数据—&gt;多叉树，特征要计算排序）</p>
+</blockquote>
+<p>$Gainratio(D,a)=\frac{Gain(D,a)}{IV(a)}$</p>
+<p>固有值：$IV(a)=-\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$ ，Dv是第一级特征a下的第二级特征，固有值随V的个数增加而增加。</p>
+<hr>
+<blockquote>
+<p>CART决策树（减少log的使用降低计算量，还可以用于回归，二叉树）</p>
+</blockquote>
+<p>使用Gini系数替代ID3里的熵，Gini系数越小越均衡（被错分的概率低），说明该样本只属于同一类的概率（纯度）越高。</p>
+<p>$Gini(D)=\sum_{k=1}^{y}\sum_{k’ \ne k}p_k*p_k’=1-\sum_{k=1}^{y}p_k^2$ </p>
+<p>pk表示选中的样本属于k类别的概率，则这个样本被分错的概率是(1-pk)</p>
+<p>基尼指数（基尼不纯度）= 样本被选中的概率 * 样本被分错的概率</p>
+<h3 id="预剪枝与后剪枝：（对抗过拟合与欠拟合）"><a href="#预剪枝与后剪枝：（对抗过拟合与欠拟合）" class="headerlink" title="预剪枝与后剪枝：（对抗过拟合与欠拟合）"></a>预剪枝与后剪枝：（对抗过拟合与欠拟合）</h3><ul>
+<li>预剪枝：（边自上往下生成枝杈边剪枝）</li>
+</ul>
+<p>预剪枝使得很多分支没有展开，这不仅<code>降低了过拟合的风险</code>，还显著<code>减少了决策树的训练时间开销和测试时间</code>。但是，有些分支虽当前不能提升泛化性。甚至可能导致泛化性暂时降低，但在其基础上进行后续划分却有可能导致显著提高，因此预剪枝的这种贪心本质，给决策树带来了<code>欠拟合的风险</code>。</p>
+<ul>
+<li>后剪枝：（先生成枝桠，最后从下往上剪枝）</li>
+</ul>
+<p>后剪枝通常比预剪枝<code>保留更多的分支</code>，其<code>欠拟合风险很小</code>，因此后剪枝的<code>泛化性能</code>往往<code>优</code>于预剪枝决策树。但后剪枝过程是从底往上裁剪，因此其<code>训练时间开销</code>比前剪枝要<code>大</code>。</p>
+<hr>
+<h3 id="连续值处理：（密度-甜度）"><a href="#连续值处理：（密度-甜度）" class="headerlink" title="连续值处理：（密度/甜度）"></a>连续值处理：（密度/甜度）</h3><p>连续（非离散）特征可以将特征值从小到大排列然后取</p>
+<script type="math/tex; mode=display">T_a={\frac{a_i+a_{i+1}}{2},0<i<n}</script><script type="math/tex; mode=display">Gain(D,a)=\max_{t \in T_a}  Gain(D,a,t)=max Ent(D)-\sum_{\lambda \in {-,+}}\frac{|D_t^\lambda|}{|D|}Ent(D_t^\lambda)</script><p>按照 $T_a$ 进行划分 { - ，+ }，从而得到该情况下的信息增益。</p>
+<hr>
+<h3 id="缺失值处理：（检测数据缺失）"><a href="#缺失值处理：（检测数据缺失）" class="headerlink" title="缺失值处理：（检测数据缺失）"></a>缺失值处理：（检测数据缺失）</h3><p>（1）如何在属性值缺失的情况下进行划分属性的选择？（创建决策树的时候怎么计算缺失值存在下的信息增益，选择正确的属性）<br>（2）给定划分属性，若样本在该属性上的值是缺失的，那么该如何对这个样本进行划分？（在分类过程中有缺失值的话怎么进行划分）</p>
+<p>无缺失样本所占比例：$p=\frac{ \sum_{x \in \tilde{D}}w_x}{ \sum_{x \in D} w_x}$<br>无缺失样本中第k类所占比例：$\tilde{p}_k=\frac{ \sum_{x \in \tilde{D}_k}w_x}{ \sum_{x \in \tilde{D}} w_x}$<br>无缺失样本中在特征a上取值为$a_v$的样本所占比例：$\tilde{r}_v=\frac{ \sum_{x \in \tilde{D}_k}w_x}{ \sum_{x \in \tilde{D}} w_x}$</p>
+<p>最后得到了推广了的公式：</p>
+<script type="math/tex; mode=display">Gain(D,a)=p*Gain(D,\tilde a)=p*(Ent(\tilde D)-\sum_{v=1}^{V}\tilde{r}_vEnt(\tilde D^v))</script><ul>
+<li>上式 = 总样本中非缺失的比例 *（非缺失中各类的熵-各类概率*各类特征值的熵）</li>
+</ul>
+<script type="math/tex; mode=display">Ent(\tilde D)=-\sum_{k=1}^{y}\tilde{p}_klog_2{\tilde{p}_k}</script><hr>
+<blockquote>
+<p>多变量决策树：</p>
+</blockquote>
+<p>一般的决策树分类边界由若干个与坐标轴平行的分段组成：</p>
+<p>判断过程：密度 -&gt; 含糖率 -&gt; 密度 -&gt; 含糖率…</p>
+<p><img src="\images\pasted-36.png" alt="upload successful"></p>
+<p>多变量决策树有d个属性对应d维空间的一个数据点，对样本分类表示在坐标空间中找到不同样本之间的分类边界。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4559317-cf1865a361ae78d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多变量决策树.png"></p>
+<p>“多变量决策树”能实现斜的划分边界，使决策树模型简化。在多变量决策树的学习过程中，不是为非叶结点寻找最优划分属性，而是试图建立合适的线性分类器：</p>
+<p><img src="\images\pasted-37.png" alt="upload successful"></p>
+<p>可以通过最小二乘或者嵌入神经网络进一步优化。</p>
+<hr>
+<p>增量学习：根据新样本可对学得的模型进行调整适应当前形势，而不需要重新训练。如ID4，ID5R还有ITI</p>
+<hr>
+<h3 id="熵与基尼系数哪个好"><a href="#熵与基尼系数哪个好" class="headerlink" title="熵与基尼系数哪个好"></a>熵与基尼系数哪个好</h3><p>和熵模型的度量方式比，基尼系数对应的误差有多大呢？对于二类分类，基尼系数和熵之半的曲线如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br></pre></td></tr></table></figure>
+<p><img src="\images\pasted-38.png" alt="upload successful"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt </span><br><span class="line">import matplotlib as mpl</span><br><span class="line">mpl.rcParams[&apos;font.sans-serif&apos;] = [&apos;simHei&apos;]</span><br><span class="line">mpl.rcParams[&apos;axes.unicode_minus&apos;] = False</span><br><span class="line"> </span><br><span class="line">p = np.linspace(0.0001, 0.9999 ,50)</span><br><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br><span class="line">x1 = np.linspace(0,0.5,50)</span><br><span class="line">y1 = x1</span><br><span class="line">x2 = np.linspace(0.5,1,50)</span><br><span class="line">y2 = 1- x2</span><br><span class="line"> </span><br><span class="line">plt.figure(figsize=(10,5))</span><br><span class="line">plt.plot(p, Gini, &apos;r-&apos;, label=&apos;基尼指数&apos;)</span><br><span class="line">plt.plot(p, H, &apos;b-&apos;, label=&apos;半熵&apos;)</span><br><span class="line">plt.plot(x1, y1, &apos;g-&apos;, label=&apos;分类误差率&apos;)</span><br><span class="line">plt.plot(x2, y2, &apos;g-&apos;)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlim(-0.01, 1.01)</span><br><span class="line">plt.ylim(0, 0.51)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>从上图可以看出，基尼系数和熵之半的曲线非常接近，因此，基尼系数可以做为熵模型的一个近似替代。而CART分类树算法就是使用的基尼系数来选择决策树的特征。为了进一步简化，CART分类树算法每次仅仅对某个特征的值进行二分，而不是多分，这样CART分类树算法建立起来的是二叉树，而不是多叉树。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-传教士和野人问题（M-C问题）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/10/12/传教士和野人问题（M-C问题）/" class="article-date">
+      <time datetime="2019-10-12T12:44:00.000Z" itemprop="datePublished">2019-10-12</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。</p>
+<blockquote>
+<p>状态空间</p>
+</blockquote>
+<p>我们用一个三元组(m，c，b)来表示河岸上的状态，其中m、c分别代表某一岸上传教士与野人的数目，b=1表示船在这一岸，b=0则表示船不在</p>
+<p>约束条件是: 两岸上M≥C, 船上M+C≤2</p>
+<p>（mi，ci）为船上的传教士和野人数量</p>
+<p>左岸初态为（3,3,1），终态为（0,0,0）</p>
+<p><img src="\images\pasted-35.png" alt="upload successful"></p>
+<hr>
+<blockquote>
+<p>为什么不能直接暴力穷举然后剪枝？</p>
+</blockquote>
+<p>因为可能运过去两个人，然后又把同样的两个人运回来了(或者使用别的形式但是依旧是空转)，所以要杜绝这种可能，当然最好的方法就是使用带有记忆的状态，如果之前遇到过这种状态那就拒绝执行return。</p>
+<p>所以….如何实现去重的目标？？？</p>
+<p>答：set<string/int>，我采取的是单个状态采用int，记录路径经过的状态采用string（中间用空格隔开）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;set&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int N;</span><br><span class="line">set&lt;string&gt;ans;</span><br><span class="line">void print(vector&lt;int&gt;way)&#123;</span><br><span class="line">    int i=0;</span><br><span class="line">    string h;</span><br><span class="line">    for(i=1;i&lt;way.size();i++)&#123;</span><br><span class="line">        printf(&quot;%03d   &quot;,way[i]);</span><br><span class="line">        if(way[i]&lt;100)&#123;</span><br><span class="line">            h+=&quot;0&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        h+=to_string(way[i]);</span><br><span class="line">        h+=&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;&quot;\n-------&quot;&lt;&lt;endl;</span><br><span class="line">    ans.insert(h);</span><br><span class="line">&#125;</span><br><span class="line">void dfs(int pre,int ni,int nj,int c,set&lt;int&gt;s,vector&lt;int&gt;way)&#123;</span><br><span class="line">    // set insert</span><br><span class="line">    int now=ni*100+nj*10+c;</span><br><span class="line">    s.insert(pre);    </span><br><span class="line">    if(s.count(now)||(N-ni)&lt;0||(N-nj)&lt;0||ni&lt;0||nj&lt;0||(ni&lt;nj&amp;&amp;ni!=0)||((N-ni)&lt;(N-nj)&amp;&amp;(N-ni)!=0))&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    if(pre==0)&#123;</span><br><span class="line">        // 如果上一轮就截止了</span><br><span class="line">        print(way);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    way.push_back(pre);</span><br><span class="line">    if(c==1)&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,0,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni-1,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-1,0,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni-2,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-2,0,s,way);</span><br><span class="line">        dfs(now,ni-1,nj-1,0,s,way);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,1,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni+1,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+1,1,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni+2,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+2,1,s,way);</span><br><span class="line">        dfs(now,ni+1,nj+1,1,s,way);        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int chooseN;</span><br><span class="line">    int c=1;</span><br><span class="line">    // init num and ship side 1 means left and 0 means right</span><br><span class="line">    int ni,nj;</span><br><span class="line">    // Ni(传教士),Nj(野人) on the left side.</span><br><span class="line">    int pre=-1;</span><br><span class="line">    set&lt;int&gt;s;</span><br><span class="line">    //cin&gt;&gt;chooseN;</span><br><span class="line">    chooseN=3;</span><br><span class="line">    N=nj=ni=chooseN;</span><br><span class="line">    vector&lt;int&gt;way;</span><br><span class="line">    dfs(pre,ni,nj,c,s,way);</span><br><span class="line">    cout&lt;&lt;&quot;\nfinally , the answer is:\n\n&quot;;</span><br><span class="line">    for(auto it=ans.begin();it!=ans.end();it++)&#123;</span><br><span class="line">        cout&lt;&lt;*it&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line"></span><br><span class="line">finally , the answer is:</span><br><span class="line"></span><br><span class="line">331 220 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 220 321 300 311 110 221 020 031 010 111</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 111</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="传说中的基于A-算法的解法："><a href="#传说中的基于A-算法的解法：" class="headerlink" title="传说中的基于A*算法的解法："></a>传说中的基于A*算法的解法：</h4><p>评估函数的建立：</p>
+<script type="math/tex; mode=display">f=d+h=d+M+N-2*B</script><p>M 表示左岸的传教士的人数，N 表示左岸野人的数目，B 取值为0或1 ，1 表示船在左岸，0 表示船在右岸。d 表示节点的深度。</p>
+<ul>
+<li>下面我们来证明h(n)＝M+C-2B是满足A*条件的：</li>
+</ul>
+<p>我们分两种情况考虑。<br>（1）先考虑船在左岸的情况。如果<code>不考虑限制条件</code>，也就是说，船一次可以将三人从左岸运到右岸，然后再有一个人将船送回来。这样，船一个来回可以运过河2人，而船仍然在左岸。而最后剩下的三个人，则可以一次将他们全部从左岸运到右岸。所以，在不考虑限制条件的情况下，也至少需要摆渡[(M+N-3)/2]*2+1次。其中分子上的”－3”表示剩下三个留待最后一次运过去。除以”2”是因为一个来回可以运过去2人，需要[(M+N-3)/2]个来回，而”来回”数不能是小数，需要向上取整，这个用符号[ ]表示。而乘以”2”是因为一个来回相当于两次摆渡，所以要乘以2。而最后的”＋1”，则表示将剩下的3个运过去，需要一次摆渡。</p>
+<p>化简得：需要 M+N-2次单向摆渡</p>
+<p>（2）再考虑船在右岸的情况。同样不考虑限制条件。船在右岸，需要一个人将船运到左岸。因此对于状态(M，N，0)来说，其所需要的最少摆渡数，相当于船在左岸时状态(M+1，N，1)或(M，N+1，1)所需要的最少摆渡数，再加上第一次将船从右岸送到左岸的一次摆渡数。因此所需要的最少摆渡数为：(M+N+1)-2+1。其中(M+N+1)的”＋1”表示送船回到左岸的那个人，而最后边的”＋1”，表示送船到左岸时的一次摆渡。</p>
+<p>化简有：(M+N+1)-2+1=M+N。</p>
+<p>综合船在左岸和船在右岸两种情况下，所需要的最少摆渡次数用一个式子表示为：$M+N-2B$ ，其中B＝1表示船在左岸，B＝0表示船在右岸。该摆渡次数是在不考虑限制条件下，推出的最少所需要的摆渡次数。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <!-- 添加代码  -->
 <a href="/2019/10/01/红黑树/" class="article-date">
-      <time datetime="2019-10-01T05:44:13.000Z" itemprop="datePublished">2019-10-01</time>
+      <time datetime="2019-10-01T05:44:00.000Z" itemprop="datePublished">2019-10-01</time>
 </a>
 
 
@@ -406,6 +711,10 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+
       
       <div class="clearfix"></div>
     </div>
@@ -951,314 +1260,6 @@
 </blockquote>
 <p><strong>thiscall 是为了解决类成员调用中 this 指针传递而规定的。</strong>thiscall 要求把 this 指针放在特定寄存器中，该寄存器由编译器决定。VC 使用 ecx，Borland 的 C++ 编译器使用 eax。返回方式和 __stdcall 相当。</p>
 
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-存对齐" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/13/存对齐/" class="article-date">
-      <time datetime="2019-08-13T09:10:00.000Z" itemprop="datePublished">2019-08-13</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/13/存对齐/">内存对齐</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    double b;</span><br><span class="line">    short c;</span><br><span class="line">&#125;A;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    short b;</span><br><span class="line">    double c;</span><br><span class="line">&#125;B;</span><br></pre></td></tr></table></figure>
-<p><code>sizeof(A)=24而sizeof(B)=16</code></p>
-<blockquote>
-<p>A的内存分布：(每一个元素都存在最大元素大小的空间内)</p>
-</blockquote>
-<p><img src="\images\pasted-5.png" alt="upload successful"></p>
-<blockquote>
-<p>B的内存分布：</p>
-</blockquote>
-<p><img src="\images\pasted-6.png" alt="upload successful"></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/操作系统底层/">操作系统底层</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-小端存储" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/13/小端存储/" class="article-date">
-      <time datetime="2019-08-13T08:55:00.000Z" itemprop="datePublished">2019-08-13</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/13/小端存储/">大小端存储</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<p>大端模式，是指数据的高字节保存在内存的低地址中。</p>
-<p><img src="\images\pasted-4.png" alt="upload successful"><br>4个两位16进制数=8*4=32位=4B=1int</p>
-<hr>
-<p>编程判断大小端的两种方法：</p>
-<ol>
-<li>union 判断法</li>
-</ol>
-<p>在union中所有的数据成员共用一个空间，同一时间只能储存其中一个数据成员，所有的数据成员具有相同的起始地址。即上述的union虽然定义了两个成员，但其实这个union只占用了4个字节(32位机器中)，往a成员赋值，然后读取b就相读取a成员的低位第一个字节的值。如果机器使用大端模式，则u.a=1那a的最高字节值为1；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef union &#123;</span><br><span class="line">	int i;</span><br><span class="line">	char c;</span><br><span class="line">&#125;my_union;</span><br><span class="line"> </span><br><span class="line">int checkSystem1(void)</span><br><span class="line">&#123;</span><br><span class="line">	my_union u;</span><br><span class="line">	u.i = 1;</span><br><span class="line">	return (u.i == u.c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>直接判断法</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int checkSystem2(void)</span><br><span class="line">&#123;</span><br><span class="line">	int i = 0x12345678;</span><br><span class="line">	char *c = (char*)&amp;i;</span><br><span class="line">	return ((c[0] == 0x78) &amp;&amp; (c[1] == 0x56) &amp;&amp; (c[2] == 0x34) &amp;&amp; (c[3] == 0x12));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/操作系统底层/">操作系统底层</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-指针的形参" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/13/指针的形参/" class="article-date">
-      <time datetime="2019-08-13T03:11:00.000Z" itemprop="datePublished">2019-08-13</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/13/指针的形参/">指针的形参</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<p>函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）</p>
-<p><img src="\images\pasted-3.png" alt="upload successful"></p>
-<h4 id="p形参的情况："><a href="#p形参的情况：" class="headerlink" title="*p形参的情况："></a>*p形参的情况：</h4><ul>
-<li>一开始:</li>
-</ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id3[*p 形参]-->id1[7]
-    subgraph arr数组
-    id[10]-->id1[7]
-    id1[7]-->id2[5]
-    end
-    subgraph *p
-    id3[*p 形参]
-    end
-    class id,id1,id2,id3 className;</pre>
-
-<ul>
-<li>最后:</li>
-</ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id4[*p]-->id1[3]
-    id3[*p 形参]-->id[10]
-
-    subgraph *p 形参
-    id3[*p 形参]
-    end
-
-    subgraph *p
-    id4[*p]
-    end    
-
-    subgraph arr数组
-    id[10]-->id1[3]
-    id1[3]-->id2[5]
-    end
-
-    class id,id1,id2,id3,id4 className;</pre>
-
-<ul>
-<li>注意：<code>*p--=3</code>实际上是<code>*p=3</code>，然后<code>(p--)</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *p)&#123;</span><br><span class="line">	return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">	int *p=arr+1;</span><br><span class="line">	printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="amp-p引用的情况："><a href="#amp-p引用的情况：" class="headerlink" title="*&amp;p引用的情况："></a>*&amp;p引用的情况：</h4><ul>
-<li>一开始:</li>
-</ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id3[*&p]-->id1[7]
-    subgraph arr数组
-    id[10]-->id1[7]
-    id1[7]-->id2[5]
-    end
-    subgraph *&p
-    id3[*&p]
-    end
-    class id,id1,id2,id3 className;</pre>
-
-<ul>
-<li>最后:</li>
-</ul>
-<pre class="mermaid">graph LR
-    classDef className fill:white,stroke:#333,stroke-width:1px;
-    id4[*p]-->id[10]
-    id3[*&p]-->id[10]
-
-    subgraph *&p
-    id3[*&p]
-    end
-
-    subgraph *p
-    id4[*p]
-    end    
-
-    subgraph arr数组
-    id[10]-->id1[3]
-    id1[3]-->id2[5]
-    end
-
-    class id,id1,id2,id3,id4 className;</pre>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *&amp;p)&#123;</span><br><span class="line">    return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">    int *p=arr+1;</span><br><span class="line">    printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为12</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
