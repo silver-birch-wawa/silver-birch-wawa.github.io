@@ -24,10 +24,10 @@
 <meta property="og:description" content="https://www.cnblogs.com/pinard/p/6053344.htmlhttps://blog.csdn.net/a857553315/article/details/95620881  特征选择：如果瞎猜中的概率与特征选择出来的概率相差无几，那么就可以放弃该特征了。特征选择的标准是信息增益或信息增益比。   ID3算法与信息增益：（木有剪枝，只能处理离散数据）  得知特征X的">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-36.png">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4559317-cf1865a361ae78d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-41.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-37.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-38.png">
-<meta property="og:updated_time" content="2019-10-12T12:59:31.662Z">
+<meta property="og:updated_time" content="2019-10-14T13:38:11.550Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常见的几种决策树">
 <meta name="twitter:description" content="https://www.cnblogs.com/pinard/p/6053344.htmlhttps://blog.csdn.net/a857553315/article/details/95620881  特征选择：如果瞎猜中的概率与特征选择出来的概率相差无几，那么就可以放弃该特征了。特征选择的标准是信息增益或信息增益比。   ID3算法与信息增益：（木有剪枝，只能处理离散数据）  得知特征X的">
@@ -384,7 +384,7 @@
 <p>判断过程：密度 -&gt; 含糖率 -&gt; 密度 -&gt; 含糖率…</p>
 <p><img src="\images\pasted-36.png" alt="upload successful"></p>
 <p>多变量决策树有d个属性对应d维空间的一个数据点，对样本分类表示在坐标空间中找到不同样本之间的分类边界。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4559317-cf1865a361ae78d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多变量决策树.png"></p>
+<p><img src="\images\pasted-41.png" alt="upload successful"></p>
 <p>“多变量决策树”能实现斜的划分边界，使决策树模型简化。在多变量决策树的学习过程中，不是为非叶结点寻找最优划分属性，而是试图建立合适的线性分类器：</p>
 <p><img src="\images\pasted-37.png" alt="upload successful"></p>
 <p>可以通过最小二乘或者嵌入神经网络进一步优化。</p>
@@ -407,7 +407,7 @@
         <p><span>本文标题:</span><a href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
         <p><span>发布时间:</span>2019-10-12, 20:47:00</p>
-        <p><span>最后更新:</span>2019-10-12, 20:59:31</p>
+        <p><span>最后更新:</span>2019-10-14, 21:38:11</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/10/12/常见的几种决策树/" title="常见的几种决策树">https://silver-birch-wawa.github.io/2019/10/12/常见的几种决策树/</a>
             <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/10/12/常见的几种决策树/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -693,20 +693,5 @@ MathJax.Hub.Queue(function() {
         opacity: 1;
       }      
     </style>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
