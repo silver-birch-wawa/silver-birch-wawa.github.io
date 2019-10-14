@@ -279,6 +279,123 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-拉格朗日乘子法和（对偶性与KKT条件）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/" class="article-date">
+      <time datetime="2019-10-14T14:26:35.000Z" itemprop="datePublished">2019-10-14</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><a href="https://blog.csdn.net/weixin_37688445/article/details/79275526">https://blog.csdn.net/weixin_37688445/article/details/79275526</a><br><a href="https://www.matongxue.com/madocs/939.html">https://www.matongxue.com/madocs/939.html</a><br><a href="https://www.matongxue.com/madocs/987/">https://www.matongxue.com/madocs/987/</a></p>
+<hr>
+<blockquote>
+<p> 拉格朗日乘子法（约束条件为等式）</p>
+</blockquote>
+<p>$\begin{cases}<br>min f(x) \\<br>\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
+<p>在两个图线外相切的时候达到最小值，法向量方向相反</p>
+<p>$\begin{cases}<br>\nabla f(x)=-\nabla \lambda\star h_i(x) =&gt;  \nabla f(x)+\nabla \lambda\star h_i(x)=0\\<br>\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
+<p>最终表达式：</p>
+<p>$\begin{cases}<br>L(x,a)=min[f(x)+\sum_{i=1}^{n}a_ih_i(x)]<br>\\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
+<p>求解：$\nabla_xL(x,a)=0$还有$\nabla_aL(x,a)=0$可得最优解的x和a</p>
+<p><img src="\images\pasted-44.png" alt="upload successful"></p>
+<blockquote>
+<p>拉格朗日的KKT条件</p>
+</blockquote>
+<ul>
+<li>初试条件：</li>
+</ul>
+<p>$\begin{cases}<br>min f(x) \\<br>\<br>g(x) &lt;= 0<br>\end{cases}$</p>
+<ul>
+<li>推导出来的最终公式：</li>
+</ul>
+<p>$\begin{cases}<br>式1： L(x,a)=min[f(x)+\lambda*g(x)]\\<br>式2： g(x) = 0 \\<br>式3：\lambda&gt;0<br>\end{cases}$</p>
+<p>*情况1： 如果可行解直接落在约束条件范围内，即落在g(x)&lt;0的范围内，则直接删掉约束条件即可。（但是最优点依旧满足前提：公式1即使两条线在$r_f$≈0的时候不相交）</p>
+<p>*情况2：如果可行解落在约束条件外，则最优解在边界上去的，即在g(x)=0的曲线上取得。（此时转换为前面讲的等式条件下求最优解的问题，直接套上面的公式）</p>
+<p><img src="\images\pasted-43.png" alt="upload successful"></p>
+<p>以上两种状况要么落在约束区域内，则$\lambda_解$=0，因为直接去掉约束条件即可，要么落在约束条件边界上，则$g(x)_解=0$, 综合起来就是$\lambda*g(x)=0$</p>
+<p>还有一个问题就是$\lambda$的取值问题，当$\lambda$不等于0的时候，即最优解在$g(x)=0$上取得时，$f(x,y)$梯度方向必须要和$g(x)=0$的梯度方向相反，即$-\nabla_xf(x)=\lambda\nabla_xg(x)$，所以$\lambda$一定大于0，要不然就恒非零了。</p>
+<p><img src="\images\pasted-42.png" alt="upload successful"></p>
+<hr>
+<blockquote>
+<p>拉格朗日对偶性：（$\lambda$改为a表示）</p>
+</blockquote>
+<ol>
+<li>原始最优化问题：</li>
+</ol>
+<p>$\begin{cases}<br>式1： \min_{x \in R^n} f(x)\\<br>式2： c_i(x)&lt;=0 ， i=1，2，…，k \\<br>式3：h_j(x)=0 ，j=1，2，…，l<br>\end{cases}$</p>
+<p>$L(x,a,\beta)=f(x)+\sum_{i=1}^{k}a_ic_i(x)+\sum_{j=1}^{l}\beta_jh_j(x)$</p>
+<ol>
+<li>极小极大问题：</li>
+</ol>
+<p>$令\theta_P(x)=\max_{a,\beta:a_i&gt;=0}L(x,a,\beta)$</p>
+<p>如果$i$和$j$当中有一个不满足<code>式2</code>/<code>式3</code>条件，那么必然存在某个$i$满足$c_i(x)&gt;0$，可令$a_i-&gt;+\infty$，或者存在某个$j$满足$h_j(x) \ne 0$，则可令$\beta_jh_j(x)\rightarrow +\infty$，而将其余各个$a_i$，$\beta_j$均取为$0$，使得$\theta_P(x)=+\infty$</p>
+<p>所以<code>max</code>化的拉格朗日函数 $\theta_P(x)=\begin{cases}<br>f(x) ， x满足原始问题约束\\<br>+\infty ， 其他<br>\end{cases}$</p>
+<p>接着考虑max条件下的min最优值：</p>
+<script type="math/tex; mode=display">p^*=min \theta_P(x)=\min_{x} \max_{a,\beta:a_i>=0} L(x,a,\beta)</script><hr>
+<ol>
+<li>极大极小问题：</li>
+</ol>
+<p>$\max_{a,\beta}\theta_D(a,\beta)=\max_{a,\beta}\min_{x}L(x,a,\beta)，a_i&gt;=0$</p>
+<p>最优解：$d^*=\max_{a,\beta:a_i&gt;=0}\theta_D(a,\beta)$</p>
+<hr>
+<ol>
+<li>极大极小问题与极小极大问题的解什么时候相等？</li>
+</ol>
+<p>maxmin和minmax的最优解有以下大小关系：</p>
+<script type="math/tex; mode=display">d^*=\max_{a,\beta:a_i>=0}\min_{x}L(x,a,\beta)<=\min_{x} \max_{a,\beta:a_i>=0} L(x,a,\beta)=p^*</script><p>如果满足$f(x)$和$c_i(x)$是凸函数，$h_j(x)$是仿射函数，和KKT条件，则：</p>
+<script type="math/tex; mode=display">d^*=L(x^*,a^*,\beta^*)=p^*</script><p>KKT条件是$d^\star$ = $p^\star$的充要条件：</p>
+<script type="math/tex; mode=display">\nabla_xL(x^*,a^*,\beta^*)=0</script><script type="math/tex; mode=display">a_i^*c_i(x^*)=0，i=1,2,...,k</script><script type="math/tex; mode=display">c_i(x^*)<=0 ，i=1,2,...,k</script><script type="math/tex; mode=display">a_i^*>=0 ， i=1,2,...,k</script><script type="math/tex; mode=display">h_j(x^*)=0，j=1，...，l</script>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-C维" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1206,98 +1323,9 @@
 
 
   
-    <article id="post-ecl-stdcall-fastcall-pascal-thiscall-的区别" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/" class="article-date">
-      <time datetime="2019-08-14T12:49:00.000Z" itemprop="datePublished">2019-08-14</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<p>关于函数的调用规则（调用约定），大多数时候是不需要了解的，但是如果需要跨语言的编程，比如VC写的dll要delphi调用，则需要了解。</p>
-<blockquote>
-<p>1.__cdecl         </p>
-</blockquote>
-<p>__cdecl 是 C Declaration  的缩写，表示 C 语言默认的函数调用方法：所有参数从右到左依次入栈，这些参数由调用者清除，称为手动清栈。被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。</p>
-<blockquote>
-<p>2.__stdcall </p>
-</blockquote>
-<p>__stdcall 是 Standard Call 的缩写，是 C++ 的标准调用方式：所有参数从右到左依次入栈，如果是调用类成员的话，最后一个入栈的是 this 指针。这些堆栈中的参数由被调用的函数在返回后清除，使用的指令是 retnX，X 表示参数占用的字节数，CPU 在 ret 之后自动弹出 X 个字节的堆栈空间，称为自动清栈。函数在编译的时候就必须确定参数个数，并且调用者必须严格的控制参数的生成，不能多，不能少，否则返回后会出错。</p>
-<blockquote>
-<p>3.__fastcall         </p>
-</blockquote>
-<p><strong>fastcall 是编译器指定的快速调用方式。由于大多数的函数参数个数很少，使用堆栈传递比较费时。因此 </strong>fastcall 通常规定将前两个（或若干个）参数由寄存器传递，其余参数还是通过堆栈传递。不同编译器编译的程序规定的寄存器不同，返回方式和 __stdcall 相当。</p>
-<blockquote>
-<p>4.__pascal         </p>
-</blockquote>
-<p><strong>pascal 是 Pascal 语言（Delphi）的函数调用方式，也可以在 C/C++ 中使用，参数压栈顺序与前两者相反。返回时的清栈方式与 </strong>stdcall 相同。</p>
-<blockquote>
-<p>5.__thiscall</p>
-</blockquote>
-<p><strong>thiscall 是为了解决类成员调用中 this 指针传递而规定的。</strong>thiscall 要求把 this 指针放在特定寄存器中，该寄存器由编译器决定。VC 使用 ecx，Borland 的 C++ 编译器使用 eax。返回方式和 __stdcall 相当。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>
