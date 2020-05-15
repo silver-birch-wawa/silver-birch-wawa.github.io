@@ -200,7 +200,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式与并行计算/">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -279,12 +279,281 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-归并排序为什么要用败者树？" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2020/05/15/归并排序为什么要用败者树？/" class="article-date">
+      <time datetime="2020-05-15T04:29:04.000Z" itemprop="datePublished">2020-05-15</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><a href="https://www.zhihu.com/question/35144290/answer/148681658">https://www.zhihu.com/question/35144290/answer/148681658</a></p>
+<hr>
+<blockquote>
+<p>堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$ </p>
+</blockquote>
+<p>其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后再用孩子节点的最小值和父节点进行比较，所以每调整一层需要比较两次。 这时人们想能否简化比较过程，这时就有了胜者树。</p>
+<p>这样每次比较只用跟自己的兄弟节点进行比较就好，所以用胜者树可以比堆少一半的比较次数。 而胜者树在节点上升的时候首先需要获得父节点，然后再获得兄弟节点，然后再比较。这时人们又想能否再次减少比较次数，于是就有了败者树。</p>
+<p>在使用败者树的时候，每个新元素上升时，只需要获得父节点并比较即可。 所以总的来说，减少了访存的时间。（拿空间换时间）</p>
+<p>原因：胜者树以小为胜的话，如果比较兄弟节点发现更小直接替代父节点即可，如果更大则兄弟节点胜出。<br>败者树比较父节点指向的点发现更大直接替换败者即可，更小则不需要替换然后接着上移。</p>
+<p>二者都是顶点缺失，都要从底部叶节点遍历到顶点。</p>
+<p>最后就是现在程序的主要瓶颈在于访存了，计算倒几乎可以忽略不计。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post--选择排序" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2020/05/15/-选择排序/" class="article-date">
+      <time datetime="2020-05-15T04:19:18.000Z" itemprop="datePublished">2020-05-15</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/15/-选择排序/">置换-选择排序</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><a href="http://data.biancheng.net/view/78.html">http://data.biancheng.net/view/78.html</a></p>
+<hr>
+<p>如果内存为W，则内排序算法最多只能对大小略小于W的段进行排序。置换-选择排序可以降低段的个数</p>
+<blockquote>
+<p>置换—选择排序算法的具体操作过程为：</p>
+</blockquote>
+<ol>
+<li>首先从有24个记录的初始文件中输入 6 个记录到内存工作区中；<br>从内存工作区中选出关键字最小的记录，将其记为 MINIMAX 记录；<br>然后将 MINIMAX 记录输出到归并段文件中；</li>
+<li>此时内存工作区中还剩余 5 个记录，若初始文件不为空，则从初始文件中输入下一个记录到内存工作区中；</li>
+<li>从内存工作区中的所有比 MINIMAX 值大的记录中选出值最小的关键字的记录，作为新的 MINIMAX 记录；</li>
+<li>重复过程 3—5，直至在内存工作区中选不出新的 MINIMAX 记录为止，由此就得到了一个初始归并段；</li>
+<li>重复 2—6，直至内存工作为空，由此就可以得到全部的初始归并段。</li>
+</ol>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">51</span><br><span class="line">49</span><br><span class="line">39</span><br><span class="line">46</span><br><span class="line">38</span><br><span class="line">29</span><br><span class="line">14</span><br><span class="line">61</span><br><span class="line">15</span><br><span class="line">30</span><br><span class="line">1</span><br><span class="line">48</span><br><span class="line">52</span><br><span class="line">3</span><br><span class="line">83</span><br><span class="line">27</span><br><span class="line">4</span><br><span class="line">13</span><br><span class="line">89</span><br><span class="line">24</span><br><span class="line">46</span><br><span class="line">58</span><br><span class="line">33</span><br><span class="line">76</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-54.png" alt="upload successful"></p>
+<blockquote>
+<p>具体步骤：</p>
+</blockquote>
+<ol>
+<li>首先输入前 6 个记录到内存工作区，其中关键字最小的为 29，所以选其为 MINIMAX 记录，同时将其输出到归并段文件中，如下图所示：</li>
+</ol>
+<p><img src="/images/pasted-56.png" alt="upload successful"></p>
+<p>2.此时初始文件不为空，所以从中输入下一个记录 14 到内存工作区中，然后从内存工作区中的比 29 大的记录中，选择一个最小值作为新的 MINIMAX 值输出到 归并段文件中，如下图所示：</p>
+<p><img src="/images/pasted-57.png" alt="upload successful"></p>
+<p>3.初始文件还不为空，所以继续输入 61 到内存工作区中，从内存工作区中的所有关键字比 38 大的记录中，选择一个最小值作为新的 MINIMAX 值输出到归并段文件中，如下图所示：</p>
+<p><img src="/images/pasted-58.png" alt="upload successful"></p>
+<p>4.如此重复性进行，直至选不出 MINIMAX 值为止，如下图所示：</p>
+<p><img src="/images/pasted-59.png" alt="upload successful"></p>
+<p>5.当选不出 MINIMAX 值时，表示一个归并段已经生成，则开始下一个归并段的创建，创建过程同第一个归并段一样，这里不再赘述。</p>
+<hr>
+<ul>
+<li>败者树的实现：</li>
+</ul>
+<p>在不断选择新的 MINIMAX 记录时，为了防止新加入的关键字值小的的影响，每个叶子结点附加一个序号位，当进行关键字的比较时，先比较序号，序号小的为胜者；序号相同的关键字值小的为胜者。</p>
+<p>在初期创建败者树时也可以通过不断调整败者树的方式，其中所有记录的序号均设为 0 ，然后从初始文件中逐个输入记录到内存工作区中，自下而上调整败者树。过程如下：</p>
+<p>1.首先创建一个空的败者树，如下图所示：</p>
+<p><img src="/images/pasted-60.png" alt="upload successful"></p>
+<p>2.从初始文件中读入关键字为 51 的记录，自下往上调整败者树，如下图所示：</p>
+<p><img src="/images/pasted-61.png" alt="upload successful"></p>
+<p>提示：序号 1 默认为比 0 小，为败者。</p>
+<p>3.从初始文件中读入关键字为 49 的记录，调整败者树如下图所示：</p>
+<p><img src="/images/pasted-62.png" alt="upload successful"></p>
+<p>4.从初始文件依次读入关键字为 39、46、38、29 的记录，调整败者树如下图所示：</p>
+<p><img src="/images/pasted-63.png" alt="upload successful"></p>
+<p>5.由败者树得知，其最终胜者为 29，设为 MINIMAX 值，将其输出到初始归并文件中，同时再读入下一个记录 14，调整败者树，如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4559317-c2d595dba5aac378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>通过不断地向败者树中读入记录，会产生多个 MINIMAX，直到最终所有叶子结点中的序号都为 2，此时产生的新的 MINIMAX 值的序号 2（循环判定胜者的段号决定是否输出新段），表明此归并段生成完成，而此新的 MINIMAX 值就是下一个归并段中的第一个记录。</p>
+<p>注意：当读入新的记录时，如果其值比 MINIMAX 大，其序号则仍为 1；反之则为 2 ，比较时序号大的。</p>
+<blockquote>
+<p>总结：</p>
+</blockquote>
+<p>通过置换选择排序算法得到的初始归并段，其长度并不会受内存容量的限制，且通过证明得知使用该方法所获得的归并段的平均长度为内存工作区大小的两倍。</p>
+<p>若不计输入输出的时间，通过置换选择排序生成初始归并段的所需时间为O(nlogw)（其中 n 为记录数，w 为内存工作区的大小）。</p>
+<p>以下代码有问题，有时候会多生成几个数，但是可以拿来做个参考。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define MAXKEY 10000</span><br><span class="line">#define RUNEND_SYMBOL 10000 // 归并段结束标志</span><br><span class="line">#define w 6     // 内存工作区可容纳的记录个数</span><br><span class="line">#define N 24    // 设文件中含有的记录的数量</span><br><span class="line">typedef int KeyType; // 定义关键字类型为整型</span><br><span class="line"></span><br><span class="line">// 记录类型</span><br><span class="line">typedef struct&#123;</span><br><span class="line">    KeyType key; // 关键字项</span><br><span class="line">&#125;RedType;</span><br><span class="line"></span><br><span class="line">typedef int LoserTree[w];// 败者树是完全二叉树且不含叶子，可采用顺序存储结构</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">    RedType rec; /* 记录 */</span><br><span class="line">    KeyType key; /* 从记录中抽取的关键字 */</span><br><span class="line">    int rnum; /* 所属归并段的段号 */</span><br><span class="line">&#125;RedNode, WorkArea[w];</span><br><span class="line"></span><br><span class="line">// 从wa[q]起到败者树的根比较选择MINIMAX记录，并由q指示它所在的归并段</span><br><span class="line">void Select_MiniMax(LoserTree ls,WorkArea wa,int q)&#123;</span><br><span class="line">    int p, s, t;</span><br><span class="line">// ls[t]为q的双亲节点，p作为中介</span><br><span class="line"></span><br><span class="line">    for(t = (w+q)/2,p = ls[t]; t &gt; 0;t = t/2,p = ls[t])&#123;</span><br><span class="line">        // 段号小者 或者 段号相等且关键字更小的为胜者</span><br><span class="line">        if(wa[p].rnum &lt; wa[q].rnum || (wa[p].rnum == wa[q].rnum &amp;&amp; wa[p].key &lt; wa[q].key))&#123;</span><br><span class="line">            s=q;</span><br><span class="line">            q=ls[t]; //q指示新的胜利者</span><br><span class="line">            ls[t]=s;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ls[0] = q; // 最后的冠军</span><br><span class="line">&#125;</span><br><span class="line">//输入w个记录到内存工作区wa,建得败者树ls,选出关键字最小的记录，并由s指示其在wa中的位置。</span><br><span class="line">void Construct_Loser(LoserTree ls, WorkArea wa, FILE *fi)&#123;</span><br><span class="line">    int i;</span><br><span class="line">    for(i = 0; i &lt; w; ++i)&#123;</span><br><span class="line">        wa[i].rnum = wa[i].key = ls[i] = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i = w - 1; i &gt;= 0; --i)&#123;</span><br><span class="line">        fread(&amp;wa[i].rec, sizeof(RedType), 1, fi);// 输入一个记录</span><br><span class="line">        wa[i].key = wa[i].rec.key; // 提取关键字</span><br><span class="line">        wa[i].rnum = 1; // 其段号为＂1＂</span><br><span class="line">        Select_MiniMax(ls,wa,i); // 调整败者树</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 求得一个初始归并段，fi为输入文件指针，fo为输出文件指针。</span><br><span class="line">void get_run(LoserTree ls,WorkArea wa,int rc,int *rmax,FILE *fi,FILE *fo)&#123;</span><br><span class="line">    int q;</span><br><span class="line">    KeyType minimax;</span><br><span class="line">    // 选得的MINIMAX记录属当前段时</span><br><span class="line">    while(wa[ls[0]].rnum == rc)&#123;</span><br><span class="line">        q = ls[0];// q指示MINIMAX记录在wa中的位置</span><br><span class="line">        minimax = wa[q].key;</span><br><span class="line">        // 将刚选得的MINIMAX记录写入输出文件</span><br><span class="line">        fwrite(&amp;wa[q].rec, sizeof(RedType), 1, fo);</span><br><span class="line">        // 如果输入文件结束，则虚设一条记录（属＂rmax+1＂段）</span><br><span class="line">        if(feof(fi))&#123;</span><br><span class="line">            wa[q].rnum = *rmax+1;</span><br><span class="line">            wa[q].key = MAXKEY;</span><br><span class="line">        &#125;else&#123; // 输入文件非空时</span><br><span class="line">            // 从输入文件读入下一记录</span><br><span class="line">            fread(&amp;wa[q].rec,sizeof(RedType),1,fi);</span><br><span class="line">            wa[q].key = wa[q].rec.key;// 提取关键字</span><br><span class="line">            if(wa[q].key &lt; minimax)&#123;</span><br><span class="line">                // 新读入的记录比上一轮的最小关键字还小，则它属下一段</span><br><span class="line">                *rmax = rc+1;</span><br><span class="line">                wa[q].rnum = *rmax;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                // 新读入的记录大则属当前段</span><br><span class="line">                wa[q].rnum = rc;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 选择新的MINIMAX记录</span><br><span class="line">        Select_MiniMax(ls, wa, q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//在败者树ls和内存工作区wa上用置换－选择排序求初始归并段</span><br><span class="line">void Replace_Selection(LoserTree ls, WorkArea wa, FILE *fi, FILE *fo)&#123;</span><br><span class="line">    int rc, rmax;</span><br><span class="line">    RedType j;</span><br><span class="line">    j.key = RUNEND_SYMBOL;</span><br><span class="line">    // 初建败者树</span><br><span class="line">    Construct_Loser(ls, wa, fi);</span><br><span class="line">    rc = rmax =1;//rc指示当前生成的初始归并段的段号，rmax指示wa中关键字所属初始归并段的最大段号</span><br><span class="line"></span><br><span class="line">    while(rc &lt;= rmax)&#123;// ＂rc=rmax+1＂标志输入文件的置换－选择排序已完成</span><br><span class="line">        // 求得一个初始归并段</span><br><span class="line">        get_run(ls, wa, rc, &amp;rmax, fi, fo);</span><br><span class="line">        fwrite(&amp;j,sizeof(RedType),1,fo);//将段结束标志写入输出文件</span><br><span class="line">        rc = wa[ls[0]].rnum;//设置下一段的段号</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print(RedType t)&#123;</span><br><span class="line">    printf(&quot;%d &quot;,t.key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    RedType a[N]=&#123;51,49,39,46,38,29,14,61,15,30,1,48,52,3,63,27,4,13,89,24,46,58,33,76&#125;;</span><br><span class="line">    RedType b;</span><br><span class="line">    FILE *fi,*fo; //输入输出文件</span><br><span class="line">    LoserTree ls; // 败者树</span><br><span class="line">    WorkArea wa; // 内存工作区</span><br><span class="line">    int i, k;</span><br><span class="line">    fo = fopen(&quot;ori&quot;,&quot;wb&quot;); //准备对 ori 文本文件进行写操作</span><br><span class="line">    //将&lt;u&gt;[数组](http://data.biancheng.net/view/181.html)&lt;/u&gt; a 写入大文件ori</span><br><span class="line">fwrite(a, sizeof(RedType), N, fo);</span><br><span class="line">    fclose(fo); //关闭指针 fo 表示的文件</span><br><span class="line">    fi = fopen(&quot;ori&quot;,&quot;rb&quot;);//准备对 ori 文本文件进行读操作</span><br><span class="line">    printf(&quot;文件中的待排序记录为:\n&quot;);</span><br><span class="line">    for(i = 1; i &lt;= N; i++)&#123;</span><br><span class="line">        // 依次将文件ori的数据读入并赋值给b</span><br><span class="line">        fread(&amp;b,sizeof(RedType),1,fi);</span><br><span class="line">        print(b);</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    rewind(fi);// 使fi的指针重新返回大文件ori的起始位置，以便重新读入内存，产生有序的子文件。</span><br><span class="line">    fo = fopen(&quot;out&quot;,&quot;wb&quot;);</span><br><span class="line">    // 用置换－选择排序求初始归并段</span><br><span class="line">    Replace_Selection(ls, wa, fi, fo);</span><br><span class="line">    fclose(fo);</span><br><span class="line">    fclose(fi);</span><br><span class="line">    fi = fopen(&quot;out&quot;,&quot;rb&quot;);</span><br><span class="line">    printf(&quot;初始归并段各为:\n&quot;);</span><br><span class="line">    do&#123;</span><br><span class="line">        k = fread(&amp;b, sizeof(RedType), 1, fi); //读 fi 指针指向的文件，并将读的记录赋值给 b，整个操作成功与否的结果赋值给 k</span><br><span class="line">        if(k == 1)&#123;</span><br><span class="line">            if(b.key ==MAXKEY)&#123;//当其值等于最大值时，表明当前初始归并段已经完成</span><br><span class="line">                printf(&quot;\n\n&quot;);</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line">            print(b);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;while(k == 1);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-排序" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2020/05/15/排序/" class="article-date">
+      <time datetime="2020-05-15T03:41:00.000Z" itemprop="datePublished">2020-05-15</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/15/排序/">外部排序</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><a href="http://data.biancheng.net/view/77.html">http://data.biancheng.net/view/77.html</a></p>
+<hr>
+<blockquote>
+<p>多路归并排序：</p>
+</blockquote>
+<p><img src="/images/pasted-47.png" alt="二路归并排序"></p>
+<p><img src="/images/pasted-48.png" alt="五路归并排序"></p>
+<p>对于外部排序算法来说，影响整体排序效率的因素主要取决于读写外存的次数，即访问外存的次数越多，算法花费的时间就越多，效率就越低。</p>
+<p>对于同一个文件来说，对其进行外部排序时访问外存的次数同归并的次数成正比，即归并操作的次数越多，访问外存的次数就越多（每次归并都要加载硬盘上的待归并文件到内存）。</p>
+<ul>
+<li>最后一轮归并的时候内存不够怎么办？</li>
+</ul>
+<p>在实际归并的过程中，由于内存容量的限制不能满足同时将 2 个归并段全部完整的读入内存进行归并，只能不断地取 2 个归并段中的每一小部分进行归并，通过不断地读数据和向外存写数据，直至 2 个归并段完成归并变为 1 个大的有序文件。</p>
+<ul>
+<li>有关段的预处理如何提升算法效率？</li>
+</ul>
+<p>对比2-路还有5-路归并排序可以看出，对于 k-路平衡归并中，增加 k 可以减少归并的次数，从而减少外存读写的次数，最终达到提高算法效率的目的。除此之外，一般情况下对于具有 m 个初始归并段进行 k-路平衡归并时，归并的次数为：$s=⌊log_k⁡m ⌋$（其中 s 表示归并次数）</p>
+<p>-方法也就以下两个：<br>（1）增加 k-路平衡归并中的 k 值；<code>（多路平衡归并算法）</code><br>（2）减少初始段的数量m / 增加每个归并段的容量（段太大的话内存可能不够）；<code>（置换-选择排序算法）</code></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/分布式与并行计算/">分布式与并行计算</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式与并行计算/">分布式与并行计算</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <!-- 添加代码  -->
 <a href="/2020/05/05/test/" class="article-date">
-      <time datetime="2020-05-05T12:28:28.000Z" itemprop="datePublished">2020-05-05</time>
+      <time datetime="2020-05-05T12:28:00.000Z" itemprop="datePublished">2020-05-05</time>
 </a>
 
 
@@ -328,6 +597,10 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
       
       <div class="clearfix"></div>
     </div>
@@ -389,7 +662,7 @@
 <p>最终表达式：</p>
 <p>$\begin{cases}<br>L(x,a)=min[f(x)+\sum_{i=1}^{n}a_ih_i(x)]<br>\\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
 <p>求解：$\nabla_xL(x,a)=0$还有$\nabla_aL(x,a)=0$可得最优解的x和a</p>
-<p><img src="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/images\pasted-44.png" alt="upload successful"></p>
+<p><img src="\images\pasted-44.png" alt="upload successful"></p>
 <blockquote>
 <p>拉格朗日的KKT条件</p>
 </blockquote>
@@ -403,10 +676,10 @@
 <p>$\begin{cases}<br>式1： L(x,a)=min[f(x)+\lambda*g(x)]\\<br>式2： g(x) = 0 \\<br>式3：\lambda&gt;0<br>\end{cases}$</p>
 <p>*情况1： 如果可行解直接落在约束条件范围内，即落在g(x)&lt;0的范围内，则直接删掉约束条件即可。（但是最优点依旧满足前提：公式1即使两条线在$r_f$≈0的时候不相交）</p>
 <p>*情况2：如果可行解落在约束条件外，则最优解在边界上去的，即在g(x)=0的曲线上取得。（此时转换为前面讲的等式条件下求最优解的问题，直接套上面的公式）</p>
-<p><img src="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/images\pasted-43.png" alt="upload successful"></p>
+<p><img src="\images\pasted-43.png" alt="upload successful"></p>
 <p>以上两种状况要么落在约束区域内，则$\lambda_解$=0，因为直接去掉约束条件即可，要么落在约束条件边界上，则$g(x)_解=0$, 综合起来就是$\lambda*g(x)=0$</p>
 <p>还有一个问题就是$\lambda$的取值问题，当$\lambda$不等于0的时候，即最优解在$g(x)=0$上取得时，$f(x,y)$梯度方向必须要和$g(x)=0$的梯度方向相反，即$-\nabla_xf(x)=\lambda\nabla_xg(x)$，所以$\lambda$一定大于0，要不然就恒非零了。</p>
-<p><img src="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/images\pasted-42.png" alt="upload successful"></p>
+<p><img src="\images\pasted-42.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>拉格朗日对偶性：（$\lambda$改为a表示）</p>
@@ -490,9 +763,9 @@
         <hr>
 <p>VC 维是衡量函数类的复杂度的一种方式，通过评估函数类中函数的弯曲程度实现。WIKI上的解释是：空间中的点在经过排列之后，能够被模型f打散(shatter)的最大数量。</p>
 <p>通过$y=a_0+a_1^Tx$将平面分割为两部分，如果满足平面中任意N个点（无论如何取值）总能被一条直线分开，而N+1个点却不行，则称该函数情况下的VC维为N。</p>
-<p><img src="/2019/10/12/C维/images\pasted-39.png" alt="upload successful"></p>
+<p><img src="\images\pasted-39.png" alt="upload successful"></p>
 <p>举个无穷的VC维的例子：</p>
-<script type="math/tex; mode=display">f(x,a)=I(sina*x)</script><p><img src="/2019/10/12/C维/images\pasted-40.png" alt="upload successful"></p>
+<script type="math/tex; mode=display">f(x,a)=I(sina*x)</script><p><img src="\images\pasted-40.png" alt="upload successful"></p>
 <p>从这两个例子，可以看出VC维刻画了函数的弯曲程度，越弯曲其VC维越大。</p>
 
       
@@ -615,18 +888,18 @@
 </blockquote>
 <p>一般的决策树分类边界由若干个与坐标轴平行的分段组成：</p>
 <p>判断过程：密度 -&gt; 含糖率 -&gt; 密度 -&gt; 含糖率…</p>
-<p><img src="/2019/10/12/常见的几种决策树/images\pasted-36.png" alt="upload successful"></p>
+<p><img src="\images\pasted-36.png" alt="upload successful"></p>
 <p>多变量决策树有d个属性对应d维空间的一个数据点，对样本分类表示在坐标空间中找到不同样本之间的分类边界。</p>
-<p><img src="/2019/10/12/常见的几种决策树/images\pasted-41.png" alt="upload successful"></p>
+<p><img src="\images\pasted-41.png" alt="upload successful"></p>
 <p>“多变量决策树”能实现斜的划分边界，使决策树模型简化。在多变量决策树的学习过程中，不是为非叶结点寻找最优划分属性，而是试图建立合适的线性分类器：</p>
-<p><img src="/2019/10/12/常见的几种决策树/images\pasted-37.png" alt="upload successful"></p>
+<p><img src="\images\pasted-37.png" alt="upload successful"></p>
 <p>可以通过最小二乘或者嵌入神经网络进一步优化。</p>
 <hr>
 <p>增量学习：根据新样本可对学得的模型进行调整适应当前形势，而不需要重新训练。如ID4，ID5R还有ITI</p>
 <hr>
 <h3 id="熵与基尼系数哪个好"><a href="#熵与基尼系数哪个好" class="headerlink" title="熵与基尼系数哪个好"></a>熵与基尼系数哪个好</h3><p>和熵模型的度量方式比，基尼系数对应的误差有多大呢？对于二类分类，基尼系数和熵之半的曲线如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/10/12/常见的几种决策树/images\pasted-38.png" alt="upload successful"></p>
+<p><img src="\images\pasted-38.png" alt="upload successful"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt </span><br><span class="line">import matplotlib as mpl</span><br><span class="line">mpl.rcParams[&apos;font.sans-serif&apos;] = [&apos;simHei&apos;]</span><br><span class="line">mpl.rcParams[&apos;axes.unicode_minus&apos;] = False</span><br><span class="line"> </span><br><span class="line">p = np.linspace(0.0001, 0.9999 ,50)</span><br><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br><span class="line">x1 = np.linspace(0,0.5,50)</span><br><span class="line">y1 = x1</span><br><span class="line">x2 = np.linspace(0.5,1,50)</span><br><span class="line">y2 = 1- x2</span><br><span class="line"> </span><br><span class="line">plt.figure(figsize=(10,5))</span><br><span class="line">plt.plot(p, Gini, &apos;r-&apos;, label=&apos;基尼指数&apos;)</span><br><span class="line">plt.plot(p, H, &apos;b-&apos;, label=&apos;半熵&apos;)</span><br><span class="line">plt.plot(x1, y1, &apos;g-&apos;, label=&apos;分类误差率&apos;)</span><br><span class="line">plt.plot(x2, y2, &apos;g-&apos;)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlim(-0.01, 1.01)</span><br><span class="line">plt.ylim(0, 0.51)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p>从上图可以看出，基尼系数和熵之半的曲线非常接近，因此，基尼系数可以做为熵模型的一个近似替代。而CART分类树算法就是使用的基尼系数来选择决策树的特征。为了进一步简化，CART分类树算法每次仅仅对某个特征的值进行二分，而不是多分，这样CART分类树算法建立起来的是二叉树，而不是多叉树。</p>
 
@@ -705,7 +978,7 @@
 <p>约束条件是: 两岸上M≥C, 船上M+C≤2</p>
 <p>（mi，ci）为船上的传教士和野人数量</p>
 <p>左岸初态为（3,3,1），终态为（0,0,0）</p>
-<p><img src="/2019/10/12/传教士和野人问题（M-C问题）/images\pasted-35.png" alt="upload successful"></p>
+<p><img src="\images\pasted-35.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>为什么不能直接暴力穷举然后剪枝？</p>
@@ -804,7 +1077,7 @@
 <ul>
 <li>红黑树的5条特性确保了从根到叶子的最长的可能路径不多于最短的可能路径的两倍长，使得整棵树大致上是平衡的</li>
 </ul>
-<p><img src="/2019/10/01/红黑树/images\pasted-13.png" alt="upload successful"></p>
+<p><img src="\images\pasted-13.png" alt="upload successful"></p>
 <blockquote>
 <p>树的插入：（警惕红）</p>
 </blockquote>
@@ -815,23 +1088,23 @@
 <blockquote>
 <p>对策 :把父节点和叔叔节点变黑，爷爷节点涂红，然后把当前节点指针给到爷爷，让爷爷节点那层继续循环，接受红黑树特性检测。</p>
 </blockquote>
-<p><img src="/2019/10/01/红黑树/images\pasted-14.png" alt="simple case"></p>
-<p><img src="/2019/10/01/红黑树/images\pasted-15.png" alt="z是当前点"></p>
+<p><img src="\images\pasted-14.png" alt="simple case"></p>
+<p><img src="\images\pasted-15.png" alt="z是当前点"></p>
 <h5 id="情况2：cur为红，parent为红，pParent为黑，uncle不存在-u为黑"><a href="#情况2：cur为红，parent为红，pParent为黑，uncle不存在-u为黑" class="headerlink" title="情况2：cur为红，parent为红，pParent为黑，uncle不存在/u为黑"></a>情况2：cur为红，parent为红，pParent为黑，uncle不存在/u为黑</h5><blockquote>
 <p>对策：当前节点的父节点作为新的当前节点，以新当前指点为支点左旋</p>
 </blockquote>
 <p>parent为pParent的左孩子，cur为parent的左孩子，则进行右单旋转。</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-16.png" alt="upload successful"></p>
+<p><img src="\images\pasted-16.png" alt="upload successful"></p>
 <h5 id="情况3：当前节点的父节点是红色，叔叔节点是黑色-不存在，且当前节点是其父节点的右儿子，祖父节点的左儿子是父节点"><a href="#情况3：当前节点的父节点是红色，叔叔节点是黑色-不存在，且当前节点是其父节点的右儿子，祖父节点的左儿子是父节点" class="headerlink" title="情况3：当前节点的父节点是红色，叔叔节点是黑色/不存在，且当前节点是其父节点的右儿子，祖父节点的左儿子是父节点"></a>情况3：当前节点的父节点是红色，叔叔节点是黑色/不存在，且当前节点是其父节点的右儿子，祖父节点的左儿子是父节点</h5><blockquote>
 <p>对策： 父节点变黑，祖父变红，以祖父节点为支点右旋</p>
 </blockquote>
 <hr>
 <p>1为当前点，祖父节点为下一轮遍历的当前节点。</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-17.png" alt="只变色不拐"></p>
+<p><img src="\images\pasted-17.png" alt="只变色不拐"></p>
 <p>4为当前点，取初始父节点3为下一轮遍历的当前节点。然后交换一下3和4，然后再重组</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-19.png" alt="不变色只拐"></p>
+<p><img src="\images\pasted-19.png" alt="不变色只拐"></p>
 <p>3为当前点，取父亲为下一轮遍历的当前节点。</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-20.png" alt="变色+拐"></p>
+<p><img src="\images\pasted-20.png" alt="变色+拐"></p>
 <hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define N 1000</span><br><span class="line">#define red true</span><br><span class="line">#define black false</span><br><span class="line">class Node&#123;</span><br><span class="line">    public:</span><br><span class="line">    static int length;</span><br><span class="line">    bool br;</span><br><span class="line">    // true red false black</span><br><span class="line">    int num;</span><br><span class="line">    Node*l,*r,*f;</span><br><span class="line">    Node()&#123;</span><br><span class="line">        num=-1;</span><br><span class="line">        r=f=l=NULL;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;;</span><br><span class="line">int Node::length=0;</span><br><span class="line">void left_turn(Node*&amp;root)&#123;</span><br><span class="line">    Node*p=root-&gt;f;</span><br><span class="line">    Node*pP=root-&gt;f-&gt;f;</span><br><span class="line">    if(p-&gt;l)&#123;</span><br><span class="line">        p-&gt;l-&gt;f=pP;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;f=pP-&gt;f;</span><br><span class="line">    pP-&gt;r=p-&gt;l;</span><br><span class="line">    p-&gt;l=pP;</span><br><span class="line">    if(pP-&gt;f==NULL)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    else if(pP-&gt;f-&gt;num&gt;pP-&gt;num)&#123;</span><br><span class="line">        pP-&gt;f-&gt;l=p;</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        pP-&gt;f-&gt;r=p;</span><br><span class="line">    &#125;</span><br><span class="line">    pP-&gt;f=p;</span><br><span class="line">&#125;</span><br><span class="line">void right_turn(Node*&amp;root)&#123;</span><br><span class="line">    Node*p=root-&gt;f;</span><br><span class="line">    Node*pP=root-&gt;f-&gt;f;</span><br><span class="line">    if(p-&gt;r)&#123;</span><br><span class="line">        p-&gt;r-&gt;f=pP;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;f=pP-&gt;f;</span><br><span class="line">    pP-&gt;l=p-&gt;r;</span><br><span class="line">    p-&gt;r=pP;</span><br><span class="line">    if(pP-&gt;f==NULL)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    else if(pP-&gt;f-&gt;num&gt;pP-&gt;num)&#123;</span><br><span class="line">        pP-&gt;f-&gt;l=p;</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        pP-&gt;f-&gt;r=p;</span><br><span class="line">    &#125;</span><br><span class="line">    pP-&gt;f=p;</span><br><span class="line">&#125;</span><br><span class="line">void balance(Node*&amp;root)&#123;</span><br><span class="line">    // 如果是top点，没有father/grandfather需要单独讨论，因为可能是红点做top点</span><br><span class="line">    if(root-&gt;f==NULL)&#123;</span><br><span class="line">        root-&gt;br=black;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    else if(root-&gt;br==black)&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    if(root-&gt;f-&gt;br==red)&#123;</span><br><span class="line">        // Need to deal with this situation.</span><br><span class="line">        // first decide you are in which side(l/r). there will be two choice and four cases.</span><br><span class="line">        if(root-&gt;f-&gt;f-&gt;l&amp;&amp;root-&gt;f-&gt;f-&gt;r&amp;&amp;root-&gt;f-&gt;f-&gt;l-&gt;br==red&amp;&amp;root-&gt;f-&gt;f-&gt;r-&gt;br==red)&#123;</span><br><span class="line">            // balance1 , p=red , uncle=red</span><br><span class="line">            root-&gt;f-&gt;f-&gt;br=red;</span><br><span class="line">            root-&gt;f-&gt;f-&gt;l-&gt;br=black;</span><br><span class="line">            root-&gt;f-&gt;f-&gt;r-&gt;br=black;</span><br><span class="line">            balance(root-&gt;f-&gt;f);</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            // balance2, p(left)=red , uncle=black/NULL</span><br><span class="line">            if(root-&gt;f-&gt;f-&gt;r==NULL||root-&gt;f-&gt;f-&gt;r-&gt;br==black)&#123;</span><br><span class="line">                // right turn</span><br><span class="line">                Node*pP=root-&gt;f-&gt;f;</span><br><span class="line">                Node*p=root-&gt;f;</span><br><span class="line">                if(root-&gt;f-&gt;num&gt;root-&gt;num)&#123;</span><br><span class="line">                    p-&gt;br=black;</span><br><span class="line">                    pP-&gt;br=red;</span><br><span class="line">                    right_turn(root);</span><br><span class="line">                    balance(root-&gt;f);</span><br><span class="line">                &#125;</span><br><span class="line">                else&#123;</span><br><span class="line">                    root-&gt;br=black;</span><br><span class="line">                    pP-&gt;br=red;                    </span><br><span class="line">                    // adjust</span><br><span class="line">                    if(root-&gt;l)&#123;</span><br><span class="line">                        root-&gt;l-&gt;f=root-&gt;f;</span><br><span class="line">                    &#125;</span><br><span class="line">                    p-&gt;r=root-&gt;l;</span><br><span class="line">                    pP-&gt;l=root;</span><br><span class="line">                    root-&gt;f=pP;</span><br><span class="line">                    root-&gt;l=p;</span><br><span class="line">                    p-&gt;f=root;</span><br><span class="line">                    right_turn(root-&gt;l);</span><br><span class="line">                    balance(root);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            // balance3 , p(right)=red , uncle(left)=black/NULL</span><br><span class="line">            else&#123;   // warm up</span><br><span class="line">                Node*pP=root-&gt;f-&gt;f;</span><br><span class="line">                Node*p=root-&gt;f;</span><br><span class="line">                //left turn</span><br><span class="line">                if(root-&gt;f-&gt;num&gt;root-&gt;num)&#123;</span><br><span class="line">                    root-&gt;br=black;</span><br><span class="line">                    pP-&gt;br=red;                    </span><br><span class="line">                    // adjust</span><br><span class="line">                    pP-&gt;r=root;</span><br><span class="line">                    p-&gt;f=root;</span><br><span class="line">                    root-&gt;f=pP;</span><br><span class="line">                    Node*t=root;</span><br><span class="line">                    // 为了防止root被误置为NULL,出此下策保留该root指针</span><br><span class="line">                    p-&gt;l=root-&gt;r; // bug p-&gt;l(指向root的左指针)=root-&gt;r 变成了 root=root-&gt;r</span><br><span class="line">                    </span><br><span class="line">                    root=t;</span><br><span class="line">                    root-&gt;r=p;</span><br><span class="line">                    left_turn(root-&gt;r);</span><br><span class="line">                    balance(root);</span><br><span class="line">                &#125;</span><br><span class="line">                else&#123;</span><br><span class="line">                    p-&gt;br=black;</span><br><span class="line">                    pP-&gt;br=red;                    </span><br><span class="line">                    left_turn(root);</span><br><span class="line">                    balance(root-&gt;f);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Node* leave=NULL;</span><br><span class="line">Node* insert(Node*&amp;root,int num)&#123;</span><br><span class="line">    if(root==NULL)&#123;       </span><br><span class="line">        Node *node=new Node();</span><br><span class="line">        node-&gt;num=num;</span><br><span class="line">        node-&gt;br=red;</span><br><span class="line">        if(node-&gt;length==0)&#123;</span><br><span class="line">            // root必须为black</span><br><span class="line">            node-&gt;length=1;</span><br><span class="line">            node-&gt;br=black;</span><br><span class="line">        &#125;</span><br><span class="line">        root=node;</span><br><span class="line">        leave=root;</span><br><span class="line">        return node;</span><br><span class="line">    &#125;</span><br><span class="line">    else if(root-&gt;num&gt;num)&#123;</span><br><span class="line">        root-&gt;l=insert(root-&gt;l,num);</span><br><span class="line">        root-&gt;l-&gt;f=root;      </span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        root-&gt;r=insert(root-&gt;r,num);</span><br><span class="line">        root-&gt;r-&gt;f=root;      </span><br><span class="line">    &#125;</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br><span class="line">// 打印看看结构</span><br><span class="line">void print(Node*root)&#123;</span><br><span class="line">    if(root==NULL)&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;root-&gt;num&lt;&lt;&quot;  color: &quot;&lt;&lt;(root-&gt;br==black?&quot;black&quot;:&quot;red&quot;)&lt;&lt;endl;</span><br><span class="line">    print(root-&gt;l);</span><br><span class="line">    print(root-&gt;r);</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">  int i,j,input,k;</span><br><span class="line">  int p,e;</span><br><span class="line">  Node*root=NULL;</span><br><span class="line">  freopen(&quot;inputs.txt&quot;,&quot;r+&quot;,stdin);</span><br><span class="line">  cin&gt;&gt;p;</span><br><span class="line">  for(i=0;i&lt;p;i++)&#123;</span><br><span class="line">      cin&gt;&gt;e;</span><br><span class="line">      insert(root,e);</span><br><span class="line">      balance(leave);</span><br><span class="line">      root-&gt;length++; </span><br><span class="line">  &#125;</span><br><span class="line">  cout&lt;&lt;&quot;preorder :\n&quot;;</span><br><span class="line">  print(root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">7</span><br><span class="line">5 7 1 4 6 3 2</span><br><span class="line"></span><br><span class="line">5  color: black</span><br><span class="line">3  color: red</span><br><span class="line">1  color: black</span><br><span class="line">2  color: red</span><br><span class="line">4  color: black</span><br><span class="line">7  color: black</span><br><span class="line">6  color: red</span><br><span class="line"></span><br><span class="line">6 7 0 4 5 2 1</span><br><span class="line"></span><br><span class="line">6  color: black</span><br><span class="line">4  color: red</span><br><span class="line">1  color: black</span><br><span class="line">0  color: red</span><br><span class="line">2  color: red</span><br><span class="line">5  color: black</span><br><span class="line">7  color: black</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
 <hr>
@@ -846,39 +1119,39 @@
 <p>其中情况一，可以按与其他二叉搜索树的删除方式一样处理，最终可以转换到后面的三种情况。具体为：找到(Old)D节点的直接后继节点(暂且称为X节点)，然后将X的值转移到D节点，最后将X节点作为真正要被删除掉的节点(即：(Real)D节点)。这样删除操作后，可以保证该树仍然为一棵二叉搜索树。但这样删除(Real)D节点后，可能会破坏红黑树的性质。所以需要额外做一些调整处理，这便是下面将要详细讨论的内容。</p>
 <p>说明：下文中所提到的D，除非有特别说明，否则都将指的是(Real)D（一般可以认为该RealD节点的左子树为空，OldD不一定），最终要删除的节点一般是OldD的右节点或者右节点的最前面的一个左节点，当然也可能无右节点只能删自己。</p>
 <hr>
-<p><img src="/2019/10/01/红黑树/images\pasted-21.png" alt="upload successful"></p>
+<p><img src="\images\pasted-21.png" alt="upload successful"></p>
 <h4 id="删除的类别可以分为几种："><a href="#删除的类别可以分为几种：" class="headerlink" title="删除的类别可以分为几种："></a>删除的类别可以分为几种：</h4><blockquote>
 <p>（1）首先 ，从当前点D和DR之间的颜色顺序看。</p>
 </blockquote>
 <p>&lt; 1 &gt; 红-&gt;黑/NULL ，P肯定为黑 ， 直接删掉红，用黑（NULL）替换。</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-22.png" alt="upload successful"></p>
+<p><img src="\images\pasted-22.png" alt="upload successful"></p>
 <p>&lt; 2 &gt; 黑-&gt;红 ，直接拿红替换黑，然后红变黑。</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-23.png" alt="upload successful"></p>
+<p><img src="\images\pasted-23.png" alt="upload successful"></p>
 <p>&lt; 3 &gt; 黑-&gt;黑 / NULL ， 情况变得复杂。</p>
 <blockquote>
 <p>（2）然后 ，根据uncle的颜色再分一次情况讨论：</p>
 </blockquote>
 <p>&lt; 1 &gt; 如果uncle是红，那就很容易了。因为P不可能是红只能是黑，只有一种情况。</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-29.png" alt="upload successful"></p>
-<p><img src="/2019/10/01/红黑树/images\pasted-30.png" alt="upload successful"></p>
+<p><img src="\images\pasted-29.png" alt="upload successful"></p>
+<p><img src="\images\pasted-30.png" alt="upload successful"></p>
 <p>&lt; 2 &gt; uncle为黑时，特别复杂。</p>
 <ul>
 <li>1.SL=红，uncle=黑，P=黑/红，SR=黑/红</li>
 </ul>
 <p>将S右旋转时，接着将SL改为P的颜色，P的颜色改为黑色(用这个黑色来填补DR分支的黑节点数)，将P左旋转。</p>
-<p><img src="/2019/10/01/红黑树/images\pasted-31.png" alt="upload successful"></p>
+<p><img src="\images\pasted-31.png" alt="upload successful"></p>
 <ul>
 <li>2.SR=红，P=黑/红，SL=黑/红</li>
 </ul>
-<p><img src="/2019/10/01/红黑树/images\pasted-32.png" alt="upload successful"></p>
+<p><img src="\images\pasted-32.png" alt="upload successful"></p>
 <ul>
 <li>3.S=黑，P=红，SL=SR=黑（处理简单，只要变色）</li>
 </ul>
-<p><img src="/2019/10/01/红黑树/images\pasted-33.png" alt="upload successful"></p>
+<p><img src="\images\pasted-33.png" alt="upload successful"></p>
 <ul>
 <li>4.SR=SL=黑，P=黑（处理简单，只要变色）</li>
 </ul>
-<p><img src="/2019/10/01/红黑树/images\pasted-34.png" alt="upload successful"></p>
+<p><img src="\images\pasted-34.png" alt="upload successful"></p>
 
       
     </div>
@@ -944,8 +1217,8 @@
           
         <hr>
 <h2 id="kd树："><a href="#kd树：" class="headerlink" title="kd树："></a>kd树：</h2><p>计算时采用线性扫描的方式O(n^2)，效率奇低。采用平衡二叉树的方法存储各个点，用中位数做分割，划分左右区间，并进行以x-y轴为中心进行交替选择。</p>
-<p><img src="/2019/10/01/d/images\pasted-11.png" alt="（2，4.5）"></p>
-<p><img src="/2019/10/01/d/images\pasted-12.png" alt="（2.1，3.1）"></p>
+<p><img src="\images\pasted-11.png" alt="（2，4.5）"></p>
+<p><img src="\images\pasted-12.png" alt="（2.1，3.1）"></p>
 <blockquote>
 <p>算法复杂度：</p>
 </blockquote>
@@ -988,291 +1261,6 @@
       
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-感知机" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/15/感知机/" class="article-date">
-      <time datetime="2019-08-15T14:05:13.000Z" itemprop="datePublished">2019-08-15</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/15/感知机/">感知机</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<p>感知机是二分类的线性模型，其输入是实例的特征向量，输出的是事例的类别，分别是+1和-1，属于判别模型。假设训练数据集是线性可分的，感知机学习的目标是求得一个能够将训练数据集正实例点和负实例点完全正确分开的分离超平面。如果是非线性可分的数据，则最后无法获得超平面</p>
-<p><img src="/2019/08/15/感知机/images\pasted-10.png" alt="分类效果"></p>
-<p>点到线的距离公式：</p>
-<p>$d=\frac{Ax_0+By_0+C}{\sqrt{A^2+B^2}}$</p>
-<p>假设有一超平面，h=w*x+b，其中w=（w0，w1…wm），x=（x0，x1…xm），样本x’到超平面的距离为：</p>
-<p>$d=\frac{w*x’+b}{||w||}$</p>
-<hr>
-<p>输出的模型如下：</p>
-<p>$f(x)=sign(w*x+b)$</p>
-<p>$sign(x)=\begin{cases} 1 \quad\quad\quad x&gt;0<br> -1 \quad\quad\quad x\leq0\end{cases}$</p>
-<p>如果 $ \frac{w\star x’+b}{||w||}&gt;0 $，则y=1。如果&lt;0，则y=-1。这样分类正确的话 $y*\frac{w\star x’+b}{||w||}&gt;0$ 恒成立（||w||是L2范数）</p>
-<hr>
-<h5 id="损失函数："><a href="#损失函数：" class="headerlink" title="损失函数："></a>损失函数：</h5><p>$L(w,b)=-\frac{1}{||w||}\sum_{x_i \in M}y_i(w*x_i+b)$（M集合是误分类点的集合）</p>
-<p>当然因为||$w$||&gt;0所以我们可以去掉它</p>
-<p>$L(w,b)=-\sum_{x_i \in M}y_i(w*x_i+b)$</p>
-<p>感知机分类的最终目的是让最终值=0，所以少除也无所谓，还能降低计算量。(所以有个前提：能收敛到0)</p>
-<hr>
-<h5 id="随机梯度下降算法"><a href="#随机梯度下降算法" class="headerlink" title="随机梯度下降算法"></a>随机梯度下降算法</h5><p>用普通的基于所有样本的梯度和的均值的批量梯度下降法（BGD）是行不通的，原因在于我们的损失函数里面有限定，只有误分类的M集合里面的样本才能参与损失函数的优化。所以我们不能用最普通的批量梯度下降,只能采用随机梯度下降（SGD）</p>
-<p>$\nabla_wL(w,b)=-\sum_{x_i \in M}y_i*x_i$</p>
-<p>$\nabla_bL(w,b)=-\sum_{x_i \in M}y_i$</p>
-<p>$w \gets w+\eta<em>y_i</em>x_i$</p>
-<p>$b \gets b+\eta*y_i$</p>
-<ul>
-<li>xi实际上是(x,y)，yi实际上是{-1，1}，$\eta$是步长。</li>
-</ul>
-<hr>
-<h4 id="计算过程："><a href="#计算过程：" class="headerlink" title="计算过程："></a>计算过程：</h4><ol>
-<li>获取{-1，1}对应的点，初始化w矩阵和b变量的值。</li>
-<li>正确分类的不用管，不正确分类的利用梯度对w和b的值进行更新。</li>
-<li>循环带入所有的点，直到满足要求。</li>
-</ol>
-<pre><code>例：点x1=（3，3），w0=0，b0=0，y1=1，步长为1
-
-1. y1*（w0*x1+b0）=0，分类错误。
-
-2. w1=w0+y1*x1=(3，3)^T，b1=b0+y1=1
-
-3. 得到线性模型 f（x）=sign（3x+3y+1）(只输出在线的哪一侧)
-</code></pre><hr>
-<p><img src="/2019/08/15/感知机/images\pasted-11.gif" alt="线性可分"></p>
-<p><img src="/2019/08/15/感知机/images\pasted-12.gif" alt="线性不可分"></p>
-<hr>
-<h4 id="对偶形式算法："><a href="#对偶形式算法：" class="headerlink" title="对偶形式算法："></a>对偶形式算法：</h4><p>对偶形式的目的是降低运算量，但是并不是在任何情况下都能降低运算量，而是在特征空间的维度很高时才起到作用。</p>
-<blockquote>
-<p>原：</p>
-</blockquote>
-<p>$w \gets w+\eta<em>y_i</em>x_i$</p>
-<p>$b \gets b+\eta*y_i$</p>
-<blockquote>
-<p>现：</p>
-</blockquote>
-<p>初始值为（0，0）的w和b经过了n次修改后：（$a_i=n_i\eta$）</p>
-<p>$w=\sum_{i=1}^na_iy_ix_i$</p>
-<p>$b=\sum_{i=1}^na_iy_i$</p>
-<p>$sign（w<em>x+b）$，将$w=\sum_{i=1}^na_iy_ix_i$带入得$f(x)=\sum_{i=1}^na_iy_ix_i</em>xj+b$</p>
-<ul>
-<li>第n-1次的参数$a_i$在第2(n-1)轮要再加$\eta$，所以参数$a_i$越大，说明该点位于分割线附近，在更新的时候容易受影响难以正确分类。$a_i$默认初始为0</li>
-</ul>
-<p>$a_i \gets a_i+\eta$    </p>
-<p>$b \gets b+\eta y_i$</p>
-<hr>
-<h4 id="加速的设计："><a href="#加速的设计：" class="headerlink" title="加速的设计："></a>加速的设计：</h4><p>gram矩阵，$G=[x_i<em>x_j]_{N</em>N}$</p>
-<hr>
-<p>很可惜，因为不能解决异或问题躺尸了很多年。。。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-new和malloc的区别" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/14/new和malloc的区别/" class="article-date">
-      <time datetime="2019-08-14T13:02:00.000Z" itemprop="datePublished">2019-08-14</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h4 id="new与malloc的区别"><a href="#new与malloc的区别" class="headerlink" title="new与malloc的区别?"></a>new与malloc的区别?</h4><p>（1）申请的内存所在位置:<br>new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。</p>
-<p>那么自由存储区是否能够是堆，这取决于operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看operator new在哪里为对象分配内存。</p>
-<p><code>在C++中，内存区分为5个区，分别是堆、栈、自由存储区、全局/静态存储区、常量存储区</code>，但是new其实是对malloc的封装，所以只是逻辑上有所区别….</p>
-<p>（2）返回类型安全性：<br>new操作符内存分配成功时，返回的是对象类型的指针，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void <em> ，需要通过强制类型转换将void</em>指针转换成我们需要的类型。</p>
-<p>（3）是否调用构造函数/析构函数：<br>使用new操作符来分配对象内存时会经历三个步骤：<br>第一步：调用operator new 函数（对于数组是operator new[]）分配一块足够大的，原始的，未命名的内存空间以便存储特定类型的对象。<br>第二步：编译器运行相应的构造函数以构造对象，并为其传入初值。<br>第三部：对象构造完成后，返回一个指向该对象的指针。</p>
-<p>使用delete操作符来释放对象内存时会经历两个步骤：<br>第一步：调用对象的析构函数。<br>第二步：编译器调用operator delete(或operator delete[])函数释放内存空间。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/操作系统底层/">操作系统底层</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-垃圾管理（智能指针）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/14/垃圾管理（智能指针）/" class="article-date">
-      <time datetime="2019-08-14T12:59:00.000Z" itemprop="datePublished">2019-08-14</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<blockquote>
-<p>智能指针：<br><a href="https://blog.csdn.net/u012501459/article/details/48229399">https://blog.csdn.net/u012501459/article/details/48229399</a></p>
-</blockquote>
-<p>C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。</p>
-<ul>
-<li>构造函数中创建类的新对象时，初始化引用计数为1；</li>
-<li>拷贝构造函数复制指针，并使相应的引用计数增加1；</li>
-<li>赋值操作减少左操作数所值对象的引用计数，增加右操作数所指对象的引用计数；</li>
-<li>析构函数使引用计数减少1，并且当引用计数为0时，释放指针说指向的对象；</li>
-</ul>
-<p><img src="/2019/08/14/垃圾管理（智能指针）/images\pasted-9.png" alt="upload successful"></p>
-<h4 id="Ref-ptr类："><a href="#Ref-ptr类：" class="headerlink" title="Ref_ptr类："></a>Ref_ptr类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//使用int*指针初始化ptr，注意必须要放在初始化列表中</span><br><span class="line">Ref_ptr(int * i):ptr(new Referenced(i))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">//拷贝构造函数，又有一个变量指向了这块内存</span><br><span class="line">Ref_ptr(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    ptr=rhs.ptr;//将右操作数的引用计数对象赋值给左操作数</span><br><span class="line">    ptr-&gt;ref();//将它们的应用计数加1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Ref_ptr r1=new int(4); //调用构造函数</span><br><span class="line">Ref_ptr r2=r1; //调用拷贝构造函数</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/08/14/垃圾管理（智能指针）/images\pasted-8.png" alt="upload successful"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//赋值操作符，右操作数的引用计数要减1，左操作数的引用计数要加1</span><br><span class="line">Ref_ptr &amp; operator=(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    if(&amp;rhs==this)</span><br><span class="line">        return *this;</span><br><span class="line">    if(ptr-&gt;unref()==0)//赋值操作符，首先将当前类的引用计数减1，因为现在指向它的指针少了一个。</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    ptr=rhs.ptr; //将右操作数的引用计数赋值给当前对象</span><br><span class="line">    ptr-&gt;ref(); //引用计数加1</span><br><span class="line">    return *this;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，引用计数要减1，如果减为0，删除这块内存</span><br><span class="line">~Ref_ptr()</span><br><span class="line">&#123;</span><br><span class="line">    if(ptr-&gt;unref()==0)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Referenced类："><a href="#Referenced类：" class="headerlink" title="Referenced类："></a>Referenced类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//初始化这个类，引用计数设为1，并且将p指向传入的地址</span><br><span class="line">Referenced(int * pi)</span><br><span class="line">&#123;</span><br><span class="line">    refCount=1;</span><br><span class="line">    p=pi;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//引用计数加1</span><br><span class="line">int ref()</span><br><span class="line">&#123;</span><br><span class="line">    return ++refCount;</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line">//引用计数减1</span><br><span class="line">int unref()</span><br><span class="line">&#123;</span><br><span class="line">    return --refCount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，释放掉内存</span><br><span class="line">~Referenced()</span><br><span class="line">&#123;</span><br><span class="line">    cout&lt;&lt;&quot;delete referenced&quot;&lt;&lt;endl;</span><br><span class="line">    delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="好处："><a href="#好处：" class="headerlink" title="好处："></a>好处：</h4><ul>
-<li>智能指针能够帮助我们处理资源泄露问题；</li>
-<li>它也能够帮我们处理空悬指针的问题；</li>
-<li>它还能够帮我们处理比较隐晦的由异常造成的资源泄露。</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
     </div>
 
       
