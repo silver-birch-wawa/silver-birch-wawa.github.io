@@ -16,14 +16,14 @@
 
 
 <meta name="description" content="https://www.zhihu.com/question/35144290/answer/148681658   堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$   其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后">
-<meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
+<meta name="keywords" content="分布式与并行计算,数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="归并排序为什么要用败者树？">
 <meta property="og:url" content="https://silver-birch-wawa.github.io/2020/05/15/归并排序为什么要用败者树？/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
 <meta property="og:description" content="https://www.zhihu.com/question/35144290/answer/148681658   堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$   其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-05-15T04:33:08.694Z">
+<meta property="og:updated_time" content="2020-05-15T04:48:15.513Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="归并排序为什么要用败者树？">
 <meta name="twitter:description" content="https://www.zhihu.com/question/35144290/answer/148681658   堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$   其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后">
@@ -278,7 +278,7 @@
     <div class="article-meta">
       <!-- 添加代码  -->
 <a href="/2020/05/15/归并排序为什么要用败者树？/" class="article-date">
-      <time datetime="2020-05-15T04:29:04.000Z" itemprop="datePublished">2020-05-15</time>
+      <time datetime="2020-05-15T04:29:00.000Z" itemprop="datePublished">2020-05-15</time>
 </a>
 
 
@@ -302,8 +302,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/分布式与并行计算/">分布式与并行计算</a><a class="article-category-link" href="/categories/分布式与并行计算/数据结构/">数据结构</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式与并行计算/">分布式与并行计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -332,8 +340,8 @@
     <div class="copyright">
         <p><span>本文标题:</span><a href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
-        <p><span>发布时间:</span>2020-05-15, 12:29:04</p>
-        <p><span>最后更新:</span>2020-05-15, 12:33:08</p>
+        <p><span>发布时间:</span>2020-05-15, 12:29:00</p>
+        <p><span>最后更新:</span>2020-05-15, 12:48:15</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/05/15/归并排序为什么要用败者树？/" title="归并排序为什么要用败者树？">https://silver-birch-wawa.github.io/2020/05/15/归并排序为什么要用败者树？/</a>
             <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2020/05/15/归并排序为什么要用败者树？/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -347,6 +355,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/05/15/memset与虚函数/">
+                    memset与虚函数
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -442,7 +456,9 @@ gitment.render('git')
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2020/05/15/memset与虚函数/" title="上一篇: memset与虚函数">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -454,7 +470,7 @@ gitment.render('git')
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-选择排序/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/排序/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C维/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/红黑树/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/感知机/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset与虚函数/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-选择排序/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/排序/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C维/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/红黑树/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/感知机/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
 
 
 

@@ -279,6 +279,76 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-olatile" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/olatile/" class="article-date">
+      <time datetime="2019-08-13T03:00:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/olatile/">volatile</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><p>volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。</p>
+<h4 id="volatile和编译器的优化有关："><a href="#volatile和编译器的优化有关：" class="headerlink" title="volatile和编译器的优化有关："></a>volatile和编译器的优化有关：</h4><p>在本次线程内，当读取一个变量时，为了提高读取速度，编译器进行优化时有时会先把变量读取到一个寄存器中；以后，再读取变量值时，就直接从寄存器中读取；当变量值在本线程里改变时，会同时把变量的新值copy到该寄存器中，以保持一致。 </p>
+<p>当变量因别的线程值发生改变，上面寄存器的值不会相应改变，从而造成应用程序读取的值和实际的变量值不一致。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-联函数" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

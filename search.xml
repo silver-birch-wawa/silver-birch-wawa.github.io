@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[memset与虚函数]]></title>
+    <url>%2F2020%2F05%2F15%2Fmemset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[12345678910111213141516class BaseParameters&#123;public: virtual void reset() &#123;&#125;&#125;;class MyParameters : public BaseParameters&#123;public: int data[3]; int buf[3];&#125;;MyParameters my_pars;memset(&amp;my_pars, 0, sizeof(my_pars));BaseParameters* pars = &amp;my_pars;//.....MyParameters* my = dynamic_cast&lt;MyParameters*&gt;(pars); 初始化数据结构MyParameters里的data和buf，正常来说需要初始化的内存空间是sizeof(int) 3 2 = 24字节，但是使用memset初始化MyParameters类型的数据结构时，sizeof(my_pars)却是28字节。 因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用memset时，会把该虚函数表的指针也初始化为0，而dynamic_cast也使用RTTI技术，运行时会使用到V-Table，可此时由于与V-Table的链接已经被破坏，导致程序发生异常。]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[归并排序为什么要用败者树？]]></title>
     <url>%2F2020%2F05%2F15%2F%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F%2F</url>
     <content type="text"><![CDATA[https://www.zhihu.com/question/35144290/answer/148681658 堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$ 其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后再用孩子节点的最小值和父节点进行比较，所以每调整一层需要比较两次。 这时人们想能否简化比较过程，这时就有了胜者树。 这样每次比较只用跟自己的兄弟节点进行比较就好，所以用胜者树可以比堆少一半的比较次数。 而胜者树在节点上升的时候首先需要获得父节点，然后再获得兄弟节点，然后再比较。这时人们又想能否再次减少比较次数，于是就有了败者树。 在使用败者树的时候，每个新元素上升时，只需要获得父节点并比较即可。 所以总的来说，减少了访存的时间。（拿空间换时间） 原因：胜者树以小为胜的话，如果比较兄弟节点发现更小直接替代父节点即可，如果更大则兄弟节点胜出。败者树比较父节点指向的点发现更大直接替换败者即可，更小则不需要替换然后接着上移。 二者都是顶点缺失，都要从底部叶节点遍历到顶点。 最后就是现在程序的主要瓶颈在于访存了，计算倒几乎可以忽略不计。]]></content>
+      <categories>
+        <category>分布式与并行计算</category>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>分布式与并行计算</tag>
+        <tag>数据结构</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[置换-选择排序]]></title>
     <url>%2F2020%2F05%2F15%2F-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%2F</url>
     <content type="text"><![CDATA[http://data.biancheng.net/view/78.html 如果内存为W，则内排序算法最多只能对大小略小于W的段进行排序。置换-选择排序可以降低段的个数 置换—选择排序算法的具体操作过程为： 首先从有24个记录的初始文件中输入 6 个记录到内存工作区中；从内存工作区中选出关键字最小的记录，将其记为 MINIMAX 记录；然后将 MINIMAX 记录输出到归并段文件中； 此时内存工作区中还剩余 5 个记录，若初始文件不为空，则从初始文件中输入下一个记录到内存工作区中； 从内存工作区中的所有比 MINIMAX 值大的记录中选出值最小的关键字的记录，作为新的 MINIMAX 记录； 重复过程 3—5，直至在内存工作区中选不出新的 MINIMAX 记录为止，由此就得到了一个初始归并段； 重复 2—6，直至内存工作为空，由此就可以得到全部的初始归并段。 123456789101112131415161718192021222324514939463829146115301485238327413892446583376 具体步骤： 首先输入前 6 个记录到内存工作区，其中关键字最小的为 29，所以选其为 MINIMAX 记录，同时将其输出到归并段文件中，如下图所示： 2.此时初始文件不为空，所以从中输入下一个记录 14 到内存工作区中，然后从内存工作区中的比 29 大的记录中，选择一个最小值作为新的 MINIMAX 值输出到 归并段文件中，如下图所示： 3.初始文件还不为空，所以继续输入 61 到内存工作区中，从内存工作区中的所有关键字比 38 大的记录中，选择一个最小值作为新的 MINIMAX 值输出到归并段文件中，如下图所示： 4.如此重复性进行，直至选不出 MINIMAX 值为止，如下图所示： 5.当选不出 MINIMAX 值时，表示一个归并段已经生成，则开始下一个归并段的创建，创建过程同第一个归并段一样，这里不再赘述。 败者树的实现： 在不断选择新的 MINIMAX 记录时，为了防止新加入的关键字值小的的影响，每个叶子结点附加一个序号位，当进行关键字的比较时，先比较序号，序号小的为胜者；序号相同的关键字值小的为胜者。 在初期创建败者树时也可以通过不断调整败者树的方式，其中所有记录的序号均设为 0 ，然后从初始文件中逐个输入记录到内存工作区中，自下而上调整败者树。过程如下： 1.首先创建一个空的败者树，如下图所示： 2.从初始文件中读入关键字为 51 的记录，自下往上调整败者树，如下图所示： 提示：序号 1 默认为比 0 小，为败者。 3.从初始文件中读入关键字为 49 的记录，调整败者树如下图所示： 4.从初始文件依次读入关键字为 39、46、38、29 的记录，调整败者树如下图所示： 5.由败者树得知，其最终胜者为 29，设为 MINIMAX 值，将其输出到初始归并文件中，同时再读入下一个记录 14，调整败者树，如下图所示： 通过不断地向败者树中读入记录，会产生多个 MINIMAX，直到最终所有叶子结点中的序号都为 2，此时产生的新的 MINIMAX 值的序号 2（循环判定胜者的段号决定是否输出新段），表明此归并段生成完成，而此新的 MINIMAX 值就是下一个归并段中的第一个记录。 注意：当读入新的记录时，如果其值比 MINIMAX 大，其序号则仍为 1；反之则为 2 ，比较时序号大的。 总结： 通过置换选择排序算法得到的初始归并段，其长度并不会受内存容量的限制，且通过证明得知使用该方法所获得的归并段的平均长度为内存工作区大小的两倍。 若不计输入输出的时间，通过置换选择排序生成初始归并段的所需时间为O(nlogw)（其中 n 为记录数，w 为内存工作区的大小）。 以下代码有问题，有时候会多生成几个数，但是可以拿来做个参考。123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141#include &lt;stdio.h&gt;#define MAXKEY 10000#define RUNEND_SYMBOL 10000 // 归并段结束标志#define w 6 // 内存工作区可容纳的记录个数#define N 24 // 设文件中含有的记录的数量typedef int KeyType; // 定义关键字类型为整型// 记录类型typedef struct&#123; KeyType key; // 关键字项&#125;RedType;typedef int LoserTree[w];// 败者树是完全二叉树且不含叶子，可采用顺序存储结构typedef struct&#123; RedType rec; /* 记录 */ KeyType key; /* 从记录中抽取的关键字 */ int rnum; /* 所属归并段的段号 */&#125;RedNode, WorkArea[w];// 从wa[q]起到败者树的根比较选择MINIMAX记录，并由q指示它所在的归并段void Select_MiniMax(LoserTree ls,WorkArea wa,int q)&#123; int p, s, t;// ls[t]为q的双亲节点，p作为中介 for(t = (w+q)/2,p = ls[t]; t &gt; 0;t = t/2,p = ls[t])&#123; // 段号小者 或者 段号相等且关键字更小的为胜者 if(wa[p].rnum &lt; wa[q].rnum || (wa[p].rnum == wa[q].rnum &amp;&amp; wa[p].key &lt; wa[q].key))&#123; s=q; q=ls[t]; //q指示新的胜利者 ls[t]=s; &#125; &#125; ls[0] = q; // 最后的冠军&#125;//输入w个记录到内存工作区wa,建得败者树ls,选出关键字最小的记录，并由s指示其在wa中的位置。void Construct_Loser(LoserTree ls, WorkArea wa, FILE *fi)&#123; int i; for(i = 0; i &lt; w; ++i)&#123; wa[i].rnum = wa[i].key = ls[i] = 0; &#125; for(i = w - 1; i &gt;= 0; --i)&#123; fread(&amp;wa[i].rec, sizeof(RedType), 1, fi);// 输入一个记录 wa[i].key = wa[i].rec.key; // 提取关键字 wa[i].rnum = 1; // 其段号为＂1＂ Select_MiniMax(ls,wa,i); // 调整败者树 &#125;&#125;// 求得一个初始归并段，fi为输入文件指针，fo为输出文件指针。void get_run(LoserTree ls,WorkArea wa,int rc,int *rmax,FILE *fi,FILE *fo)&#123; int q; KeyType minimax; // 选得的MINIMAX记录属当前段时 while(wa[ls[0]].rnum == rc)&#123; q = ls[0];// q指示MINIMAX记录在wa中的位置 minimax = wa[q].key; // 将刚选得的MINIMAX记录写入输出文件 fwrite(&amp;wa[q].rec, sizeof(RedType), 1, fo); // 如果输入文件结束，则虚设一条记录（属＂rmax+1＂段） if(feof(fi))&#123; wa[q].rnum = *rmax+1; wa[q].key = MAXKEY; &#125;else&#123; // 输入文件非空时 // 从输入文件读入下一记录 fread(&amp;wa[q].rec,sizeof(RedType),1,fi); wa[q].key = wa[q].rec.key;// 提取关键字 if(wa[q].key &lt; minimax)&#123; // 新读入的记录比上一轮的最小关键字还小，则它属下一段 *rmax = rc+1; wa[q].rnum = *rmax; &#125;else&#123; // 新读入的记录大则属当前段 wa[q].rnum = rc; &#125; &#125; // 选择新的MINIMAX记录 Select_MiniMax(ls, wa, q); &#125;&#125;//在败者树ls和内存工作区wa上用置换－选择排序求初始归并段void Replace_Selection(LoserTree ls, WorkArea wa, FILE *fi, FILE *fo)&#123; int rc, rmax; RedType j; j.key = RUNEND_SYMBOL; // 初建败者树 Construct_Loser(ls, wa, fi); rc = rmax =1;//rc指示当前生成的初始归并段的段号，rmax指示wa中关键字所属初始归并段的最大段号 while(rc &lt;= rmax)&#123;// ＂rc=rmax+1＂标志输入文件的置换－选择排序已完成 // 求得一个初始归并段 get_run(ls, wa, rc, &amp;rmax, fi, fo); fwrite(&amp;j,sizeof(RedType),1,fo);//将段结束标志写入输出文件 rc = wa[ls[0]].rnum;//设置下一段的段号 &#125;&#125;void print(RedType t)&#123; printf(&quot;%d &quot;,t.key);&#125;int main()&#123; RedType a[N]=&#123;51,49,39,46,38,29,14,61,15,30,1,48,52,3,63,27,4,13,89,24,46,58,33,76&#125;; RedType b; FILE *fi,*fo; //输入输出文件 LoserTree ls; // 败者树 WorkArea wa; // 内存工作区 int i, k; fo = fopen(&quot;ori&quot;,&quot;wb&quot;); //准备对 ori 文本文件进行写操作 //将&lt;u&gt;[数组](http://data.biancheng.net/view/181.html)&lt;/u&gt; a 写入大文件orifwrite(a, sizeof(RedType), N, fo); fclose(fo); //关闭指针 fo 表示的文件 fi = fopen(&quot;ori&quot;,&quot;rb&quot;);//准备对 ori 文本文件进行读操作 printf(&quot;文件中的待排序记录为:\n&quot;); for(i = 1; i &lt;= N; i++)&#123; // 依次将文件ori的数据读入并赋值给b fread(&amp;b,sizeof(RedType),1,fi); print(b); &#125; printf(&quot;\n&quot;); rewind(fi);// 使fi的指针重新返回大文件ori的起始位置，以便重新读入内存，产生有序的子文件。 fo = fopen(&quot;out&quot;,&quot;wb&quot;); // 用置换－选择排序求初始归并段 Replace_Selection(ls, wa, fi, fo); fclose(fo); fclose(fi); fi = fopen(&quot;out&quot;,&quot;rb&quot;); printf(&quot;初始归并段各为:\n&quot;); do&#123; k = fread(&amp;b, sizeof(RedType), 1, fi); //读 fi 指针指向的文件，并将读的记录赋值给 b，整个操作成功与否的结果赋值给 k if(k == 1)&#123; if(b.key ==MAXKEY)&#123;//当其值等于最大值时，表明当前初始归并段已经完成 printf(&quot;\n\n&quot;); continue; &#125; print(b); &#125; &#125;while(k == 1); return 0;&#125;]]></content>
+      <categories>
+        <category>分布式与并行计算</category>
+      </categories>
+      <tags>
+        <tag>分布式与并行计算</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[外部排序]]></title>

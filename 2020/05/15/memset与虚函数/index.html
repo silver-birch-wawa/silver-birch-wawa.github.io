@@ -15,21 +15,18 @@
 
 
 
-<meta name="description" content="VC 维是衡量函数类的复杂度的一种方式，通过评估函数类中函数的弯曲程度实现。WIKI上的解释是：空间中的点在经过排列之后，能够被模型f打散(shatter)的最大数量。 通过$y=a_0+a_1^Tx$将平面分割为两部分，如果满足平面中任意N个点（无论如何取值）总能被一条直线分开，而N+1个点却不行，则称该函数情况下的VC维为N。  举个无穷的VC维的例子： f(x,a)=I(sina*x) 从">
-<meta name="keywords" content="Machine Learning">
+<meta name="description" content="12345678910111213141516class BaseParameters&amp;#123;public:  virtual void reset() &amp;#123;&amp;#125;&amp;#125;;class MyParameters : public BaseParameters&amp;#123;public:  int data[3];  int buf[3];&amp;#125;;MyParameters">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VC维">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/10/12/C维/index.html">
+<meta property="og:title" content="memset与虚函数">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2020/05/15/memset与虚函数/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="VC 维是衡量函数类的复杂度的一种方式，通过评估函数类中函数的弯曲程度实现。WIKI上的解释是：空间中的点在经过排列之后，能够被模型f打散(shatter)的最大数量。 通过$y=a_0+a_1^Tx$将平面分割为两部分，如果满足平面中任意N个点（无论如何取值）总能被一条直线分开，而N+1个点却不行，则称该函数情况下的VC维为N。  举个无穷的VC维的例子： f(x,a)=I(sina*x) 从">
+<meta property="og:description" content="12345678910111213141516class BaseParameters&amp;#123;public:  virtual void reset() &amp;#123;&amp;#125;&amp;#125;;class MyParameters : public BaseParameters&amp;#123;public:  int data[3];  int buf[3];&amp;#125;;MyParameters">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-39.png">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-40.png">
-<meta property="og:updated_time" content="2019-10-12T13:01:13.518Z">
+<meta property="og:updated_time" content="2020-05-15T07:34:10.133Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="VC维">
-<meta name="twitter:description" content="VC 维是衡量函数类的复杂度的一种方式，通过评估函数类中函数的弯曲程度实现。WIKI上的解释是：空间中的点在经过排列之后，能够被模型f打散(shatter)的最大数量。 通过$y=a_0+a_1^Tx$将平面分割为两部分，如果满足平面中任意N个点（无论如何取值）总能被一条直线分开，而N+1个点却不行，则称该函数情况下的VC维为N。  举个无穷的VC维的例子： f(x,a)=I(sina*x) 从">
-<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-39.png">
+<meta name="twitter:title" content="memset与虚函数">
+<meta name="twitter:description" content="12345678910111213141516class BaseParameters&amp;#123;public:  virtual void reset() &amp;#123;&amp;#125;&amp;#125;;class MyParameters : public BaseParameters&amp;#123;public:  int data[3];  int buf[3];&amp;#125;;MyParameters">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -61,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>VC维 | Blog for AI Self-Study</title>
+<title>memset与虚函数 | Blog for AI Self-Study</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -276,12 +273,12 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-C维" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-memset与虚函数" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/2019/10/12/C维/" class="article-date">
-      <time datetime="2019-10-12T13:00:00.000Z" itemprop="datePublished">2019-10-12</time>
+<a href="/2020/05/15/memset与虚函数/" class="article-date">
+      <time datetime="2020-05-15T07:33:00.000Z" itemprop="datePublished">2020-05-15</time>
 </a>
 
 
@@ -297,7 +294,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      VC维
+      memset与虚函数
     </h1>
   
 
@@ -305,10 +302,14 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -319,12 +320,9 @@
       
           
         <hr>
-<p>VC 维是衡量函数类的复杂度的一种方式，通过评估函数类中函数的弯曲程度实现。WIKI上的解释是：空间中的点在经过排列之后，能够被模型f打散(shatter)的最大数量。</p>
-<p>通过$y=a_0+a_1^Tx$将平面分割为两部分，如果满足平面中任意N个点（无论如何取值）总能被一条直线分开，而N+1个点却不行，则称该函数情况下的VC维为N。</p>
-<p><img src="\images\pasted-39.png" alt="upload successful"></p>
-<p>举个无穷的VC维的例子：</p>
-<script type="math/tex; mode=display">f(x,a)=I(sina*x)</script><p><img src="\images\pasted-40.png" alt="upload successful"></p>
-<p>从这两个例子，可以看出VC维刻画了函数的弯曲程度，越弯曲其VC维越大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void reset() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">class MyParameters : public BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  int data[3];</span><br><span class="line">  int buf[3];</span><br><span class="line">&#125;;</span><br><span class="line">MyParameters my_pars;</span><br><span class="line">memset(&amp;my_pars, 0, sizeof(my_pars));</span><br><span class="line">BaseParameters* pars = &amp;my_pars;</span><br><span class="line">//.....</span><br><span class="line">MyParameters* my = dynamic_cast&lt;MyParameters*&gt;(pars);</span><br></pre></td></tr></table></figure>
+<p>初始化数据结构MyParameters里的data和buf，正常来说需要初始化的内存空间是sizeof(int) <em> 3 </em> 2 = 24字节，但是使用memset初始化MyParameters类型的数据结构时，sizeof(my_pars)却是28字节。</p>
+<p>因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用memset时，会把该虚函数表的指针也初始化为0，而dynamic_cast也使用RTTI技术，运行时会使用到V-Table，可此时由于与V-Table的链接已经被破坏，导致程序发生异常。</p>
 
       
     </div>
@@ -333,13 +331,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/10/12/C维/">VC维</a></p>
+        <p><span>本文标题:</span><a href="/2020/05/15/memset与虚函数/">memset与虚函数</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
-        <p><span>发布时间:</span>2019-10-12, 21:00:00</p>
-        <p><span>最后更新:</span>2019-10-12, 21:01:13</p>
+        <p><span>发布时间:</span>2020-05-15, 15:33:00</p>
+        <p><span>最后更新:</span>2020-05-15, 15:34:10</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/10/12/C维/" title="VC维">https://silver-birch-wawa.github.io/2019/10/12/C维/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/10/12/C维/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/15/memset与虚函数/" title="memset与虚函数">https://silver-birch-wawa.github.io/2020/05/15/memset与虚函数/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2020/05/15/memset与虚函数/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -351,16 +349,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">
-                    拉格朗日乘子法和（对偶性与KKT条件）
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/10/12/常见的几种决策树/">
-                    常见的几种决策树
+                <a href="/2020/05/15/归并排序为什么要用败者树？/">
+                    归并排序为什么要用败者树？
                 </a>
             </div>
         
@@ -407,7 +399,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"VC维　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://silver-birch-wawa.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"memset与虚函数　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://silver-birch-wawa.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
     
@@ -433,7 +425,7 @@
 -->
 <script>
 var gitment = new Gitment({
-      id: "VC维",
+      id: "memset与虚函数",
       owner: 'silver-birch-wawa',
       repo: 'silver-birch-wawa.github.io',
       oauth: {
@@ -451,15 +443,13 @@ gitment.render('git')
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/" title="上一篇: 拉格朗日乘子法和（对偶性与KKT条件）">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/10/12/常见的几种决策树/" title="下一篇: 常见的几种决策树">
+            <a href="/2020/05/15/归并排序为什么要用败者树？/" title="下一篇: 归并排序为什么要用败者树？">
                 <i class="fa fa-angle-right"></i>
             </a>
         
