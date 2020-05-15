@@ -279,6 +279,95 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/" class="article-date">
+      <time datetime="2019-08-14T12:53:00.000Z" itemprop="datePublished">2019-08-14</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<blockquote>
+<p>基于安全考虑：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_ptr&lt; string&gt; ps (new string (&quot;I reigned lonely as a cloud.”）;</span><br><span class="line">auto_ptr&lt;string&gt; vocation; </span><br><span class="line">vocaticn = ps;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>因为程序将试图删除同一个对象两次，要避免这种问题，方法有多种：</p>
+<p>（1）定义赋值运算符，使之执行深复制。这样两个指针将指向不同的对象，其中的一个对象是另一个对象的副本，缺点是浪费空间，所以智能指针都未采用此方案。</p>
+<p>（2）建立所有权概念。对于特定的对象，只能有一个智能指针可拥有，这样只有拥有对象的智能指针的析构函数会删除该对象。然后让赋值操作转让所有权。这就是用于auto_ptr和unique_ptr 的策略，但unique_ptr的策略更严格。</p>
+<p>（3）创建智能更高的指针，跟踪引用特定对象的智能指针数。这称为引用计数。例如，赋值时，计数将加1，而指针过期时，计数将减1,。当减为0时才调用delete。这是shared_ptr采用的策略。</p>
+<hr>
+<h2 id="1-unique-ptr："><a href="#1-unique-ptr：" class="headerlink" title="1. unique_ptr："></a>1. unique_ptr：</h2><p>unique_ptr由C++11引入，旨在替代不安全的auto_ptr。<br>unique_ptr不共享它的所管理的对象。它无法复制到其他unique_ptr，无法通过值传递到函数，也无法用于需要副本的任何标准模板库 （STL）算法。只能移动 unique_ptr，即对资源管理权限可以实现转移。</p>
+<p><img src="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/images\pasted-7.png" alt="upload successful"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//智能指针的创建  </span><br><span class="line">unique_ptr&lt;int&gt; u_i; //创建空智能指针</span><br><span class="line">u_i.reset(new int(3)); //&quot;绑定”动态对象  </span><br><span class="line">unique_ptr&lt;int&gt; u_i2(new int(4));//创建时指定动态对象</span><br><span class="line">unique_ptr&lt;T,D&gt; u(d);	//创建空unique_ptr,执行类型为T的对象，用类型为D的对象d来替代默认的删除器delete</span><br><span class="line"></span><br><span class="line">//所有权的变化  </span><br><span class="line">int *p_i = u_i2.release(); //释放所有权  </span><br><span class="line">unique_ptr&lt;string&gt; u_s(new string(&quot;abc&quot;));  </span><br><span class="line">unique_ptr&lt;string&gt; u_s2 = std::move(u_s); //所有权转移(通过移动语义)，u_s所有权转移后，变成“空指针” </span><br><span class="line">u_s2.reset(u_s.release());//所有权转移</span><br><span class="line">u_s2=nullptr;//显式销毁所指对象，同时智能指针变为空指针。与u_s2.reset()等价</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-auto-ptr：为什么不用它而用unique-ptr"><a href="#2-auto-ptr：为什么不用它而用unique-ptr" class="headerlink" title="2.auto_ptr：为什么不用它而用unique_ptr"></a>2.auto_ptr：为什么不用它而用unique_ptr</h2><p>使用unique_ptr时编译出错，与auto_ptr一样，unique_ptr也采用所有权模型，但在使用unique_ptr时，程序不会等到运行阶段崩溃，而在编译期因下述代码行出现错误。一句话总结就是：避免因潜在的内存问题导致程序崩溃。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	auto_ptr&lt;string&gt; films[5] =&#123;</span><br><span class="line">	auto_ptr&lt;string&gt; (new string(&quot;Fowl Balls&quot;)),</span><br><span class="line">	auto_ptr&lt;string&gt; (new string(&quot;Duck Walks&quot;)),</span><br><span class="line">	auto_ptr&lt;string&gt; (new string(&quot;Chicken Runs&quot;)),</span><br><span class="line">	auto_ptr&lt;string&gt; (new string(&quot;Turkey Errors&quot;))</span><br><span class="line">	&#125;;</span><br><span class="line">    auto_ptr&lt;string&gt; pwin;</span><br><span class="line">    pwin = films[2]; </span><br><span class="line">    // films[2] loses ownership. 将所有权从films[2]转让给pwin，此时films[2]不再引用该字符串从而变成空指针</span><br><span class="line"></span><br><span class="line">	for(int i = 0; i &lt; 4; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; *films[i] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从上面可见，unique_ptr比auto_ptr更加安全，因为auto_ptr有拷贝语义，拷贝后原象变得无效，再次访问原对象时会导致程序崩溃；unique_ptr则禁止了拷贝语义，但提供了移动语义，即可以使用std::move()进行控制权限的转移<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;string&gt; upt(new string(&quot;lvlv&quot;));</span><br><span class="line">unique_ptr&lt;string&gt; upt1(upt);	//编译出错，已禁止拷贝</span><br><span class="line">unique_ptr&lt;string&gt; upt1=upt;	//编译出错，已禁止拷贝</span><br><span class="line">unique_ptr&lt;string&gt; upt1=std::move(upt);  //控制权限转移，正确的写法</span><br><span class="line"></span><br><span class="line">auto_ptr&lt;string&gt; apt(new string(&quot;lvlv&quot;));</span><br><span class="line">auto_ptr&lt;string&gt; apt1(apt);	//编译通过</span><br><span class="line">auto_ptr&lt;string&gt; apt1=apt;	//编译通过</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>使用shared_ptr时运行正常，因为shared_ptr采用引用计数，pwin和films[2]都指向同一块内存，在释放空间时因为事先要判断引用计数值的大小因此不会出现多次删除一个对象的错误。</li>
+</ul>
+<h2 id="3-shared-ptr"><a href="#3-shared-ptr" class="headerlink" title="3. shared_ptr"></a>3. shared_ptr</h2><p>参看<code>内存垃圾管理（智能指针）</code></p>
+<h2 id="4-weak-ptr"><a href="#4-weak-ptr" class="headerlink" title="4. weak_ptr"></a>4. weak_ptr</h2><p>被设计为与shared_ptr共同工作，可以从一个shared_ptr或者另一个weak_ptr对象构造而来。</p>
+<blockquote>
+<p>循环引用：</p>
+</blockquote>
+<p>一般来讲，解除这种循环引用有下面三种可行的方法：<br>（1）当只剩下最后一个引用的时候需要手动打破循环引用释放对象。<br>（2）当parent的生存期超过children的生存期的时候，children改为使用一个普通指针指向parent。<br>（3）使用弱引用的智能指针打破这种循环引用。<br>虽然这三种方法都可行，但方法1和方法2都需要程序员手动控制，麻烦且容易出错。这里主要介绍一下第三种方法，使用弱引用的智能指针<code>std:weak_ptr</code>来打破循环引用。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/STL/">STL</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STL/">STL</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-ecl-stdcall-fastcall-pascal-thiscall-的区别" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -406,11 +495,11 @@
 <blockquote>
 <p>A的内存分布：(每一个元素都存在最大元素大小的空间内)</p>
 </blockquote>
-<p><img src="\images\pasted-5.png" alt="upload successful"></p>
+<p><img src="/2019/08/13/存对齐/images\pasted-5.png" alt="upload successful"></p>
 <blockquote>
 <p>B的内存分布：</p>
 </blockquote>
-<p><img src="\images\pasted-6.png" alt="upload successful"></p>
+<p><img src="/2019/08/13/存对齐/images\pasted-6.png" alt="upload successful"></p>
 
       
     </div>
@@ -480,7 +569,7 @@
           
         <hr>
 <p>大端模式，是指数据的高字节保存在内存的低地址中。</p>
-<p><img src="\images\pasted-4.png" alt="upload successful"><br>4个两位16进制数=8*4=32位=4B=1int</p>
+<p><img src="/2019/08/13/小端存储/images\pasted-4.png" alt="upload successful"><br>4个两位16进制数=8*4=32位=4B=1int</p>
 <hr>
 <p>编程判断大小端的两种方法：</p>
 <ol>
@@ -559,7 +648,7 @@
           
         <hr>
 <p>函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）</p>
-<p><img src="\images\pasted-3.png" alt="upload successful"></p>
+<p><img src="/2019/08/13/指针的形参/images\pasted-3.png" alt="upload successful"></p>
 <h4 id="p形参的情况："><a href="#p形参的情况：" class="headerlink" title="*p形参的情况："></a>*p形参的情况：</h4><ul>
 <li>一开始:</li>
 </ul>
@@ -939,7 +1028,7 @@
 <p>说明：</p>
 </blockquote>
 <p>使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关联的时间开销很少，提高了多态性的效率。</p>
-<p><img src="\images\pasted-2.png" alt="upload successful"></p>
+<p><img src="/2019/08/13/虚函数/images\pasted-2.png" alt="upload successful"></p>
 <p>编译器生成的析构函数都是非虚的，除非是一个子类，其父类有个虚析构函数，此时的虚函数特性继承自基类。有虚函数的类，一般情况下要定义一个虚析构函数。</p>
 <p>纯虚函数不能new。</p>
 <hr>
@@ -1088,82 +1177,6 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/08/11/hello-world/" class="article-date">
-      <time datetime="2019-08-11T12:22:00.000Z" itemprop="datePublished">2019-08-11</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/11/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p id="1"></p>
-
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-<p><a href="#1">第一段</a></p>
-<p><img src="\\images\pasted-26.png\" alt="upload successful"></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1175,7 +1188,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2019 SaltedMdFiveSh
+                2016-2020 SaltedMdFiveSh
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>
@@ -1318,5 +1331,20 @@ MathJax.Hub.Queue(function() {
         opacity: 1;
       }      
     </style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
