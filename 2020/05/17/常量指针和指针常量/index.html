@@ -15,17 +15,18 @@
 
 
 
-<meta name="description" content="Machine Learning,Data Mining,Deep Learning">
-<meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog for AI Self-Study">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/categories/C/page/2/index.html">
+<meta name="description" content="作用域：默认状态下，Const对象仅在文件内有效。所以不同文件的const对象不是同一个对象，即使名字相同，因为这样才能避免重复定义。 那为了使一个非常量表达式的const变量在不同文件之间可以共享，可以使用extern来解决问题。1extern const int temp;  两种一样的写法const int a; int const a; 这两个写法是等同的 const int *a;">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="const">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2020/05/17/常量指针和指针常量/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="Machine Learning,Data Mining,Deep Learning">
+<meta property="og:description" content="作用域：默认状态下，Const对象仅在文件内有效。所以不同文件的const对象不是同一个对象，即使名字相同，因为这样才能避免重复定义。 那为了使一个非常量表达式的const变量在不同文件之间可以共享，可以使用extern来解决问题。1extern const int temp;  两种一样的写法const int a; int const a; 这两个写法是等同的 const int *a;">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-05-17T12:31:26.942Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog for AI Self-Study">
-<meta name="twitter:description" content="Machine Learning,Data Mining,Deep Learning">
+<meta name="twitter:title" content="const">
+<meta name="twitter:description" content="作用域：默认状态下，Const对象仅在文件内有效。所以不同文件的const对象不是同一个对象，即使名字相同，因为这样才能避免重复定义。 那为了使一个非常量表达式的const变量在不同文件之间可以共享，可以使用extern来解决问题。1extern const int temp;  两种一样的写法const int a; int const a; 这两个写法是等同的 const int *a;">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -57,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Category: C++ | Blog for AI Self-Study</title>
+<title>const | Blog for AI Self-Study</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -67,10 +68,10 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
-        isCategory: true,
+        isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
         search: true
@@ -272,222 +273,218 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-常量指针和指针常量" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2020/05/17/常量指针和指针常量/" class="article-date">
+      <time datetime="2020-05-17T11:53:00.000Z" itemprop="datePublished">2020-05-17</time>
+</a>
+
+
+
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      const
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/ifndef-define-endif/" class="archive-article-date">
-      <time datetime="2019-08-13T03:04:00.000Z" itemprop="datePublished">08-13</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
+    <div class="article-entry" itemprop="articleBody">
+      
           
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
+        <hr>
+<h4 id="作用域："><a href="#作用域：" class="headerlink" title="　作用域："></a>　作用域：</h4><p>默认状态下，Const对象仅在文件内有效。所以不同文件的const对象不是同一个对象，即使名字相同，因为这样才能避免重复定义。</p>
+<p>那为了使一个非常量表达式的const变量在不同文件之间可以共享，可以使用extern来解决问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extern const int temp;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="两种一样的写法"><a href="#两种一样的写法" class="headerlink" title="两种一样的写法"></a>两种一样的写法</h4><p><code>const int a; int const a;</code> 这两个写法是等同的</p>
+<p><code>const int *a; int const* a;</code>含义相同。</p>
+<hr>
+<h4 id="常量指针和指针常量"><a href="#常量指针和指针常量" class="headerlink" title="　常量指针和指针常量"></a>　常量指针和指针常量</h4><blockquote>
+<p>常量指针声明：<code>const int * p; int const * p;</code>（指针指向常量）</p>
+</blockquote>
+<p>具有只能够读取内存中数据，却不能够修改内存中数据的属性的指针，称为指向常量的指针。</p>
+<blockquote>
+<p>指针常量声明：<code>int * const p=&amp;a;</code>（指针指向常量地址）</p>
+</blockquote>
+<p>指针常量是指指针所指向的位置不能改变，即指针本身是一个常量，但是指针所指向的内容可以改变。</p>
+<ul>
+<li>指针常量必须在声明的同时对其初始化，不允许先声明一个指针常量随后再对其赋值，这和声明一般的常量是一样的。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int num=0;</span><br><span class="line"></span><br><span class="line">int*const cur=&amp;num;//一直指向num</span><br><span class="line"></span><br><span class="line">const double pi=3.1415;</span><br><span class="line"></span><br><span class="line">const double * const pip=&amp;pi;//指向常量的常量指针。</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
     </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/olatile/" class="archive-article-date">
-      <time datetime="2019-08-13T03:00:00.000Z" itemprop="datePublished">08-13</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/olatile/">volatile</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/05/17/常量指针和指针常量/">const</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
+        <p><span>发布时间:</span>2020-05-17, 19:53:00</p>
+        <p><span>最后更新:</span>2020-05-17, 20:31:26</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/17/常量指针和指针常量/" title="const">https://silver-birch-wawa.github.io/2020/05/17/常量指针和指针常量/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2020/05/17/常量指针和指针常量/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
 
 
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/联函数/" class="archive-article-date">
-      <time datetime="2019-08-13T01:41:00.000Z" itemprop="datePublished">08-13</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/联函数/">内联函数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/13/虚函数/" class="archive-article-date">
-      <time datetime="2019-08-13T01:36:00.000Z" itemprop="datePublished">08-13</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/13/虚函数/">虚函数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <!-- 添加代码  -->
-<a href="/2019/08/12/-编译过程/" class="archive-article-date">
-      <time datetime="2019-08-12T14:26:00.000Z" itemprop="datePublished">08-12</time>
-</a>
-
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/12/-编译过程/">C++编译过程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/categories/C/">&laquo; Prev</a><a class="page-number" href="/categories/C/">1</a><span class="page-number current">2</span>
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/05/20/gcc优化/">
+                    gcc优化
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/05/15/memset与虚函数/">
+                    memset与虚函数
+                </a>
+            </div>
+        
     </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#作用域："><span class="toc-number">1.</span> <span class="toc-text">　作用域：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两种一样的写法"><span class="toc-number">2.</span> <span class="toc-text">两种一样的写法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常量指针和指针常量"><span class="toc-number">3.</span> <span class="toc-text">　常量指针和指针常量</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    <div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>         
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"const　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://silver-birch-wawa.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+    
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+    
+
+
+
+  
+  <!-- Gitment评论插件通用代码 -->
+<div id="git"></div>
+<link rel="stylesheet" href="https://silver-birch-wawa.github.io/css/gitment.css">
+<script src="https://silver-birch-wawa.github.io/js/gitment.js"></script>
+<!-- 汉化
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+-->
+<script>
+var gitment = new Gitment({
+      id: "const",
+      owner: 'silver-birch-wawa',
+      repo: 'silver-birch-wawa.github.io',
+      oauth: {
+        client_id: '0bdbf12aa2f1fbb3971f',
+        client_secret: 'fc1dc6d7c7886a85d50e4c5225294b8f107d9e31'
+      },
+})
+gitment.render('git')
+</script>
+<!-- Gitment代码结束 -->
   
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/05/20/gcc优化/" title="上一篇: gcc优化">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2020/05/15/memset与虚函数/" title="下一篇: memset与虚函数">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc优化/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/常量指针和指针常量/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset与虚函数/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-选择排序/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/排序/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C维/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/红黑树/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/感知机/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
