@@ -316,7 +316,7 @@
 <h3 id="单头注意力"><a href="#单头注意力" class="headerlink" title="单头注意力"></a>单头注意力</h3><p>Q（查询query）=&gt; （seq_len×d_k）</p>
 <p>K（键值key）=&gt; Q*K 输出每个单词和其他单词的概率关系分布（seq_len x seq_len）</p>
 <p>V（值 value）=&gt; 赋予每个向量重要性</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4559317-72f06257719d6799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="/images/pasted-71.png" alt="upload successful"></p>
 <p>d_k：是 Q/K 的维度，通常远小于 d_model（如 d_k=64），目的是降低计算复杂度，将原始得分除以 √d_k，避免因 d_k 过大导致 Softmax 输出过于极端（梯度消失）。</p>
 <p>d_model：输入词向量的维度</p>
 <p>输入都是同一个词向量+位置编码，注意力的Q、K、V矩阵参数不同但是长宽相同（seq_len×d_k）</p>
