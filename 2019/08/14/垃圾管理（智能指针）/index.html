@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<html >
+<head>
 
     <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
@@ -8,30 +8,30 @@
     <![endif]-->
 
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-<meta name="author" content="SaltedMdFiveSh">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="SaltedMdFiveSh" />
 
 
 
-<meta name="description" content="智能指针：https://blog.csdn.net/u012501459/article/details/48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
-<meta name="keywords" content="C++">
+<meta name="description" content="智能指针：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u012501459&#x2F;article&#x2F;details&#x2F;48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内存垃圾管理（智能指针）">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/08/14/垃圾管理（智能指针）/index.html">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="智能指针：https://blog.csdn.net/u012501459/article/details/48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-9.png">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-8.png">
-<meta property="og:updated_time" content="2019-08-14T13:02:14.756Z">
+<meta property="og:description" content="智能指针：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u012501459&#x2F;article&#x2F;details&#x2F;48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
+<meta property="og:locale">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/images/pasted-9.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/images/pasted-8.png">
+<meta property="article:published_time" content="2019-08-14T12:59:00.000Z">
+<meta property="article:modified_time" content="2019-08-14T13:02:16.000Z">
+<meta property="article:author" content="SaltedMdFiveSh">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内存垃圾管理（智能指针）">
-<meta name="twitter:description" content="智能指针：https://blog.csdn.net/u012501459/article/details/48229399  C++11中引入了智能指针的概念。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，使用智能指针能更好的管理堆内存。  构造函数中创建类的新对象时，初始化引用计数为1； 拷贝构造函数复制指针，并使相应的引用计数增加1； 赋值操作减少左操作数所值对象的引用计数，增">
-<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-9.png">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/images/pasted-9.png">
 
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
 
     <link rel="alternate" href="/atom.xml" title="Blog for AI Self-Study" type="application/atom+xml">
@@ -54,7 +54,9 @@
     <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
 
 
+
 <link rel="stylesheet" href="/css/style.css">
+
 
 
 
@@ -97,7 +99,7 @@
 
 
 
-</head></html>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -108,7 +110,7 @@
             <img src="/img/avatar.png" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author"><a href="/"></a></h1>
         </hgroup>
 
         
@@ -175,7 +177,7 @@
                         
                             <li><a href="/archives/">所有文章</a></li>
                         
-                            <li><a href="/tags/随笔">随笔</a></li>
+                            <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                         
                             <li><a href="/tags/">标签云</a></li>
                         
@@ -199,7 +201,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式与并行计算/">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -234,7 +236,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -242,7 +244,7 @@
                 <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
             </hgroup>
             
             <nav class="header-menu">
@@ -252,7 +254,7 @@
                 
                     <li><a href="/archives/">所有文章</a></li>
                 
-                    <li><a href="/tags/随笔">随笔</a></li>
+                    <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                 
                     <li><a href="/tags/">标签云</a></li>
                 
@@ -280,7 +282,7 @@
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/2019/08/14/垃圾管理（智能指针）/" class="article-date">
+<a href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/" class="article-date">
       <time datetime="2019-08-14T12:59:00.000Z" itemprop="datePublished">2019-08-14</time>
 </a>
 
@@ -312,7 +314,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -333,11 +335,11 @@
 <li>赋值操作减少左操作数所值对象的引用计数，增加右操作数所指对象的引用计数；</li>
 <li>析构函数使引用计数减少1，并且当引用计数为0时，释放指针说指向的对象；</li>
 </ul>
-<p><img src="\images\pasted-9.png" alt="upload successful"></p>
-<h4 id="Ref-ptr类："><a href="#Ref-ptr类：" class="headerlink" title="Ref_ptr类："></a>Ref_ptr类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//使用int*指针初始化ptr，注意必须要放在初始化列表中</span><br><span class="line">Ref_ptr(int * i):ptr(new Referenced(i))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">//拷贝构造函数，又有一个变量指向了这块内存</span><br><span class="line">Ref_ptr(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    ptr=rhs.ptr;//将右操作数的引用计数对象赋值给左操作数</span><br><span class="line">    ptr-&gt;ref();//将它们的应用计数加1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Ref_ptr r1=new int(4); //调用构造函数</span><br><span class="line">Ref_ptr r2=r1; //调用拷贝构造函数</span><br></pre></td></tr></table></figure>
-<p><img src="\images\pasted-8.png" alt="upload successful"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//赋值操作符，右操作数的引用计数要减1，左操作数的引用计数要加1</span><br><span class="line">Ref_ptr &amp; operator=(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    if(&amp;rhs==this)</span><br><span class="line">        return *this;</span><br><span class="line">    if(ptr-&gt;unref()==0)//赋值操作符，首先将当前类的引用计数减1，因为现在指向它的指针少了一个。</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    ptr=rhs.ptr; //将右操作数的引用计数赋值给当前对象</span><br><span class="line">    ptr-&gt;ref(); //引用计数加1</span><br><span class="line">    return *this;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，引用计数要减1，如果减为0，删除这块内存</span><br><span class="line">~Ref_ptr()</span><br><span class="line">&#123;</span><br><span class="line">    if(ptr-&gt;unref()==0)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Referenced类："><a href="#Referenced类：" class="headerlink" title="Referenced类："></a>Referenced类：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//初始化这个类，引用计数设为1，并且将p指向传入的地址</span><br><span class="line">Referenced(int * pi)</span><br><span class="line">&#123;</span><br><span class="line">    refCount=1;</span><br><span class="line">    p=pi;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//引用计数加1</span><br><span class="line">int ref()</span><br><span class="line">&#123;</span><br><span class="line">    return ++refCount;</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line">//引用计数减1</span><br><span class="line">int unref()</span><br><span class="line">&#123;</span><br><span class="line">    return --refCount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，释放掉内存</span><br><span class="line">~Referenced()</span><br><span class="line">&#123;</span><br><span class="line">    cout&lt;&lt;&quot;delete referenced&quot;&lt;&lt;endl;</span><br><span class="line">    delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/images\pasted-9.png" alt="upload successful"></p>
+<h4 id="Ref-ptr类："><a href="#Ref-ptr类：" class="headerlink" title="Ref_ptr类："></a>Ref_ptr类：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//使用int*指针初始化ptr，注意必须要放在初始化列表中</span><br><span class="line">Ref_ptr(int * i):ptr(new Referenced(i))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">//拷贝构造函数，又有一个变量指向了这块内存</span><br><span class="line">Ref_ptr(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    ptr=rhs.ptr;//将右操作数的引用计数对象赋值给左操作数</span><br><span class="line">    ptr-&gt;ref();//将它们的应用计数加1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Ref_ptr r1=new int(4); //调用构造函数</span><br><span class="line">Ref_ptr r2=r1; //调用拷贝构造函数</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/images\pasted-8.png" alt="upload successful"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//赋值操作符，右操作数的引用计数要减1，左操作数的引用计数要加1</span><br><span class="line">Ref_ptr &amp; operator=(const Ref_ptr &amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    if(&amp;rhs==this)</span><br><span class="line">        return *this;</span><br><span class="line">    if(ptr-&gt;unref()==0)//赋值操作符，首先将当前类的引用计数减1，因为现在指向它的指针少了一个。</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    ptr=rhs.ptr; //将右操作数的引用计数赋值给当前对象</span><br><span class="line">    ptr-&gt;ref(); //引用计数加1</span><br><span class="line">    return *this;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，引用计数要减1，如果减为0，删除这块内存</span><br><span class="line">~Ref_ptr()</span><br><span class="line">&#123;</span><br><span class="line">    if(ptr-&gt;unref()==0)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;delete Ref_ptr&quot;&lt;&lt;endl;</span><br><span class="line">        delete ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Referenced类："><a href="#Referenced类：" class="headerlink" title="Referenced类："></a>Referenced类：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//初始化这个类，引用计数设为1，并且将p指向传入的地址</span><br><span class="line">Referenced(int * pi)</span><br><span class="line">&#123;</span><br><span class="line">    refCount=1;</span><br><span class="line">    p=pi;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//引用计数加1</span><br><span class="line">int ref()</span><br><span class="line">&#123;</span><br><span class="line">    return ++refCount;</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line">//引用计数减1</span><br><span class="line">int unref()</span><br><span class="line">&#123;</span><br><span class="line">    return --refCount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//析构函数，释放掉内存</span><br><span class="line">~Referenced()</span><br><span class="line">&#123;</span><br><span class="line">    cout&lt;&lt;&quot;delete referenced&quot;&lt;&lt;endl;</span><br><span class="line">    delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="好处："><a href="#好处：" class="headerlink" title="好处："></a>好处：</h4><ul>
 <li>智能指针能够帮助我们处理资源泄露问题；</li>
 <li>它也能够帮我们处理空悬指针的问题；</li>
@@ -351,13 +353,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
+        <p><span>本文标题:</span><a href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
         <p><span>发布时间:</span>2019-08-14, 20:59:00</p>
-        <p><span>最后更新:</span>2019-08-14, 21:02:14</p>
+        <p><span>最后更新:</span>2019-08-14, 21:02:16</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/08/14/垃圾管理（智能指针）/" title="内存垃圾管理（智能指针）">https://silver-birch-wawa.github.io/2019/08/14/垃圾管理（智能指针）/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/14/垃圾管理（智能指针）/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/" title="内存垃圾管理（智能指针）">https://silver-birch-wawa.github.io/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -370,14 +372,14 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/08/14/new和malloc的区别/">
+                <a href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">
                     new和malloc的区别
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">
+                <a href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">
                     STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr
                 </a>
             </div>
@@ -390,7 +392,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ref-ptr类："><span class="toc-number">1.</span> <span class="toc-text">Ref_ptr类：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Referenced类："><span class="toc-number">2.</span> <span class="toc-text">Referenced类：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#好处："><span class="toc-number">3.</span> <span class="toc-text">好处：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ref-ptr%E7%B1%BB%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">Ref_ptr类：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Referenced%E7%B1%BB%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">Referenced类：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A5%BD%E5%A4%84%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">好处：</span></a></li></ol>
         
     </div>
     <style>
@@ -469,7 +471,7 @@ gitment.render('git')
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/08/14/new和malloc的区别/" title="上一篇: new和malloc的区别">
+            <a href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/" title="上一篇: new和malloc的区别">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -477,13 +479,13 @@ gitment.render('git')
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/" title="下一篇: STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr">
+            <a href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/" title="下一篇: STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc优化/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/常量指针和指针常量/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset与虚函数/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-选择排序/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/排序/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C维/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/红黑树/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/感知机/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">多头注意力机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C%E7%BB%B4/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a></li></ul>
 
 
 
@@ -497,7 +499,7 @@ gitment.render('git')
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2020 SaltedMdFiveSh
+                2016-2025 SaltedMdFiveSh
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>

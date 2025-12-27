@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<html >
+<head>
 
     <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
@@ -8,29 +8,29 @@
     <![endif]-->
 
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-<meta name="author" content="SaltedMdFiveSh">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="SaltedMdFiveSh" />
 
 
 
 <meta name="description" content="有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。  状态空间  我们用一个三元组(m，c，b)来表示河岸上的状态，其中">
-<meta name="keywords" content="算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="传教士和野人问题（M-C问题）">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/10/12/传教士和野人问题（M-C问题）/index.html">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
 <meta property="og:description" content="有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。  状态空间  我们用一个三元组(m，c，b)来表示河岸上的状态，其中">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-35.png">
-<meta property="og:updated_time" content="2019-10-12T12:46:40.422Z">
+<meta property="og:locale">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/images/pasted-35.png">
+<meta property="article:published_time" content="2019-10-12T12:44:00.000Z">
+<meta property="article:modified_time" content="2019-10-12T12:46:42.000Z">
+<meta property="article:author" content="SaltedMdFiveSh">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="传教士和野人问题（M-C问题）">
-<meta name="twitter:description" content="有N个传教士和N个野人来到河边渡河，河岸有一条船，每次至多可供k人乘渡。河两岸以及船上的野人数目总是不超过传教士的数目(否则不安全，传教士有可能被野人吃掉)。即求解传教士和野人从左岸全部摆渡到右岸的过程中，任何时刻满足M(传教士数)≥C(野人数)和M+C≤k的摆渡方案。以下讨论三个传教士三个野人还有一条船最多能载两个人的方案。  状态空间  我们用一个三元组(m，c，b)来表示河岸上的状态，其中">
-<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-35.png">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/images/pasted-35.png">
 
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
 
     <link rel="alternate" href="/atom.xml" title="Blog for AI Self-Study" type="application/atom+xml">
@@ -53,7 +53,9 @@
     <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
 
 
+
 <link rel="stylesheet" href="/css/style.css">
+
 
 
 
@@ -96,7 +98,7 @@
 
 
 
-</head></html>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -107,7 +109,7 @@
             <img src="/img/avatar.png" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author"><a href="/"></a></h1>
         </hgroup>
 
         
@@ -174,7 +176,7 @@
                         
                             <li><a href="/archives/">所有文章</a></li>
                         
-                            <li><a href="/tags/随笔">随笔</a></li>
+                            <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                         
                             <li><a href="/tags/">标签云</a></li>
                         
@@ -198,7 +200,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式与并行计算/">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -233,7 +235,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -241,7 +243,7 @@
                 <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
             </hgroup>
             
             <nav class="header-menu">
@@ -251,7 +253,7 @@
                 
                     <li><a href="/archives/">所有文章</a></li>
                 
-                    <li><a href="/tags/随笔">随笔</a></li>
+                    <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                 
                     <li><a href="/tags/">标签云</a></li>
                 
@@ -279,7 +281,7 @@
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/2019/10/12/传教士和野人问题（M-C问题）/" class="article-date">
+<a href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/" class="article-date">
       <time datetime="2019-10-12T12:44:00.000Z" itemprop="datePublished">2019-10-12</time>
 </a>
 
@@ -305,13 +307,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/算法/">算法</a>
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -330,7 +332,7 @@
 <p>约束条件是: 两岸上M≥C, 船上M+C≤2</p>
 <p>（mi，ci）为船上的传教士和野人数量</p>
 <p>左岸初态为（3,3,1），终态为（0,0,0）</p>
-<p><img src="\images\pasted-35.png" alt="upload successful"></p>
+<p><img src="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/images\pasted-35.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>为什么不能直接暴力穷举然后剪枝？</p>
@@ -338,7 +340,7 @@
 <p>因为可能运过去两个人，然后又把同样的两个人运回来了(或者使用别的形式但是依旧是空转)，所以要杜绝这种可能，当然最好的方法就是使用带有记忆的状态，如果之前遇到过这种状态那就拒绝执行return。</p>
 <p>所以….如何实现去重的目标？？？</p>
 <p>答：set<string int>，我采取的是单个状态采用int，记录路径经过的状态采用string（中间用空格隔开）</string></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;set&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int N;</span><br><span class="line">set&lt;string&gt;ans;</span><br><span class="line">void print(vector&lt;int&gt;way)&#123;</span><br><span class="line">    int i=0;</span><br><span class="line">    string h;</span><br><span class="line">    for(i=1;i&lt;way.size();i++)&#123;</span><br><span class="line">        printf(&quot;%03d   &quot;,way[i]);</span><br><span class="line">        if(way[i]&lt;100)&#123;</span><br><span class="line">            h+=&quot;0&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        h+=to_string(way[i]);</span><br><span class="line">        h+=&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;&quot;\n-------&quot;&lt;&lt;endl;</span><br><span class="line">    ans.insert(h);</span><br><span class="line">&#125;</span><br><span class="line">void dfs(int pre,int ni,int nj,int c,set&lt;int&gt;s,vector&lt;int&gt;way)&#123;</span><br><span class="line">    // set insert</span><br><span class="line">    int now=ni*100+nj*10+c;</span><br><span class="line">    s.insert(pre);    </span><br><span class="line">    if(s.count(now)||(N-ni)&lt;0||(N-nj)&lt;0||ni&lt;0||nj&lt;0||(ni&lt;nj&amp;&amp;ni!=0)||((N-ni)&lt;(N-nj)&amp;&amp;(N-ni)!=0))&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    if(pre==0)&#123;</span><br><span class="line">        // 如果上一轮就截止了</span><br><span class="line">        print(way);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    way.push_back(pre);</span><br><span class="line">    if(c==1)&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,0,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni-1,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-1,0,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni-2,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-2,0,s,way);</span><br><span class="line">        dfs(now,ni-1,nj-1,0,s,way);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,1,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni+1,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+1,1,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni+2,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+2,1,s,way);</span><br><span class="line">        dfs(now,ni+1,nj+1,1,s,way);        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int chooseN;</span><br><span class="line">    int c=1;</span><br><span class="line">    // init num and ship side 1 means left and 0 means right</span><br><span class="line">    int ni,nj;</span><br><span class="line">    // Ni(传教士),Nj(野人) on the left side.</span><br><span class="line">    int pre=-1;</span><br><span class="line">    set&lt;int&gt;s;</span><br><span class="line">    //cin&gt;&gt;chooseN;</span><br><span class="line">    chooseN=3;</span><br><span class="line">    N=nj=ni=chooseN;</span><br><span class="line">    vector&lt;int&gt;way;</span><br><span class="line">    dfs(pre,ni,nj,c,s,way);</span><br><span class="line">    cout&lt;&lt;&quot;\nfinally , the answer is:\n\n&quot;;</span><br><span class="line">    for(auto it=ans.begin();it!=ans.end();it++)&#123;</span><br><span class="line">        cout&lt;&lt;*it&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line"></span><br><span class="line">finally , the answer is:</span><br><span class="line"></span><br><span class="line">331 220 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 220 321 300 311 110 221 020 031 010 111</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 111</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;set&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int N;</span><br><span class="line">set&lt;string&gt;ans;</span><br><span class="line">void print(vector&lt;int&gt;way)&#123;</span><br><span class="line">    int i=0;</span><br><span class="line">    string h;</span><br><span class="line">    for(i=1;i&lt;way.size();i++)&#123;</span><br><span class="line">        printf(&quot;%03d   &quot;,way[i]);</span><br><span class="line">        if(way[i]&lt;100)&#123;</span><br><span class="line">            h+=&quot;0&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        h+=to_string(way[i]);</span><br><span class="line">        h+=&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;&quot;\n-------&quot;&lt;&lt;endl;</span><br><span class="line">    ans.insert(h);</span><br><span class="line">&#125;</span><br><span class="line">void dfs(int pre,int ni,int nj,int c,set&lt;int&gt;s,vector&lt;int&gt;way)&#123;</span><br><span class="line">    // set insert</span><br><span class="line">    int now=ni*100+nj*10+c;</span><br><span class="line">    s.insert(pre);    </span><br><span class="line">    if(s.count(now)||(N-ni)&lt;0||(N-nj)&lt;0||ni&lt;0||nj&lt;0||(ni&lt;nj&amp;&amp;ni!=0)||((N-ni)&lt;(N-nj)&amp;&amp;(N-ni)!=0))&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    if(pre==0)&#123;</span><br><span class="line">        // 如果上一轮就截止了</span><br><span class="line">        print(way);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    way.push_back(pre);</span><br><span class="line">    if(c==1)&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,0,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni-1,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-1,0,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni-2,nj,0,s,way);</span><br><span class="line">        dfs(now,ni,nj-2,0,s,way);</span><br><span class="line">        dfs(now,ni-1,nj-1,0,s,way);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        // zero people . no one on ship is illegal</span><br><span class="line">        // dfs(now,ni,nj,1,s,way);</span><br><span class="line">        // one people on</span><br><span class="line">        dfs(now,ni+1,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+1,1,s,way);</span><br><span class="line">        // two people on</span><br><span class="line">        dfs(now,ni+2,nj,1,s,way);</span><br><span class="line">        dfs(now,ni,nj+2,1,s,way);</span><br><span class="line">        dfs(now,ni+1,nj+1,1,s,way);        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int chooseN;</span><br><span class="line">    int c=1;</span><br><span class="line">    // init num and ship side 1 means left and 0 means right</span><br><span class="line">    int ni,nj;</span><br><span class="line">    // Ni(传教士),Nj(野人) on the left side.</span><br><span class="line">    int pre=-1;</span><br><span class="line">    set&lt;int&gt;s;</span><br><span class="line">    //cin&gt;&gt;chooseN;</span><br><span class="line">    chooseN=3;</span><br><span class="line">    N=nj=ni=chooseN;</span><br><span class="line">    vector&lt;int&gt;way;</span><br><span class="line">    dfs(pre,ni,nj,c,s,way);</span><br><span class="line">    cout&lt;&lt;&quot;\nfinally , the answer is:\n\n&quot;;</span><br><span class="line">    for(auto it=ans.begin();it!=ans.end();it++)&#123;</span><br><span class="line">        cout&lt;&lt;*it&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021   </span><br><span class="line">-------</span><br><span class="line">331   310   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   111   </span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line">331   220   321   300   311   110   221   020   031   010   021</span><br><span class="line">-------</span><br><span class="line"></span><br><span class="line">finally , the answer is:</span><br><span class="line"></span><br><span class="line">331 220 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 220 321 300 311 110 221 020 031 010 111</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 021</span><br><span class="line">331 310 321 300 311 110 221 020 031 010 111</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
 <hr>
 <h4 id="传说中的基于A-算法的解法："><a href="#传说中的基于A-算法的解法：" class="headerlink" title="传说中的基于A*算法的解法："></a>传说中的基于A*算法的解法：</h4><p>评估函数的建立：</p>
 <script type="math/tex; mode=display">f=d+h=d+M+N-2*B</script><p>M 表示左岸的传教士的人数，N 表示左岸野人的数目，B 取值为0或1 ，1 表示船在左岸，0 表示船在右岸。d 表示节点的深度。</p>
@@ -358,13 +360,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
+        <p><span>本文标题:</span><a href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
         <p><span>发布时间:</span>2019-10-12, 20:44:00</p>
-        <p><span>最后更新:</span>2019-10-12, 20:46:40</p>
+        <p><span>最后更新:</span>2019-10-12, 20:46:42</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/10/12/传教士和野人问题（M-C问题）/" title="传教士和野人问题（M-C问题）">https://silver-birch-wawa.github.io/2019/10/12/传教士和野人问题（M-C问题）/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/10/12/传教士和野人问题（M-C问题）/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/" title="传教士和野人问题（M-C问题）">https://silver-birch-wawa.github.io/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -377,14 +379,14 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/10/12/常见的几种决策树/">
+                <a href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">
                     常见的几种决策树
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/10/01/红黑树/">
+                <a href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">
                     红黑树
                 </a>
             </div>
@@ -397,7 +399,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#传说中的基于A-算法的解法："><span class="toc-number">1.</span> <span class="toc-text">传说中的基于A*算法的解法：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E5%9F%BA%E4%BA%8EA-%E7%AE%97%E6%B3%95%E7%9A%84%E8%A7%A3%E6%B3%95%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">传说中的基于A*算法的解法：</span></a></li></ol>
         
     </div>
     <style>
@@ -476,7 +478,7 @@ gitment.render('git')
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/10/12/常见的几种决策树/" title="上一篇: 常见的几种决策树">
+            <a href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/" title="上一篇: 常见的几种决策树">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -484,13 +486,13 @@ gitment.render('git')
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/10/01/红黑树/" title="下一篇: 红黑树">
+            <a href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/" title="下一篇: 红黑树">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc优化/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/常量指针和指针常量/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset与虚函数/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-选择排序/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/排序/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C维/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/红黑树/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/感知机/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">多头注意力机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C%E7%BB%B4/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a></li></ul>
 
 
 
@@ -504,7 +506,7 @@ gitment.render('git')
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2020 SaltedMdFiveSh
+                2016-2025 SaltedMdFiveSh
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>

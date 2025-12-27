@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<html >
+<head>
 
     <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
@@ -8,31 +8,31 @@
     <![endif]-->
 
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-<meta name="author" content="SaltedMdFiveSh">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="SaltedMdFiveSh" />
 
 
 
-<meta name="description" content="https://blog.csdn.net/weixin_37688445/article/details/79275526https://www.matongxue.com/madocs/939.htmlhttps://www.matongxue.com/madocs/987/    拉格朗日乘子法（约束条件为等式）  $\begin{cases}min f(x) \\\h_i(x)=0，i=0">
-<meta name="keywords" content="Machine Learning,Data Mining,Deep Learning">
+<meta name="description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_37688445&#x2F;article&#x2F;details&#x2F;79275526https:&#x2F;&#x2F;www.matongxue.com&#x2F;madocs&#x2F;939.htmlhttps:&#x2F;&#x2F;www.matongxue.com&#x2F;madocs&#x2F;987&#x2F;    拉格朗日乘子法（约束条件为等式）  $\begin{cases}min f(x) \\\h_i(x)&#x3D;0，i&#x3D;0">
 <meta property="og:type" content="article">
 <meta property="og:title" content="拉格朗日乘子法和（对偶性与KKT条件）">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/index.html">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="https://blog.csdn.net/weixin_37688445/article/details/79275526https://www.matongxue.com/madocs/939.htmlhttps://www.matongxue.com/madocs/987/    拉格朗日乘子法（约束条件为等式）  $\begin{cases}min f(x) \\\h_i(x)=0，i=0">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-44.png">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-43.png">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-42.png">
-<meta property="og:updated_time" content="2019-10-22T13:49:41.882Z">
+<meta property="og:description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_37688445&#x2F;article&#x2F;details&#x2F;79275526https:&#x2F;&#x2F;www.matongxue.com&#x2F;madocs&#x2F;939.htmlhttps:&#x2F;&#x2F;www.matongxue.com&#x2F;madocs&#x2F;987&#x2F;    拉格朗日乘子法（约束条件为等式）  $\begin{cases}min f(x) \\\h_i(x)&#x3D;0，i&#x3D;0">
+<meta property="og:locale">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images/pasted-44.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images/pasted-43.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images/pasted-42.png">
+<meta property="article:published_time" content="2019-10-14T14:26:00.000Z">
+<meta property="article:modified_time" content="2019-10-22T13:49:42.000Z">
+<meta property="article:author" content="SaltedMdFiveSh">
+<meta property="article:tag" content="Machine Learning,Data Mining,Deep Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="拉格朗日乘子法和（对偶性与KKT条件）">
-<meta name="twitter:description" content="https://blog.csdn.net/weixin_37688445/article/details/79275526https://www.matongxue.com/madocs/939.htmlhttps://www.matongxue.com/madocs/987/    拉格朗日乘子法（约束条件为等式）  $\begin{cases}min f(x) \\\h_i(x)=0，i=0">
-<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-44.png">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images/pasted-44.png">
 
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
 
     <link rel="alternate" href="/atom.xml" title="Blog for AI Self-Study" type="application/atom+xml">
@@ -55,7 +55,9 @@
     <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
 
 
+
 <link rel="stylesheet" href="/css/style.css">
+
 
 
 
@@ -98,7 +100,7 @@
 
 
 
-</head></html>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -109,7 +111,7 @@
             <img src="/img/avatar.png" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author"><a href="/"></a></h1>
         </hgroup>
 
         
@@ -176,7 +178,7 @@
                         
                             <li><a href="/archives/">所有文章</a></li>
                         
-                            <li><a href="/tags/随笔">随笔</a></li>
+                            <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                         
                             <li><a href="/tags/">标签云</a></li>
                         
@@ -200,7 +202,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式与并行计算/">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -235,7 +237,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -243,7 +245,7 @@
                 <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
             </hgroup>
             
             <nav class="header-menu">
@@ -253,7 +255,7 @@
                 
                     <li><a href="/archives/">所有文章</a></li>
                 
-                    <li><a href="/tags/随笔">随笔</a></li>
+                    <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                 
                     <li><a href="/tags/">标签云</a></li>
                 
@@ -281,7 +283,7 @@
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/" class="article-date">
+<a href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/" class="article-date">
       <time datetime="2019-10-14T14:26:00.000Z" itemprop="datePublished">2019-10-14</time>
 </a>
 
@@ -326,7 +328,7 @@
 <p>最终表达式：</p>
 <p>$\begin{cases}<br>L(x,a)=min[f(x)+\sum_{i=1}^{n}a_ih_i(x)]<br>\\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
 <p>求解：$\nabla_xL(x,a)=0$还有$\nabla_aL(x,a)=0$可得最优解的x和a</p>
-<p><img src="\images\pasted-44.png" alt="upload successful"></p>
+<p><img src="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images\pasted-44.png" alt="upload successful"></p>
 <blockquote>
 <p>拉格朗日的KKT条件</p>
 </blockquote>
@@ -340,25 +342,25 @@
 <p>$\begin{cases}<br>式1： L(x,a)=min[f(x)+\lambda*g(x)]\\<br>式2： g(x) = 0 \\<br>式3：\lambda&gt;0<br>\end{cases}$</p>
 <p>*情况1： 如果可行解直接落在约束条件范围内，即落在g(x)&lt;0的范围内，则直接删掉约束条件即可。（但是最优点依旧满足前提：公式1即使两条线在$r_f$≈0的时候不相交）</p>
 <p>*情况2：如果可行解落在约束条件外，则最优解在边界上去的，即在g(x)=0的曲线上取得。（此时转换为前面讲的等式条件下求最优解的问题，直接套上面的公式）</p>
-<p><img src="\images\pasted-43.png" alt="upload successful"></p>
-<p>以上两种状况要么落在约束区域内，则$\lambda_解$=0，因为直接去掉约束条件即可，要么落在约束条件边界上，则$g(x)_解=0$, 综合起来就是$\lambda*g(x)=0$</p>
+<p><img src="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images\pasted-43.png" alt="upload successful"></p>
+<p>以上两种状况要么落在约束区域内，则$\lambda<em>解$=0，因为直接去掉约束条件即可，要么落在约束条件边界上，则$g(x)</em>解=0$, 综合起来就是$\lambda*g(x)=0$</p>
 <p>还有一个问题就是$\lambda$的取值问题，当$\lambda$不等于0的时候，即最优解在$g(x)=0$上取得时，$f(x,y)$梯度方向必须要和$g(x)=0$的梯度方向相反，即$-\nabla_xf(x)=\lambda\nabla_xg(x)$，所以$\lambda$一定大于0，要不然就恒非零了。</p>
-<p><img src="\images\pasted-42.png" alt="upload successful"></p>
+<p><img src="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images\pasted-42.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>拉格朗日对偶性：（$\lambda$改为a表示）</p>
 </blockquote>
 <p>1.原始最优化问题：</p>
 <p>$\begin{cases}<br>式1： \min_{x \in R^n} f(x)\\<br>式2： c_i(x)&lt;=0 ， i=1，2，…，k \\<br>式3：h_j(x)=0 ，j=1，2，…，l<br>\end{cases}$</p>
-<p>$L(x,a,\beta)=f(x)+\sum_{i=1}^{k}a_ic_i(x)+\sum_{j=1}^{l}\beta_jh_j(x)$</p>
+<p>$L(x,a,\beta)=f(x)+\sum<em>{i=1}^{k}a_ic_i(x)+\sum</em>{j=1}^{l}\beta_jh_j(x)$</p>
 <p>2.极小极大问题：</p>
-<p>$令\theta_P(x)=\max_{a,\beta:a_i&gt;=0}L(x,a,\beta)$</p>
+<p>$令\theta<em>P(x)=\max</em>{a,\beta:a_i&gt;=0}L(x,a,\beta)$</p>
 <p>如果$i$和$j$当中有一个不满足<code>式2</code>/<code>式3</code>条件，那么必然存在某个$i$满足$c_i(x)&gt;0$，可令$a_i-&gt;+\infty$，或者存在某个$j$满足$h_j(x) \ne 0$，则可令$\beta_jh_j(x)\rightarrow +\infty$，而将其余各个$a_i$，$\beta_j$均取为$0$，使得$\theta_P(x)=+\infty$</p>
 <p>所以<code>max</code>化的拉格朗日函数 $\theta_P(x)=\begin{cases}<br>f(x) ， x满足原始问题约束\\<br>+\infty ， 其他<br>\end{cases}$</p>
 <p>接着考虑max条件下的min最优值：</p>
 <script type="math/tex; mode=display">p^*=min \theta_P(x)=\min_{x} \max_{a,\beta:a_i>=0} L(x,a,\beta)</script><hr>
 <p>3.极大极小问题：</p>
-<p>$\max_{a,\beta}\theta_D(a,\beta)=\max_{a,\beta}\min_{x}L(x,a,\beta)，a_i&gt;=0$</p>
+<p>$\max<em>{a,\beta}\theta_D(a,\beta)=\max</em>{a,\beta}\min_{x}L(x,a,\beta)，a_i&gt;=0$</p>
 <p>最优解：$d^*=\max_{a,\beta:a_i&gt;=0}\theta_D(a,\beta)$</p>
 <hr>
 <p>4.极大极小问题与极小极大问题的解什么时候相等？</p>
@@ -373,13 +375,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
+        <p><span>本文标题:</span><a href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
         <p><span>发布时间:</span>2019-10-14, 22:26:00</p>
-        <p><span>最后更新:</span>2019-10-22, 21:49:41</p>
+        <p><span>最后更新:</span>2019-10-22, 21:49:42</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/" title="拉格朗日乘子法和（对偶性与KKT条件）">https://silver-birch-wawa.github.io/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/" title="拉格朗日乘子法和（对偶性与KKT条件）">https://silver-birch-wawa.github.io/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -399,7 +401,7 @@
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/10/12/C维/">
+                <a href="/2019/10/12/C%E7%BB%B4/">
                     VC维
                 </a>
             </div>
@@ -499,13 +501,13 @@ gitment.render('git')
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/10/12/C维/" title="下一篇: VC维">
+            <a href="/2019/10/12/C%E7%BB%B4/" title="下一篇: VC维">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc优化/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/常量指针和指针常量/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset与虚函数/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-选择排序/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/排序/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C维/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/红黑树/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/感知机/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">多头注意力机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C%E7%BB%B4/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a></li></ul>
 
 
 
@@ -519,7 +521,7 @@ gitment.render('git')
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2020 SaltedMdFiveSh
+                2016-2025 SaltedMdFiveSh
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>

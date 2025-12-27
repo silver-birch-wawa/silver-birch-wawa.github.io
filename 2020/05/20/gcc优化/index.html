@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<html >
+<head>
 
     <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
@@ -8,34 +8,34 @@
     <![endif]-->
 
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-<meta name="author" content="SaltedMdFiveSh">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="SaltedMdFiveSh" />
 
 
 
-<meta name="description" content="在优化之前要提醒的内容：  1.任何级别的优化都将带来代码结构的改变。例如：对分支的合并和消除，对公用子表达式的消除，对循环内load/store操作的替换和更改等，都将会使目标代码的执行顺序变得面目全非，导致调试信息严重不足。  2.内存操作顺序改变所带来的问题：在O2优化后，编译器会对影响内存操作的执行顺序。例如：-fschedule-insns允许数据处理时先完成其他的指令；-fforc">
-<meta name="keywords" content="C++">
+<meta name="description" content="在优化之前要提醒的内容：  1.任何级别的优化都将带来代码结构的改变。例如：对分支的合并和消除，对公用子表达式的消除，对循环内load&#x2F;store操作的替换和更改等，都将会使目标代码的执行顺序变得面目全非，导致调试信息严重不足。  2.内存操作顺序改变所带来的问题：在O2优化后，编译器会对影响内存操作的执行顺序。例如：-fschedule-insns允许数据处理时先完成其他的指令；-fforc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gcc优化">
-<meta property="og:url" content="https://silver-birch-wawa.github.io/2020/05/20/gcc优化/index.html">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2020/05/20/gcc%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="在优化之前要提醒的内容：  1.任何级别的优化都将带来代码结构的改变。例如：对分支的合并和消除，对公用子表达式的消除，对循环内load/store操作的替换和更改等，都将会使目标代码的执行顺序变得面目全非，导致调试信息严重不足。  2.内存操作顺序改变所带来的问题：在O2优化后，编译器会对影响内存操作的执行顺序。例如：-fschedule-insns允许数据处理时先完成其他的指令；-fforc">
-<meta property="og:locale" content="default">
+<meta property="og:description" content="在优化之前要提醒的内容：  1.任何级别的优化都将带来代码结构的改变。例如：对分支的合并和消除，对公用子表达式的消除，对循环内load&#x2F;store操作的替换和更改等，都将会使目标代码的执行顺序变得面目全非，导致调试信息严重不足。  2.内存操作顺序改变所带来的问题：在O2优化后，编译器会对影响内存操作的执行顺序。例如：-fschedule-insns允许数据处理时先完成其他的指令；-fforc">
+<meta property="og:locale">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-64.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-65.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-66.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-67.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-68.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-69.png">
-<meta property="og:updated_time" content="2020-05-20T12:42:11.290Z">
+<meta property="article:published_time" content="2020-05-20T12:36:00.000Z">
+<meta property="article:modified_time" content="2020-05-20T12:42:12.000Z">
+<meta property="article:author" content="SaltedMdFiveSh">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gcc优化">
-<meta name="twitter:description" content="在优化之前要提醒的内容：  1.任何级别的优化都将带来代码结构的改变。例如：对分支的合并和消除，对公用子表达式的消除，对循环内load/store操作的替换和更改等，都将会使目标代码的执行顺序变得面目全非，导致调试信息严重不足。  2.内存操作顺序改变所带来的问题：在O2优化后，编译器会对影响内存操作的执行顺序。例如：-fschedule-insns允许数据处理时先完成其他的指令；-fforc">
 <meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-64.png">
 
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
 
     <link rel="alternate" href="/atom.xml" title="Blog for AI Self-Study" type="application/atom+xml">
@@ -58,7 +58,9 @@
     <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
 
 
+
 <link rel="stylesheet" href="/css/style.css">
+
 
 
 
@@ -101,7 +103,7 @@
 
 
 
-</head></html>
+<meta name="generator" content="Hexo 8.1.1"></head>
 <body>
   <div id="container">
     <div class="left-col">
@@ -112,7 +114,7 @@
             <img src="/img/avatar.png" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author"><a href="/"></a></h1>
         </hgroup>
 
         
@@ -179,7 +181,7 @@
                         
                             <li><a href="/archives/">所有文章</a></li>
                         
-                            <li><a href="/tags/随笔">随笔</a></li>
+                            <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                         
                             <li><a href="/tags/">标签云</a></li>
                         
@@ -203,7 +205,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式与并行计算/">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统底层/">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -238,7 +240,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -246,7 +248,7 @@
                 <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">SaltedMdFiveSh</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
             </hgroup>
             
             <nav class="header-menu">
@@ -256,7 +258,7 @@
                 
                     <li><a href="/archives/">所有文章</a></li>
                 
-                    <li><a href="/tags/随笔">随笔</a></li>
+                    <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
                 
                     <li><a href="/tags/">标签云</a></li>
                 
@@ -284,7 +286,7 @@
   
     <div class="article-meta">
       <!-- 添加代码  -->
-<a href="/2020/05/20/gcc优化/" class="article-date">
+<a href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/" class="article-date">
       <time datetime="2020-05-20T12:36:00.000Z" itemprop="datePublished">2020-05-20</time>
 </a>
 
@@ -316,7 +318,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -342,50 +344,45 @@
 <p>程序转换的优化安全：</p>
 </blockquote>
 <ol>
-<li>内存别名使用：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void twiddle1(long*xp,long*yp)&#123;</span><br><span class="line">    *xp+=*yp;</span><br><span class="line">    *xp+=*yp</span><br><span class="line">&#125;</span><br><span class="line">void twiddle2(long*xp,long*yp)&#123;</span><br><span class="line">    *xp+=2* *yp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>内存别名使用：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void twiddle1(long*xp,long*yp)&#123;</span><br><span class="line">    *xp+=*yp;</span><br><span class="line">    *xp+=*yp</span><br><span class="line">&#125;</span><br><span class="line">void twiddle2(long*xp,long*yp)&#123;</span><br><span class="line">    *xp+=2* *yp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如果<code>*xp=*yp</code>，则twiddle1会是增加四倍（xp翻倍的同时yp也翻倍），twidde2则是增加三倍，编译器不知道xp会不会等于yp，所以无法将代码从twiddle1优化为twiddle2</li>
 </ol>
-<p>如果<code>*xp=*yp</code>，则twiddle1会是增加四倍（xp翻倍的同时yp也翻倍），twidde2则是增加三倍，编译器不知道xp会不会等于yp，所以无法将代码从twiddle1优化为twiddle2</p>
-<p>2.函数调用合并<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">long counter=0;</span><br><span class="line">long f()&#123;</span><br><span class="line">    return counter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">long func1()&#123;</span><br><span class="line">    return f()+f()+f()+f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">long func2()&#123;</span><br><span class="line">    return 4*f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>func1的结果是0+1+2+3=6，而func2的结果是4*0=0</p>
+<p>2.函数调用合并<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">long counter=0;</span><br><span class="line">long f()&#123;</span><br><span class="line">    return counter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">long func1()&#123;</span><br><span class="line">    return f()+f()+f()+f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">long func2()&#123;</span><br><span class="line">    return 4*f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>func1的结果是0+1+2+3=6，而func2的结果是4*0=0</p>
 <hr>
 <blockquote>
 <p>循环展开技术（－O3）</p>
 </blockquote>
 <p>一种牺牲程序的尺寸来加快程序的执行速度的优化方法。可以由程序员完成，也可由编译器自动优化完成。循环展开最常用来降低循环开销，为具有多个功能单元的处理器提供指令级并行。也有利于指令流水线的调度。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 计算p[i]=a[0]+...a[i]</span><br><span class="line">void psum1(float a[],float p[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    p[0]=a[0];</span><br><span class="line">    for(i=1;i&lt;n;i++)&#123;</span><br><span class="line">        p[i]=p[i-1]+a[i]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void psum1(float a[],float p[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    p[0]=a[0];</span><br><span class="line">    for(i=1;i&lt;n;i++)&#123;</span><br><span class="line">        float mid_val=p[i-1]+a[i];</span><br><span class="line">        p[i]=mid_val;</span><br><span class="line">        p[i+1]=mid_val+a[i+1];</span><br><span class="line">    &#125;</span><br><span class="line">    // 对奇数值的特殊处理</span><br><span class="line">    if(i&lt;n)&#123;</span><br><span class="line">        p[i]=p[i-1]+a[i];  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 计算p[i]=a[0]+...a[i]</span><br><span class="line">void psum1(float a[],float p[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    p[0]=a[0];</span><br><span class="line">    for(i=1;i&lt;n;i++)&#123;</span><br><span class="line">        p[i]=p[i-1]+a[i]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void psum1(float a[],float p[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    p[0]=a[0];</span><br><span class="line">    for(i=1;i&lt;n;i++)&#123;</span><br><span class="line">        float mid_val=p[i-1]+a[i];</span><br><span class="line">        p[i]=mid_val;</span><br><span class="line">        p[i+1]=mid_val+a[i+1];</span><br><span class="line">    &#125;</span><br><span class="line">    // 对奇数值的特殊处理</span><br><span class="line">    if(i&lt;n)&#123;</span><br><span class="line">        p[i]=p[i-1]+a[i];  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/pasted-64.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>gcc　参数优化</p>
 </blockquote>
-<p>-Og 使用基本的优化<br>-O1 … -O3 使用更大量的优化，但是也可能增加程序的规模（主要以O1为主）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 通过修改data_t修改数据类型</span><br><span class="line">#define data_t int</span><br><span class="line">// 通过修改OP来修改执行的是加还是乘</span><br><span class="line">#define IDENT 0</span><br><span class="line">#define OP +</span><br><span class="line">void combine1(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    </span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;vec_length(v);i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>-Og 使用基本的优化<br>-O1 … -O3 使用更大量的优化，但是也可能增加程序的规模（主要以O1为主）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 通过修改data_t修改数据类型</span><br><span class="line">#define data_t int</span><br><span class="line">// 通过修改OP来修改执行的是加还是乘</span><br><span class="line">#define IDENT 0</span><br><span class="line">#define OP +</span><br><span class="line">void combine1(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    </span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;vec_length(v);i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="/images/pasted-65.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>频繁使用数据缓存（针对全局变量和数组保存中间结果）</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// combine1</span><br><span class="line">for(i=0;i&lt;vec_length(v);i++)&#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// combine2</span><br><span class="line">void combine2(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    long length=get_vec_element(v,i,&amp;val);</span><br><span class="line">  </span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// combine1</span><br><span class="line">for(i=0;i&lt;vec_length(v);i++)&#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// combine2</span><br><span class="line">void combine2(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    long length=get_vec_element(v,i,&amp;val);</span><br><span class="line">  </span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/pasted-66.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>减少过程调用</p>
 </blockquote>
-<p>把函数调用取消直接访问元素，性能没啥提升。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data_t* get_vec_start(vec_ptr v)&#123;</span><br><span class="line">        return v-&gt;data;</span><br><span class="line">&#125;</span><br><span class="line">// combine3</span><br><span class="line">void combine3(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    long length = get_vec_element(v,i,&amp;val);</span><br><span class="line">    data_t *data = get_vec_start(v);</span><br><span class="line"></span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP data[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>把函数调用取消直接访问元素，性能没啥提升。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data_t* get_vec_start(vec_ptr v)&#123;</span><br><span class="line">        return v-&gt;data;</span><br><span class="line">&#125;</span><br><span class="line">// combine3</span><br><span class="line">void combine3(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    long length = get_vec_element(v,i,&amp;val);</span><br><span class="line">    data_t *data = get_vec_start(v);</span><br><span class="line"></span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP data[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="/images/pasted-67.png" alt="upload successful"></p>
 <hr>
 <blockquote>
 <p>使用临时变量替代传入的指针变量（临时变量方便寄存器优化而不是内存地址读取数据）</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void combine4(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line"></span><br><span class="line">        for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">                acc=acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void combine4(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line"></span><br><span class="line">        for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">                acc=acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/pasted-68.png" alt="upload successful"></p>
 <blockquote>
 <p>k*n循环展开</p>
 </blockquote>
-<p>步长为二，一个循环（2*1）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void combine5(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line">        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc=(acc OP data[i])OP data[i+1];</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc = acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>步长为二，两个循环（2*2）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void combine6(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc0=IDENT;</span><br><span class="line">        data_t acc1=IDENT;        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc0=(acc0 OP data[i]);</span><br><span class="line">                acc1=(acc1 OP data[i+1]);</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc0 = acc0 OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc0 OP acc1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>重新结合变换（k*1a）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void combine7(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line">        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc=acc OP (data[i] OP data[i+1]);</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc = acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/pasted-69.png" alt="upload successful"></p>
+<p>步长为二，一个循环（2<em>1）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void combine5(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line">        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc=(acc OP data[i])OP data[i+1];</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc = acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>步长为二，两个循环（2</em>2）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void combine6(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc0=IDENT;</span><br><span class="line">        data_t acc1=IDENT;        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc0=(acc0 OP data[i]);</span><br><span class="line">                acc1=(acc1 OP data[i+1]);</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc0 = acc0 OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc0 OP acc1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>重新结合变换（k*1a）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void combine7(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line">        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc=acc OP (data[i] OP data[i+1]);</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc = acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><img src="/images/pasted-69.png" alt="upload successful"></p>
 <blockquote>
 <p>寄存器溢出</p>
 </blockquote>
@@ -393,7 +390,7 @@
 <blockquote>
 <p>条件控制转移（if…else）　VS　条件传送（ ? … : … ）</p>
 </blockquote>
-<p>条件控制转移指根据代码的条件结果来选择执行的路径，条件传送指先把结果执行，在根据条件结果选择结果值。在相同的情况下，条件传送性能比条件控制转移高。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//  CPE 13.5</span><br><span class="line">void minmax1(long a[],long b[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    for(i=0;i&lt;n;i++)&#123;</span><br><span class="line">        long t=a[i];</span><br><span class="line">        a[i]=b[i];</span><br><span class="line">        b[i]=t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// CPE 4.0</span><br><span class="line">void minmax2(long a[],long b[],long n)&#123;</span><br><span class="line">    for(i=0;i&lt;n;i++)&#123;</span><br><span class="line">        long min=a[i]&lt;b[i]?a[i]:b[i];</span><br><span class="line">        long max=a[i]&lt;b[i]?b[i]:a[i];</span><br><span class="line">        a[i]=min;</span><br><span class="line">        b[i]=max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>条件控制转移指根据代码的条件结果来选择执行的路径，条件传送指先把结果执行，在根据条件结果选择结果值。在相同的情况下，条件传送性能比条件控制转移高。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//  CPE 13.5</span><br><span class="line">void minmax1(long a[],long b[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    for(i=0;i&lt;n;i++)&#123;</span><br><span class="line">        long t=a[i];</span><br><span class="line">        a[i]=b[i];</span><br><span class="line">        b[i]=t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// CPE 4.0</span><br><span class="line">void minmax2(long a[],long b[],long n)&#123;</span><br><span class="line">    for(i=0;i&lt;n;i++)&#123;</span><br><span class="line">        long min=a[i]&lt;b[i]?a[i]:b[i];</span><br><span class="line">        long max=a[i]&lt;b[i]?b[i]:a[i];</span><br><span class="line">        a[i]=min;</span><br><span class="line">        b[i]=max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -402,13 +399,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/05/20/gcc优化/">gcc优化</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">SaltedMdFiveSh</a></p>
+        <p><span>本文标题:</span><a href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
         <p><span>发布时间:</span>2020-05-20, 20:36:00</p>
-        <p><span>最后更新:</span>2020-05-20, 20:42:11</p>
+        <p><span>最后更新:</span>2020-05-20, 20:42:12</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/05/20/gcc优化/" title="gcc优化">https://silver-birch-wawa.github.io/2020/05/20/gcc优化/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2020/05/20/gcc优化/　　作者: SaltedMdFiveSh" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/" title="gcc优化">https://silver-birch-wawa.github.io/2020/05/20/gcc%E4%BC%98%E5%8C%96/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2020/05/20/gcc%E4%BC%98%E5%8C%96/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -420,9 +417,15 @@
 
     <nav id="article-nav">
         
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
+                    多头注意力机制
+                </a>
+            </div>
+        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/05/17/常量指针和指针常量/">
+                <a href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">
                     const
                 </a>
             </div>
@@ -514,19 +517,21 @@ gitment.render('git')
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="上一篇: 多头注意力机制">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2020/05/17/常量指针和指针常量/" title="下一篇: const">
+            <a href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/" title="下一篇: const">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc优化/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/常量指针和指针常量/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset与虚函数/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/归并排序为什么要用败者树？/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-选择排序/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/排序/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/拉格朗日乘子法和（对偶性与KKT条件）/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C维/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/常见的几种决策树/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/传教士和野人问题（M-C问题）/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/红黑树/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/感知机/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new和malloc的区别/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/垃圾管理（智能指针）/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L里的四种智能指针-auto-ptr、scoped-ptr、shared-ptr、weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-的区别/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/存对齐/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/小端存储/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/指针的形参/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/联函数/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/虚函数/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-编译过程/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/特征工程-特征归一化/">特征工程-特征归一化</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">多头注意力机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C%E7%BB%B4/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a></li></ul>
 
 
 
@@ -540,7 +545,7 @@ gitment.render('git')
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2020 SaltedMdFiveSh
+                2016-2025 SaltedMdFiveSh
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>
