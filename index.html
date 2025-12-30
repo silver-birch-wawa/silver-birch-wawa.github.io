@@ -201,7 +201,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -279,6 +279,726 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-synchronized锁升级" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2025/12/29/synchronized%E9%94%81%E5%8D%87%E7%BA%A7/" class="article-date">
+      <time datetime="2025-12-29T11:32:00.000Z" itemprop="datePublished">2025-12-29</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/29/synchronized%E9%94%81%E5%8D%87%E7%BA%A7/">synchronized锁升级</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>JAVA 1.6 之后的改进</p>
+<ul>
+<li>可重入锁</li>
+</ul>
+<p><img src="/images/pasted-86.png" alt="upload successful"></p>
+<ul>
+<li>偏向锁</li>
+</ul>
+<p>共享资源首次被访问时，JVM会对该共享资源对象做一些设置，比如将对象头中是否偏向锁标志位置为1，对象头中的线程ID设置为当前线程ID（注意：这里是操作系统的线程ID），后续当前线程再次访问这个共享资源时，会根据偏向锁标识跟线程ID进行比对是否相同，比对成功则直接获取到锁，进入临界区域（就是被锁保护，线程间只能串行访问的代码），这也是synchronized锁的可重入功能。</p>
+<ul>
+<li>轻量级锁</li>
+</ul>
+<p>当多个线程同时申请共享资源锁的访问时，这就产生了竞争，JVM会先尝试使用轻量级锁，以CAS方式来获取锁（一般就是自旋加锁，不阻塞线程采用循环等待的方式），成功则获取到锁，状态为轻量级锁，失败（达到一定的自旋次数还未成功）则锁升级到重量级锁。</p>
+<ul>
+<li>重量级锁</li>
+</ul>
+<p>如果共享资源锁已经被某个线程持有，此时是偏向锁状态，未释放锁前，再有其他线程来竞争时，则会升级到重量级锁，另外轻量级锁状态多线程竞争锁时，也会升级到重量级锁，重量级锁由操作系统来实现，所以性能消耗相对较高。</p>
+<p>这4种级别的锁，在获取时性能消耗：重量级锁 &gt; 轻量级锁 &gt; 偏向锁 &gt; 无锁。</p>
+<h3 id="为什么偏向锁被废弃？"><a href="#为什么偏向锁被废弃？" class="headerlink" title="为什么偏向锁被废弃？"></a>为什么偏向锁被废弃？</h3><p>偏向锁是 HotSpot 虚拟机的一项优化技术，可以提升单线程对同步代码块的访问性能。受益于偏向锁的应用程序通常使用了早期的 Java 集合 API，例如 HashTable、Vector，在这些集合类中通过 synchronized 来控制同步，这样在单线程频繁访问时，通过偏向锁会减少同步开销。随着 JDK 的发展，出现了 ConcurrentHashMap 高性能的集合类，在集合类内部进行了许多性能优化，此时偏向锁带来的性能收益就不明显了。偏向锁仅仅在单线程访问同步代码块的场景中可以获得性能收益。如果存在多线程竞争，就需要撤销偏向锁 ，这个操作的性能开销是比较昂贵的。偏向锁的撤销需要等待进入到全局安全点（safe point），该状态下所有线程都是暂停的，此时去检查线程状态并进行偏向锁的撤销。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Java类加载流程" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2025/12/29/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/" class="article-date">
+      <time datetime="2025-12-29T08:46:00.000Z" itemprop="datePublished">2025-12-29</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/29/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/">Java类加载流程</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><p><img src="/images/pasted-83.png" alt="upload successful"></p>
+<p>加载：导入方法区，在内存中生成一个代表该类的 Class 对象，作为方法区这些数据的访问入口。</p>
+<p>验证：确保 Class 文件的字节流中包含的信息符合《Java 虚拟机规范》的全部约束要求，保证这些信息被当作代码运行后不会危害虚拟机自身的安全。</p>
+<p><img src="/images/pasted-84.png" alt="upload successful"></p>
+<p>准备：正式为类变量分配内存并设置类变量初始值的阶段，这些内存都将在方法区中分配。</p>
+<p>解析：符号引用验证发生在类加载过程中的解析阶段，具体点说是 JVM 将符号引用转化为直接引用的时候（解析阶段会介绍符号引用和直接引用）。解析动作主要针对类或接口、字段、类方法、接口方法、方法类型、方法句柄和调用限定符 7 类符号引用进行。</p>
+<p>初始化：执行初始化方法 <clinit> ()方法的过程，是类加载的最后一步，这一步 JVM 才开始真正执行类中定义的 Java 程序代码(字节码)。</clinit></p>
+<p>卸载：需要满足 3 个要求</p>
+<p>（1）该类的所有的实例对象都已被 GC，也就是说堆不存在该类的实例对象。</p>
+<p>（2）该类没有在其他任何地方被引用</p>
+<p>（3）该类的类加载器的实例已被 GC</p>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>BootstrapClassLoader(启动类加载器)：最顶层的加载类，由 C++实现，通常表示为 null，并且没有父级，主要用来加载 JDK 内部的核心类库（ %JAVA_HOME%/lib目录下的 rt.jar、resources.jar、charsets.jar等 jar 包和类）以及被 -Xbootclasspath参数指定的路径下的所有类。</p>
+<p>ExtensionClassLoader(扩展类加载器)：主要负责加载 %JRE_HOME%/lib/ext 目录下的 jar 包和类以及被 java.ext.dirs 系统变量所指定的路径下的所有类。【这些类属于 Java 标准库的扩展部分，例如加密、国际化等功能】</p>
+<p>AppClassLoader(应用程序类加载器)：面向我们用户的加载器，负责加载当前应用 classpath 下的所有 jar 包和类。【运行一个 Java 程序时，java 命令会指定 classpath】</p>
+<p>CustomClassLoader：用户还可以加入自定义的类加载器来进行拓展，以满足自己的特殊需求。就比如说，我们可以对 Java 类的字节码（ .class 文件）进行加密，加载时再利用自定义的类加载器对其解密。</p>
+<p>rt.jar：rt 代表“RunTime”，rt.jar是 Java 基础类库，包含 Java doc 里面看到的所有的类的类文件。也就是说，我们常用内置库 java.xxx.<em>都在里面，比如java.util.</em>、java.io.<em>、java.nio.</em>、java.lang.<em>、java.sql.</em>、java.math.*。</p>
+<p><img src="/images/pasted-85.png" alt="upload successful"></p>
+<h3 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h3><p>双亲委派模型是 Java 类加载机制的重要组成部分，它通过委派父加载器优先加载类的方式，实现了两个关键的安全目标：避免类的重复加载和防止核心 API 被篡改。</p>
+<p>即使攻击者绕过了双亲委派模型，Java 仍然具备更底层的安全机制来保护核心类库。ClassLoader 的 preDefineClass 方法会在定义类之前进行类名校验。任何以 “java.” 开头的类名都会触发 SecurityException，阻止恶意代码定义或加载伪造的核心类。</p>
+<h3 id="打破双亲委派模型方法"><a href="#打破双亲委派模型方法" class="headerlink" title="打破双亲委派模型方法"></a>打破双亲委派模型方法</h3><ul>
+<li>打破低级别类加载器load高级别</li>
+</ul>
+<p>重写 loadClass()方法之后，我们就可以改变传统双亲委派模型的执行流程。例如，子类加载器可以在委派给父类加载器之前，先自己尝试加载这个类，或者在父类加载器返回之后，再尝试从其他地方加载这个类。具体的规则由我们自己实现，根据项目需求定制化。</p>
+<ul>
+<li>想让高级别类加载器load低级别</li>
+</ul>
+<p>使用线程上下文类加载器，线程上下文类加载器的原理是将一个类加载器保存在线程私有数据里，跟线程绑定，然后在需要的时候取出来使用。这个类加载器通常是由应用程序或者容器（如 Tomcat）设置的。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-reentrantLock" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2025/12/29/reentrantLock/" class="article-date">
+      <time datetime="2025-12-29T07:58:00.000Z" itemprop="datePublished">2025-12-29</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/29/reentrantLock/">reentrantLock</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<ul>
+<li><p>可重入，内部有计数器 ++ — 到 0 释放锁</p>
+</li>
+<li><p>可以公平也可以非公平锁</p>
+</li>
+<li><p>悲观锁</p>
+</li>
+<li><p>可以tryLock(long timeout, TimeUnit unit) 方法，允许线程在指定时间内尝试获取锁，如果超时则返回 false。</p>
+</li>
+<li><p>中断响应，允许线程在等待锁的过程中响应中断。</p>
+</li>
+</ul>
+<h3 id="获取锁流程"><a href="#获取锁流程" class="headerlink" title="获取锁流程"></a>获取锁流程</h3><p>非公平锁：基于CAS获取锁，拿不到就去AQS队列等待。</p>
+<h3 id="AQS-队列"><a href="#AQS-队列" class="headerlink" title="AQS 队列"></a>AQS 队列</h3><p>AQS 使用一个 双向链表 来管理等待线程，每个节点是一个 Node 对象：</p>
+<p>prev：前驱节点。</p>
+<p>next：后继节点。</p>
+<p>thread：等待的线程。</p>
+<p>waitStatus：节点状态（如 SIGNAL、CANCELLED 等）。</p>
+<p>当线程获取锁失败时，会被加入队列尾部，并通过 LockSupport.park() 阻塞。当锁释放时，会唤醒队列头部的线程。</p>
+<p><img src="/images/pasted-82.png" alt="upload successful"></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Spring的循环依赖" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2025/12/29/Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/" class="article-date">
+      <time datetime="2025-12-29T05:35:00.000Z" itemprop="datePublished">2025-12-29</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/29/Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/">Spring的循环依赖</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="可以解决循环依赖的场景"><a href="#可以解决循环依赖的场景" class="headerlink" title="可以解决循环依赖的场景"></a>可以解决循环依赖的场景</h3><p>单例 Bean（非单例不行） + 基于字段注入（@Autowired） 或 setter 注入。</p>
+<p>构造器注入无法解决循环依赖，因为构造器注入在实例化时就需要依赖对象，此时依赖对象还没创建。</p>
+<h3 id="解决循环依赖发的办法"><a href="#解决循环依赖发的办法" class="headerlink" title="解决循环依赖发的办法"></a>解决循环依赖发的办法</h3><p>1.@Lazy</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class A &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    @Lazy</span><br><span class="line">    private B b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class B &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private A a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@Lazy 会延迟初始化 B，从而打破循环。</p>
+<p>2.如果使用构造器注入出现循环依赖，可以改为 setter 注入。</p>
+<h3 id="三级缓存方案"><a href="#三级缓存方案" class="headerlink" title="三级缓存方案"></a>三级缓存方案</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>缓存名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>singletonObjects</td>
+<td>一级缓存，存放已经完全创建好的单例 Bean。</td>
+</tr>
+<tr>
+<td>earlySingletonObjects</td>
+<td>二级缓存，存放提前曝光的半成品 Bean（未完成属性填充和初始化）。</td>
+</tr>
+<tr>
+<td>singletonFactories</td>
+<td>三级缓存，存放Bean 的 ObjectFactory，用于提前生成代理对象。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ Spring 容器启动                                                    │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br><span class="line">            │</span><br><span class="line">            ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 创建 Bean A                                                        │</span><br><span class="line">│   1. 检查一级缓存 singletonObjects → 没有 A                         │</span><br><span class="line">│   2. 检查二级缓存 earlySingletonObjects → 没有 A                    │</span><br><span class="line">│   3. 检查三级缓存 singletonFactories → 没有 A                       │</span><br><span class="line">│   4. 将 A 标记为正在创建（added to singletonsCurrentlyInCreation）  │</span><br><span class="line">│   5. 创建 A 的 ObjectFactory 并放入三级缓存 singletonFactories       │</span><br><span class="line">│   6. 实例化 A（调用构造方法）                                        │</span><br><span class="line">│   7. 填充 A 的属性（发现需要注入 B）                                 │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br><span class="line">            │</span><br><span class="line">            ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 创建 Bean B                                                        │</span><br><span class="line">│   1. 检查一级缓存 singletonObjects → 没有 B                         │</span><br><span class="line">│   2. 检查二级缓存 earlySingletonObjects → 没有 B                    │</span><br><span class="line">│   3. 检查三级缓存 singletonFactories → 没有 B                       │</span><br><span class="line">│   4. 将 B 标记为正在创建（added to singletonsCurrentlyInCreation）  │</span><br><span class="line">│   5. 创建 B 的 ObjectFactory 并放入三级缓存 singletonFactories       │</span><br><span class="line">│   6. 实例化 B（调用构造方法）                                        │</span><br><span class="line">│   7. 填充 B 的属性（发现需要注入 A）                                 │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br><span class="line">            │</span><br><span class="line">            ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 注入 A 到 B 时解决循环依赖                                         │</span><br><span class="line">│   1. 检查一级缓存 singletonObjects → 没有 A                         │</span><br><span class="line">│   2. 检查二级缓存 earlySingletonObjects → 没有 A                    │</span><br><span class="line">│   3. 检查三级缓存 singletonFactories → 有 A 的 ObjectFactory        │</span><br><span class="line">│   4. 通过 ObjectFactory 获取 A 的半成品（可能是代理对象）            │</span><br><span class="line">│   5. 将 A 的半成品放入二级缓存 earlySingletonObjects                │</span><br><span class="line">│   6. 从三级缓存 singletonFactories 移除 A 的 ObjectFactory           │</span><br><span class="line">│   7. 将 A 的半成品注入到 B                                          │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br><span class="line">            │</span><br><span class="line">            ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ B 创建完成                                                         │</span><br><span class="line">│   1. 将 B 放入一级缓存 singletonObjects                            │</span><br><span class="line">│   2. 从二级缓存 earlySingletonObjects 移除 B（如果有）              │</span><br><span class="line">│   3. 从三级缓存 singletonFactories 移除 B（如果有）                 │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br><span class="line">            │</span><br><span class="line">            ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 继续创建 A                                                         │</span><br><span class="line">│   1. 将 B 注入到 A                                                  │</span><br><span class="line">│   2. A 创建完成                                                    │</span><br><span class="line">│   3. 将 A 放入一级缓存 singletonObjects                            │</span><br><span class="line">│   4. 从二级缓存 earlySingletonObjects 移除 A                        │</span><br><span class="line">│   5. 从三级缓存 singletonFactories 移除 A                           │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-spring初始化执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2025/12/29/spring%E5%88%9D%E5%A7%8B%E5%8C%96%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" class="article-date">
+      <time datetime="2025-12-29T05:09:00.000Z" itemprop="datePublished">2025-12-29</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/29/spring%E5%88%9D%E5%A7%8B%E5%8C%96%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/">spring的Bean生命周期</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="常用初始化模块执行顺序"><a href="#常用初始化模块执行顺序" class="headerlink" title="常用初始化模块执行顺序"></a>常用初始化模块执行顺序</h3><p>构造函数 &gt; @Autowired &gt; @PostConstruct &gt; init函数</p>
+<h3 id="bean的生命周期"><a href="#bean的生命周期" class="headerlink" title="bean的生命周期"></a>bean的生命周期</h3><p>1.实例化</p>
+<p>Spring 首先实例化一个 Bean，并为其分配内存空间。这个阶段就是通过 Spring 的 ApplicationContext 或 BeanFactory 根据 Bean 定义的类信息（通过 XML 配置或注解）创建 Bean 对象的过程。</p>
+<p>2.属性赋值（依赖注入）</p>
+<p>实例化完成后，Spring 会通过依赖注入（DI）机制为 Bean 设置属性。这个过程确保了所有依赖项（无论是通过构造器注入还是通过 setter 注入）都会被自动注入。<br>依赖注入的方式有多种，其中最常见的是使用 @Autowired 注解或者通过 XML 配置来完成。</p>
+<p>3.初始化</p>
+<p>在属性赋值后，Spring 会调用一些初始化方法来完成额外的配置。初始化阶段非常关键，因为它通常依赖于前面注入的属性值，确保在执行相关操作时，属性已经正确赋值。<br>初始化过程包括以下几个步骤：</p>
+<p>前置初始化方法：可以通过 @PostConstruct 注解或者实现 InitializingBean 接口的 afterPropertiesSet() 方法来定义。<br>初始化方法执行：开发者可以通过在 Bean 配置文件中指定自定义的初始化方法（比如 init-method）。</p>
+<p>4.使用</p>
+<p>5.销毁</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Spring的事务" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2025/12/28/Spring%E7%9A%84%E4%BA%8B%E5%8A%A1/" class="article-date">
+      <time datetime="2025-12-28T15:31:00.000Z" itemprop="datePublished">2025-12-28</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/28/Spring%E7%9A%84%E4%BA%8B%E5%8A%A1/">Spring的事务</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<h3 id="什么时候事务无法传递？"><a href="#什么时候事务无法传递？" class="headerlink" title="什么时候事务无法传递？"></a>什么时候事务无法传递？</h3><h4 id="1-AOP代理失败"><a href="#1-AOP代理失败" class="headerlink" title="1.AOP代理失败"></a>1.AOP代理失败</h4><p>如果在 同一个类内部 直接调用带有 @Transactional 注解的方法，调用不会经过代理，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class UserService &#123;</span><br><span class="line"></span><br><span class="line">    public void updateUser() &#123;</span><br><span class="line">        // 直接调用本类的事务方法，事务失效</span><br><span class="line">        doUpdate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Transactional</span><br><span class="line">    public void doUpdate() &#123;</span><br><span class="line">        // 事务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>解决方法：</li>
+</ul>
+<p>1.通过 Spring 容器获取代理对象（如 self = applicationContext.getBean(UserService.class)）。</p>
+<p>2.拆分到不同的类中，让调用走代理。</p>
+<hr>
+<h4 id="2-异常类型不匹配"><a href="#2-异常类型不匹配" class="headerlink" title="2.异常类型不匹配"></a>2.异常类型不匹配</h4><p>Spring 默认只在 运行时异常（RuntimeException） 或 Error 时回滚事务，受检异常（Checked Exception） 默认不会回滚。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public void updateUser() throws Exception &#123;</span><br><span class="line">    // 抛出受检异常，事务不会回滚</span><br><span class="line">    throw new Exception(&quot;出错了&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>解决方案：</li>
+</ul>
+<p>显式指定回滚异常类型：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Transactional(rollbackFor = Exception.class)</span><br></pre></td></tr></table></figure><br>改为抛出运行时异常。</p>
+<hr>
+<h3 id="3-事务方法被声明为-static-或-final"><a href="#3-事务方法被声明为-static-或-final" class="headerlink" title="3.事务方法被声明为 static 或 final"></a>3.事务方法被声明为 static 或 final</h3><p>Spring 事务代理需要生成子类（CGLIB）或实现接口（JDK 动态代理）。如果方法是 static 或 final，代理无法覆盖，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public final void updateUser() &#123;</span><br><span class="line">    // 事务失效</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>解决方法：去掉 static 或 final 修饰符。</p>
+<hr>
+<h3 id="4-事务方法不是-public"><a href="#4-事务方法不是-public" class="headerlink" title="4.事务方法不是 public"></a>4.事务方法不是 public</h3><p>Spring 事务代理只对 public 方法 生效，private、protected 或默认访问权限的方法不会被代理。</p>
+<hr>
+<h3 id="5-多线程环境下事务失效"><a href="#5-多线程环境下事务失效" class="headerlink" title="5.多线程环境下事务失效"></a>5.多线程环境下事务失效</h3><p>Spring 事务是基于 ThreadLocal 管理的，如果在事务方法中开启新线程，新线程无法继承事务上下文，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public void updateUser() &#123;</span><br><span class="line">    new Thread(() -&gt; &#123;</span><br><span class="line">        // 新线程中的事务逻辑，事务失效</span><br><span class="line">    &#125;).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="6-数据源或事务管理器配置错误"><a href="#6-数据源或事务管理器配置错误" class="headerlink" title="6.数据源或事务管理器配置错误"></a>6.数据源或事务管理器配置错误</h3><p>数据源未被 Spring 事务管理器管理。</p>
+<p>事务管理器配置的数据源与实际使用的数据源不一致。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public PlatformTransactionManager transactionManager(DataSource dataSource) &#123;</span><br><span class="line">    return new DataSourceTransactionManager(dataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>如果 dataSource 没有被 Spring 管理，事务失效。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-JVM垃圾回收算法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" class="article-date">
+      <time datetime="2025-12-27T07:57:00.000Z" itemprop="datePublished">2025-12-27</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/">JVM垃圾回收算法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="CMS垃圾回收"><a href="#CMS垃圾回收" class="headerlink" title="CMS垃圾回收"></a>CMS垃圾回收</h3><blockquote>
+<p>回收步骤：</p>
+</blockquote>
+<p>年轻代使用复制算法，老年代使用标记-清除算法。</p>
+<p>老年代GC触发条件：CMS 不会等到老年代完全满了才进行回收，而是当老年代使用达到一定阈值时（默认 92%）开始回收，以避免长时间的 Full GC。</p>
+<blockquote>
+<p>CMS缺点：</p>
+</blockquote>
+<p>内存碎片问题：由于 CMS 是标记-清除回收器，不会整理内存，老年代内存中会产生碎片，这可能导致 Full GC。</p>
+<p>并发模式失败：如果老年代在回收过程中无法及时腾出足够空间，可能会发生“Concurrent Mode Failure”，这会退回到单线程的 Serial Old GC，导致长时间暂停。</p>
+<p>较高 CPU 消耗：CMS 在回收时需要额外的 CPU 资源，可能对 CPU 密集型应用有较大影响。</p>
+<p><img src="/images/pasted-73.png" alt="CMS_STW"></p>
+<p>浮动垃圾：CMS垃圾回收器在并发标记和并发清理阶段由于用户线程并未停止，该阶段可能会产生浮动垃圾，无法在本次被回收，只能等到下一次垃圾回收。</p>
+<hr>
+<h3 id="G1（Garbage-First-GC）"><a href="#G1（Garbage-First-GC）" class="headerlink" title="G1（Garbage First GC）"></a>G1（Garbage First GC）</h3><p>参考链接：<a href="https://mp.weixin.qq.com/s/RqLSu8VNcvQRMh0D-QA9Bw">https://mp.weixin.qq.com/s/RqLSu8VNcvQRMh0D-QA9Bw</a></p>
+<p>分区堆模型：G1 将堆分成多个大小相等的区域（Region），不同区域可能属于年轻代或老年代。通过收集垃圾最多的区域进行复制回收，因此称为“Garbage First”。</p>
+<p>混合回收：G1 能够同时回收年轻代和老年代的内存，避免了 Full GC 的大范围内存整理。</p>
+<p>暂停时间可控：G1 可以根据设置的最大暂停时间目标（默认 200ms），智能选择要回收的区域，来控制 GC 的影响。</p>
+<blockquote>
+<p>区块划分</p>
+</blockquote>
+<p>Eden区、Survivor区、Old区和Humongous区（存放大对象，老年代的一部分）</p>
+<p>区域Region的内存大小默认是通过整个堆内存大小除以2048得到的，例如整个堆内存为4G，则Region = 4G / 2048 = 2M，同时也支持通过JVM参数指定Region的内存大小。</p>
+<p><img src="/images/pasted-74.png" alt="upload successful"></p>
+<blockquote>
+<p>阶段划分</p>
+</blockquote>
+<ul>
+<li>年轻代回收（Young GC）阶段：</li>
+</ul>
+<p>当Eden区被填满或者达到了某个条件（例如，G1认为回收这些区域的收益较高）时，就会触发一次年轻代回收。</p>
+<p>年轻代回收的过程中，存活的对象会从Eden区和Survivor区复制到另一个Survivor区或者直接晋升到老年代。</p>
+<p>这个过程通常是Stop-The-World（STW）的，即在回收过程中，应用程序的其他线程会被暂停。</p>
+<ul>
+<li>混合回收（Mixed GC）阶段：</li>
+</ul>
+<p>当老年代的占用率达到了一定阈值（由-XX:InitiatingHeapOccupancyPercent参数控制，默认值为45%），G1会启动混合回收阶段。</p>
+<p>在这个阶段，G1不仅回收年轻代，还会回收一部分老年代的区域，这些区域被认为含有较多垃圾。</p>
+<p>混合回收也是STW的，但G1会尝试在用户指定的停顿时间目标内完成。</p>
+<blockquote>
+<p>回收技术</p>
+</blockquote>
+<p>G1垃圾回收器年轻代回收时，采用了三种关键技术，分别是记忆集、卡表和写屏障。</p>
+<p>如果年轻代的对象被老年代的对象引用了，应该如何识别出来呢？</p>
+<ul>
+<li>记忆集和卡表实现</li>
+</ul>
+<p>当某个卡页中的对象引用自己Region区域的对象时，会将老年代的卡表对应编号位置的字节修改为1，为1的字节被称之为脏卡。</p>
+<p>在Young GC回收年轻代对象时，会将记忆集中的对象也加入到GC Root中，有效避免年轻代的对象被错误的回收。</p>
+<ul>
+<li>SATB：</li>
+</ul>
+<p>核心思想是：在标记过程的起始阶段捕捉一个对象的快照，并基于这个快照来进行后续的标记工作。</p>
+<p>在标记阶段开始时，G1垃圾收集器会创建一个当前所有对象的快照。</p>
+<p>在这个快照之后新生成的对象，由于它们尚未被任何旧对象引用，因此它们会被直接标记为黑色，表示它们是活跃的，不应该被回收。</p>
+<p>为了处理在标记过程中可能发生的对象引用变化，G1采用了前置写屏障技术。</p>
+<p>前置写屏障技术 会在引用赋值操作（如B.c = null）之前被触发，将即将被改变引用的对象（在这个例子中是C）放入SATB待处理队列中。</p>
+<p>每个线程都有自己的SATB队列，但最终这些队列会被汇总到一个全局的SATB队列中。</p>
+<p><img src="/images/pasted-77.png" alt="upload successful"></p>
+<ul>
+<li>写屏障：</li>
+</ul>
+<p>更新卡表状态的底层采用了写屏障技术（具体为写后屏障），当执行对象引用相关的代码时，会在其代码前后插入对应的指令，判断到老年代对象引用年轻代对象时，会更改卡表中对应的字节为脏卡，同时会将脏卡放入到一个脏卡队列中，JVM会通过单独的线程，定期读取脏卡队列中的数据，更新记忆集。</p>
+<p><img src="/images/pasted-75.png" alt="upload successful"></p>
+<blockquote>
+<p>优点：</p>
+</blockquote>
+<p>适用于大堆内存：G1 尤其适合大堆内存（通常超过 6GB）环境，能够有效处理较大的老年代回收。</p>
+<p>避免 Full GC：通过区域化内存管理和并行收集，G1 几乎避免了传统的 Full GC 停顿。</p>
+<p>碎片整理：G1 在回收时会进行内存整理，减少了内存碎片问题。</p>
+<p>提前触发回收（少量多次），每次垃圾回收时间短。</p>
+<p><img src="/images/pasted-72.png" alt="G1_STW"></p>
+<ul>
+<li>浮动垃圾：SATB基于初始快照进行标记，因此在本轮垃圾回收过程中，可能会将一些实际上应该被回收的不存活对象错误地标记为存活对象。这些错误标记的对象被称为“浮动垃圾”。这些浮动垃圾只能下一次的时候回收。</li>
+</ul>
+<ul>
+<li>问题排查：G1在执行Full GC时，会在GC日志中记录相关信息，如[Full GC (Allocation Failure)]，表示由于分配失败触发了Full GC。</li>
+</ul>
+<h3 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h3><p>超低延迟：ZGC 是一种面向超低延迟设计的垃圾回收器，旨在将垃圾回收停顿时间控制在 10ms 以内。</p>
+<p>堆内存极大：ZGC 支持非常大的堆内存（TB 级别），这使得它在处理大规模内存应用时有很大的优势。</p>
+<p>1.着色指针（Colored Pointers）</p>
+<p>原理：利用 64 位指针的高几位空闲位（不同 CPU 架构空闲位不同，如 x86-64 保留 18 位）存储标记信息，包括：</p>
+<p>Marked0/Marked1：标记对象是否存活（用于并发标记）；</p>
+<p>Remapped：标记对象是否已完成重定位（用于并发重定位）。</p>
+<p>优势：<br>无需修改对象头，减少内存占用；</p>
+<p>指针本身携带状态，GC 阶段无需扫描整个堆，大幅提升效率；</p>
+<p>支持并发重定位（对象移动时，应用线程可同时访问旧指针，由读屏障透明转发到新地址）。</p>
+<p><img src="/images/pasted-79.png" alt="upload successful"></p>
+<p>2.读屏障（Load Barrier）</p>
+<p>ZGC 仅在应用线程读取对象指针时插入读屏障，核心作用是：</p>
+<p>指针验证：检查指针的标记位是否合法；</p>
+<p>指针转发：若对象已被移动，自动将旧指针转发到新地址；</p>
+<p>并发标记辅助：在标记阶段，协助标记对象的可达性。</p>
+<p>读屏障的性能开销极低（实测约 1%~3%），远小于传统 GC 的写屏障。</p>
+<ul>
+<li>回收流程</li>
+</ul>
+<p>1.初始标记（Initial Mark）- STW</p>
+<p>目标：标记 GC Root 直接引用的对象。</p>
+<p>特点：停顿时间微秒级，几乎可以忽略，通常与线程的 safepoint 重合。</p>
+<p>2.并发标记（Concurrent Mark）- 并发</p>
+<p>目标：从初始标记的对象出发，遍历整个对象图，标记所有存活对象（通过着色指针的 Marked0/Marked1 位）。</p>
+<p>特点：与应用线程并发执行，无停顿；标记过程中，新分配的对象自动标记为存活。</p>
+<p>3.重定位（Relocation）- 并发 + 极短 STW</p>
+<p>这是 ZGC 实现低延迟的核心阶段，分为三步：</p>
+<p>重定位选择（Concurrent Relocation Selection）：并发选择需要回收的 Region（垃圾比例高的 Region）；</p>
+<p>重定位准备（Concurrent Relocation Preparation）：准备重定位的 Region，标记为 “正在重定位”；</p>
+<p>并发重定位（Concurrent Relocation）：将存活对象移动到新的 Region，同时通过读屏障让应用线程透明访问新地址；</p>
+<p>最终重定位（Final Relocation）：极短 STW，处理极少数未转发的旧指针。</p>
+<p>4.并发重映射（Concurrent Remap）- 并发</p>
+<p>目标：更新应用线程中所有指向旧 Region 的指针，使其直接指向新地址，消除读屏障的转发开销。</p>
+<p>特点：与应用线程并发执行，优先级较低，可被 GC 周期打断（下次 GC 继续处理）。</p>
+<p>本质还是标记-复制</p>
+<p><img src="/images/pasted-80.png" alt="upload successful"></p>
+<ul>
+<li>动态的区域容量大小： </li>
+</ul>
+<p>ZGC引入了不同大小的Region，包括Small Region（2MB）、Medium Region（32MB）和Large Region（可变大小），使得ZGC在内存分配时能够更好地适应不同大小的对象，提高内存利用率。</p>
+<p><img src="/images/pasted-78.png" alt="upload successful"></p>
+<h3 id="三色标级"><a href="#三色标级" class="headerlink" title="三色标级"></a>三色标级</h3><p>CMS和G1都有三色标记算法。标记对象的颜色其实是通过位图（bitmap）实现的，默认的白色对象的bit为0，黑色对象的bit位会被设置为1，而灰色对象不会体现在位图，会被放置于一个单独的队列</p>
+<p><img src="/images/pasted-76.png" alt="upload successful"></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
   
     <article id="post-多头注意力机制" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -582,615 +1302,9 @@
 
 
   
-    <article id="post-memset与虚函数" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/" class="article-date">
-      <time datetime="2020-05-15T07:33:00.000Z" itemprop="datePublished">2020-05-15</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void reset() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">class MyParameters : public BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  int data[3];</span><br><span class="line">  int buf[3];</span><br><span class="line">&#125;;</span><br><span class="line">MyParameters my_pars;</span><br><span class="line">memset(&amp;my_pars, 0, sizeof(my_pars));</span><br><span class="line">BaseParameters* pars = &amp;my_pars;</span><br><span class="line">//.....</span><br><span class="line">MyParameters* my = dynamic_cast&lt;MyParameters*&gt;(pars);</span><br></pre></td></tr></table></figure>
-<p>初始化数据结构MyParameters里的data和buf，正常来说需要初始化的内存空间是sizeof(int) <em> 3 </em> 2 = 24字节，但是使用memset初始化MyParameters类型的数据结构时，sizeof(my_pars)却是28字节。</p>
-<p>因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用memset时，会把该虚函数表的指针也初始化为0，而dynamic_cast也使用RTTI技术，运行时会使用到V-Table，可此时由于与V-Table的链接已经被破坏，导致程序发生异常。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-归并排序为什么要用败者树？" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/" class="article-date">
-      <time datetime="2020-05-15T04:29:00.000Z" itemprop="datePublished">2020-05-15</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p><a href="https://www.zhihu.com/question/35144290/answer/148681658">https://www.zhihu.com/question/35144290/answer/148681658</a></p>
-<hr>
-<blockquote>
-<p>堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$ </p>
-</blockquote>
-<p>其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后再用孩子节点的最小值和父节点进行比较，所以每调整一层需要比较两次。 这时人们想能否简化比较过程，这时就有了胜者树。</p>
-<p>这样每次比较只用跟自己的兄弟节点进行比较就好，所以用胜者树可以比堆少一半的比较次数。 而胜者树在节点上升的时候首先需要获得父节点，然后再获得兄弟节点，然后再比较。这时人们又想能否再次减少比较次数，于是就有了败者树。</p>
-<p>在使用败者树的时候，每个新元素上升时，只需要获得父节点并比较即可。 所以总的来说，减少了访存的时间。（拿空间换时间）</p>
-<p>原因：胜者树以小为胜的话，如果比较兄弟节点发现更小直接替代父节点即可，如果更大则兄弟节点胜出。<br>败者树比较父节点指向的点发现更大直接替换败者即可，更小则不需要替换然后接着上移。</p>
-<p>二者都是顶点缺失，都要从底部叶节点遍历到顶点。</p>
-<p>最后就是现在程序的主要瓶颈在于访存了，计算倒几乎可以忽略不计。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/">分布式与并行计算</a><a class="article-category-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post--选择排序" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/" class="article-date">
-      <time datetime="2020-05-15T04:19:00.000Z" itemprop="datePublished">2020-05-15</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p><a href="http://data.biancheng.net/view/78.html">http://data.biancheng.net/view/78.html</a></p>
-<hr>
-<p>如果内存为W，则内排序算法最多只能对大小略小于W的段进行排序。置换-选择排序可以降低段的个数</p>
-<blockquote>
-<p>置换—选择排序算法的具体操作过程为：</p>
-</blockquote>
-<ol>
-<li>首先从有24个记录的初始文件中输入 6 个记录到内存工作区中；<br>从内存工作区中选出关键字最小的记录，将其记为 MINIMAX 记录；<br>然后将 MINIMAX 记录输出到归并段文件中；</li>
-<li>此时内存工作区中还剩余 5 个记录，若初始文件不为空，则从初始文件中输入下一个记录到内存工作区中；</li>
-<li>从内存工作区中的所有比 MINIMAX 值大的记录中选出值最小的关键字的记录，作为新的 MINIMAX 记录；</li>
-<li>重复过程 3—5，直至在内存工作区中选不出新的 MINIMAX 记录为止，由此就得到了一个初始归并段；</li>
-<li>重复 2—6，直至内存工作为空，由此就可以得到全部的初始归并段。</li>
-</ol>
-<hr>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">51</span><br><span class="line">49</span><br><span class="line">39</span><br><span class="line">46</span><br><span class="line">38</span><br><span class="line">29</span><br><span class="line">14</span><br><span class="line">61</span><br><span class="line">15</span><br><span class="line">30</span><br><span class="line">1</span><br><span class="line">48</span><br><span class="line">52</span><br><span class="line">3</span><br><span class="line">83</span><br><span class="line">27</span><br><span class="line">4</span><br><span class="line">13</span><br><span class="line">89</span><br><span class="line">24</span><br><span class="line">46</span><br><span class="line">58</span><br><span class="line">33</span><br><span class="line">76</span><br></pre></td></tr></table></figure>
-<p><img src="/images/pasted-54.png" alt="upload successful"></p>
-<blockquote>
-<p>具体步骤：</p>
-</blockquote>
-<ol>
-<li>首先输入前 6 个记录到内存工作区，其中关键字最小的为 29，所以选其为 MINIMAX 记录，同时将其输出到归并段文件中，如下图所示：</li>
-</ol>
-<p><img src="/images/pasted-56.png" alt="upload successful"></p>
-<p>2.此时初始文件不为空，所以从中输入下一个记录 14 到内存工作区中，然后从内存工作区中的比 29 大的记录中，选择一个最小值作为新的 MINIMAX 值输出到 归并段文件中，如下图所示：</p>
-<p><img src="/images/pasted-57.png" alt="upload successful"></p>
-<p>3.初始文件还不为空，所以继续输入 61 到内存工作区中，从内存工作区中的所有关键字比 38 大的记录中，选择一个最小值作为新的 MINIMAX 值输出到归并段文件中，如下图所示：</p>
-<p><img src="/images/pasted-58.png" alt="upload successful"></p>
-<p>4.如此重复性进行，直至选不出 MINIMAX 值为止，如下图所示：</p>
-<p><img src="/images/pasted-59.png" alt="upload successful"></p>
-<p>5.当选不出 MINIMAX 值时，表示一个归并段已经生成，则开始下一个归并段的创建，创建过程同第一个归并段一样，这里不再赘述。</p>
-<hr>
-<ul>
-<li>败者树的实现：</li>
-</ul>
-<p>在不断选择新的 MINIMAX 记录时，为了防止新加入的关键字值小的的影响，每个叶子结点附加一个序号位，当进行关键字的比较时，先比较序号，序号小的为胜者；序号相同的关键字值小的为胜者。</p>
-<p>在初期创建败者树时也可以通过不断调整败者树的方式，其中所有记录的序号均设为 0 ，然后从初始文件中逐个输入记录到内存工作区中，自下而上调整败者树。过程如下：</p>
-<p>1.首先创建一个空的败者树，如下图所示：</p>
-<p><img src="/images/pasted-60.png" alt="upload successful"></p>
-<p>2.从初始文件中读入关键字为 51 的记录，自下往上调整败者树，如下图所示：</p>
-<p><img src="/images/pasted-61.png" alt="upload successful"></p>
-<p>提示：序号 1 默认为比 0 小，为败者。</p>
-<p>3.从初始文件中读入关键字为 49 的记录，调整败者树如下图所示：</p>
-<p><img src="/images/pasted-62.png" alt="upload successful"></p>
-<p>4.从初始文件依次读入关键字为 39、46、38、29 的记录，调整败者树如下图所示：</p>
-<p><img src="/images/pasted-63.png" alt="upload successful"></p>
-<p>5.由败者树得知，其最终胜者为 29，设为 MINIMAX 值，将其输出到初始归并文件中，同时再读入下一个记录 14，调整败者树，如下图所示：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/4559317-c2d595dba5aac378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>通过不断地向败者树中读入记录，会产生多个 MINIMAX，直到最终所有叶子结点中的序号都为 2，此时产生的新的 MINIMAX 值的序号 2（循环判定胜者的段号决定是否输出新段），表明此归并段生成完成，而此新的 MINIMAX 值就是下一个归并段中的第一个记录。</p>
-<p>注意：当读入新的记录时，如果其值比 MINIMAX 大，其序号则仍为 1；反之则为 2 ，比较时序号大的。</p>
-<blockquote>
-<p>总结：</p>
-</blockquote>
-<p>通过置换选择排序算法得到的初始归并段，其长度并不会受内存容量的限制，且通过证明得知使用该方法所获得的归并段的平均长度为内存工作区大小的两倍。</p>
-<p>若不计输入输出的时间，通过置换选择排序生成初始归并段的所需时间为O(nlogw)（其中 n 为记录数，w 为内存工作区的大小）。</p>
-<p>以下代码有问题，有时候会多生成几个数，但是可以拿来做个参考。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define MAXKEY 10000</span><br><span class="line">#define RUNEND_SYMBOL 10000 // 归并段结束标志</span><br><span class="line">#define w 6     // 内存工作区可容纳的记录个数</span><br><span class="line">#define N 24    // 设文件中含有的记录的数量</span><br><span class="line">typedef int KeyType; // 定义关键字类型为整型</span><br><span class="line"></span><br><span class="line">// 记录类型</span><br><span class="line">typedef struct&#123;</span><br><span class="line">    KeyType key; // 关键字项</span><br><span class="line">&#125;RedType;</span><br><span class="line"></span><br><span class="line">typedef int LoserTree[w];// 败者树是完全二叉树且不含叶子，可采用顺序存储结构</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">    RedType rec; /* 记录 */</span><br><span class="line">    KeyType key; /* 从记录中抽取的关键字 */</span><br><span class="line">    int rnum; /* 所属归并段的段号 */</span><br><span class="line">&#125;RedNode, WorkArea[w];</span><br><span class="line"></span><br><span class="line">// 从wa[q]起到败者树的根比较选择MINIMAX记录，并由q指示它所在的归并段</span><br><span class="line">void Select_MiniMax(LoserTree ls,WorkArea wa,int q)&#123;</span><br><span class="line">    int p, s, t;</span><br><span class="line">// ls[t]为q的双亲节点，p作为中介</span><br><span class="line"></span><br><span class="line">    for(t = (w+q)/2,p = ls[t]; t &gt; 0;t = t/2,p = ls[t])&#123;</span><br><span class="line">        // 段号小者 或者 段号相等且关键字更小的为胜者</span><br><span class="line">        if(wa[p].rnum &lt; wa[q].rnum || (wa[p].rnum == wa[q].rnum &amp;&amp; wa[p].key &lt; wa[q].key))&#123;</span><br><span class="line">            s=q;</span><br><span class="line">            q=ls[t]; //q指示新的胜利者</span><br><span class="line">            ls[t]=s;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ls[0] = q; // 最后的冠军</span><br><span class="line">&#125;</span><br><span class="line">//输入w个记录到内存工作区wa,建得败者树ls,选出关键字最小的记录，并由s指示其在wa中的位置。</span><br><span class="line">void Construct_Loser(LoserTree ls, WorkArea wa, FILE *fi)&#123;</span><br><span class="line">    int i;</span><br><span class="line">    for(i = 0; i &lt; w; ++i)&#123;</span><br><span class="line">        wa[i].rnum = wa[i].key = ls[i] = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i = w - 1; i &gt;= 0; --i)&#123;</span><br><span class="line">        fread(&amp;wa[i].rec, sizeof(RedType), 1, fi);// 输入一个记录</span><br><span class="line">        wa[i].key = wa[i].rec.key; // 提取关键字</span><br><span class="line">        wa[i].rnum = 1; // 其段号为＂1＂</span><br><span class="line">        Select_MiniMax(ls,wa,i); // 调整败者树</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 求得一个初始归并段，fi为输入文件指针，fo为输出文件指针。</span><br><span class="line">void get_run(LoserTree ls,WorkArea wa,int rc,int *rmax,FILE *fi,FILE *fo)&#123;</span><br><span class="line">    int q;</span><br><span class="line">    KeyType minimax;</span><br><span class="line">    // 选得的MINIMAX记录属当前段时</span><br><span class="line">    while(wa[ls[0]].rnum == rc)&#123;</span><br><span class="line">        q = ls[0];// q指示MINIMAX记录在wa中的位置</span><br><span class="line">        minimax = wa[q].key;</span><br><span class="line">        // 将刚选得的MINIMAX记录写入输出文件</span><br><span class="line">        fwrite(&amp;wa[q].rec, sizeof(RedType), 1, fo);</span><br><span class="line">        // 如果输入文件结束，则虚设一条记录（属＂rmax+1＂段）</span><br><span class="line">        if(feof(fi))&#123;</span><br><span class="line">            wa[q].rnum = *rmax+1;</span><br><span class="line">            wa[q].key = MAXKEY;</span><br><span class="line">        &#125;else&#123; // 输入文件非空时</span><br><span class="line">            // 从输入文件读入下一记录</span><br><span class="line">            fread(&amp;wa[q].rec,sizeof(RedType),1,fi);</span><br><span class="line">            wa[q].key = wa[q].rec.key;// 提取关键字</span><br><span class="line">            if(wa[q].key &lt; minimax)&#123;</span><br><span class="line">                // 新读入的记录比上一轮的最小关键字还小，则它属下一段</span><br><span class="line">                *rmax = rc+1;</span><br><span class="line">                wa[q].rnum = *rmax;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                // 新读入的记录大则属当前段</span><br><span class="line">                wa[q].rnum = rc;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 选择新的MINIMAX记录</span><br><span class="line">        Select_MiniMax(ls, wa, q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//在败者树ls和内存工作区wa上用置换－选择排序求初始归并段</span><br><span class="line">void Replace_Selection(LoserTree ls, WorkArea wa, FILE *fi, FILE *fo)&#123;</span><br><span class="line">    int rc, rmax;</span><br><span class="line">    RedType j;</span><br><span class="line">    j.key = RUNEND_SYMBOL;</span><br><span class="line">    // 初建败者树</span><br><span class="line">    Construct_Loser(ls, wa, fi);</span><br><span class="line">    rc = rmax =1;//rc指示当前生成的初始归并段的段号，rmax指示wa中关键字所属初始归并段的最大段号</span><br><span class="line"></span><br><span class="line">    while(rc &lt;= rmax)&#123;// ＂rc=rmax+1＂标志输入文件的置换－选择排序已完成</span><br><span class="line">        // 求得一个初始归并段</span><br><span class="line">        get_run(ls, wa, rc, &amp;rmax, fi, fo);</span><br><span class="line">        fwrite(&amp;j,sizeof(RedType),1,fo);//将段结束标志写入输出文件</span><br><span class="line">        rc = wa[ls[0]].rnum;//设置下一段的段号</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print(RedType t)&#123;</span><br><span class="line">    printf(&quot;%d &quot;,t.key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    RedType a[N]=&#123;51,49,39,46,38,29,14,61,15,30,1,48,52,3,63,27,4,13,89,24,46,58,33,76&#125;;</span><br><span class="line">    RedType b;</span><br><span class="line">    FILE *fi,*fo; //输入输出文件</span><br><span class="line">    LoserTree ls; // 败者树</span><br><span class="line">    WorkArea wa; // 内存工作区</span><br><span class="line">    int i, k;</span><br><span class="line">    fo = fopen(&quot;ori&quot;,&quot;wb&quot;); //准备对 ori 文本文件进行写操作</span><br><span class="line">    //将&lt;u&gt;[数组](http://data.biancheng.net/view/181.html)&lt;/u&gt; a 写入大文件ori</span><br><span class="line">fwrite(a, sizeof(RedType), N, fo);</span><br><span class="line">    fclose(fo); //关闭指针 fo 表示的文件</span><br><span class="line">    fi = fopen(&quot;ori&quot;,&quot;rb&quot;);//准备对 ori 文本文件进行读操作</span><br><span class="line">    printf(&quot;文件中的待排序记录为:\n&quot;);</span><br><span class="line">    for(i = 1; i &lt;= N; i++)&#123;</span><br><span class="line">        // 依次将文件ori的数据读入并赋值给b</span><br><span class="line">        fread(&amp;b,sizeof(RedType),1,fi);</span><br><span class="line">        print(b);</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    rewind(fi);// 使fi的指针重新返回大文件ori的起始位置，以便重新读入内存，产生有序的子文件。</span><br><span class="line">    fo = fopen(&quot;out&quot;,&quot;wb&quot;);</span><br><span class="line">    // 用置换－选择排序求初始归并段</span><br><span class="line">    Replace_Selection(ls, wa, fi, fo);</span><br><span class="line">    fclose(fo);</span><br><span class="line">    fclose(fi);</span><br><span class="line">    fi = fopen(&quot;out&quot;,&quot;rb&quot;);</span><br><span class="line">    printf(&quot;初始归并段各为:\n&quot;);</span><br><span class="line">    do&#123;</span><br><span class="line">        k = fread(&amp;b, sizeof(RedType), 1, fi); //读 fi 指针指向的文件，并将读的记录赋值给 b，整个操作成功与否的结果赋值给 k</span><br><span class="line">        if(k == 1)&#123;</span><br><span class="line">            if(b.key ==MAXKEY)&#123;//当其值等于最大值时，表明当前初始归并段已经完成</span><br><span class="line">                printf(&quot;\n\n&quot;);</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line">            print(b);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;while(k == 1);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/">分布式与并行计算</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-排序" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2020/05/15/%E6%8E%92%E5%BA%8F/" class="article-date">
-      <time datetime="2020-05-15T03:41:00.000Z" itemprop="datePublished">2020-05-15</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p><a href="http://data.biancheng.net/view/77.html">http://data.biancheng.net/view/77.html</a></p>
-<hr>
-<blockquote>
-<p>多路归并排序：</p>
-</blockquote>
-<p><img src="/images/pasted-47.png" alt="二路归并排序"></p>
-<p><img src="/images/pasted-48.png" alt="五路归并排序"></p>
-<p>对于外部排序算法来说，影响整体排序效率的因素主要取决于读写外存的次数，即访问外存的次数越多，算法花费的时间就越多，效率就越低。</p>
-<p>对于同一个文件来说，对其进行外部排序时访问外存的次数同归并的次数成正比，即归并操作的次数越多，访问外存的次数就越多（每次归并都要加载硬盘上的待归并文件到内存）。</p>
-<ul>
-<li>最后一轮归并的时候内存不够怎么办？</li>
-</ul>
-<p>在实际归并的过程中，由于内存容量的限制不能满足同时将 2 个归并段全部完整的读入内存进行归并，只能不断地取 2 个归并段中的每一小部分进行归并，通过不断地读数据和向外存写数据，直至 2 个归并段完成归并变为 1 个大的有序文件。</p>
-<ul>
-<li>有关段的预处理如何提升算法效率？</li>
-</ul>
-<p>对比2-路还有5-路归并排序可以看出，对于 k-路平衡归并中，增加 k 可以减少归并的次数，从而减少外存读写的次数，最终达到提高算法效率的目的。除此之外，一般情况下对于具有 m 个初始归并段进行 k-路平衡归并时，归并的次数为：$s=⌊log_k⁡m ⌋$（其中 s 表示归并次数）</p>
-<p>-方法也就以下两个：<br>（1）增加 k-路平衡归并中的 k 值；<code>（多路平衡归并算法）</code><br>（2）减少初始段的数量m / 增加每个归并段的容量（段太大的话内存可能不够）；<code>（置换-选择排序算法）</code></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/">分布式与并行计算</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2020/05/05/test/" class="article-date">
-      <time datetime="2020-05-05T12:28:00.000Z" itemprop="datePublished">2020-05-05</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/05/test/">成员初始化的顺序</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<p>可以看出成员被初始化的顺序和成员初始化表里面的顺序是没有关系的，只和成员的声明顺序有关。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int seti() &#123;cout &lt;&lt; &quot;seti&quot; &lt;&lt; endl;return 1;&#125;</span><br><span class="line">int setj() &#123;cout &lt;&lt; &quot;setj&quot; &lt;&lt; endl;return 1;&#125;</span><br><span class="line">class a</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    a() &#123;cout &lt;&lt; &quot;a()~~~~~&quot; &lt;&lt; endl;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">class b</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    b():j(setj()),i(seti()) &#123;cout &lt;&lt; &quot;b()~~~~~&quot; &lt;&lt; endl;&#125;</span><br><span class="line">    int i;</span><br><span class="line">    a ca;</span><br><span class="line">    int j;</span><br><span class="line">&#125;;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    b ob;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>构造函数执行顺序：public里面 int i 先声明，就先构造 i，然后类a ca 声明，再构造 ca，然后声明 j，就构造 j，最后执行 b() 构造函数里面的东西。</p>
-<p><img src="/images/pasted-45.png" alt="upload successful"></p>
-<hr>
-<p>另外举个例子：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	int n1;</span><br><span class="line">	int n2;</span><br><span class="line">public:</span><br><span class="line">	A():n2(0),n1(n2+2)&#123;&#125;</span><br><span class="line">	void Print()&#123;</span><br><span class="line">		cout &lt;&lt; &quot;n1:&quot; &lt;&lt; n1 &lt;&lt; &quot;, n2: &quot; &lt;&lt; n2 &lt;&lt;endl;  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">int main()</span><br><span class="line">&#123; </span><br><span class="line">	A a;</span><br><span class="line">	a.Print();</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>因为private里面先定义的n1再定义的n2，但是n1需要n2，n2没有初始化，所以n2是乱码，n1是0。</p>
-<p><img src="/images/pasted-46.png" alt="upload successful"></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-拉格朗日乘子法和（对偶性与KKT条件）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/" class="article-date">
-      <time datetime="2019-10-14T14:26:00.000Z" itemprop="datePublished">2019-10-14</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p><a href="https://blog.csdn.net/weixin_37688445/article/details/79275526">https://blog.csdn.net/weixin_37688445/article/details/79275526</a><br><a href="https://www.matongxue.com/madocs/939.html">https://www.matongxue.com/madocs/939.html</a><br><a href="https://www.matongxue.com/madocs/987/">https://www.matongxue.com/madocs/987/</a></p>
-<hr>
-<blockquote>
-<p> 拉格朗日乘子法（约束条件为等式）</p>
-</blockquote>
-<p>$\begin{cases}<br>min f(x) \\<br>\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
-<p>在两个图线外相切的时候达到最小值，法向量方向相反</p>
-<p>$\begin{cases}<br>\nabla f(x)=-\nabla \lambda\star h_i(x) =&gt;  \nabla f(x)+\nabla \lambda\star h_i(x)=0\\<br>\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
-<p>最终表达式：</p>
-<p>$\begin{cases}<br>L(x,a)=min[f(x)+\sum_{i=1}^{n}a_ih_i(x)]<br>\\<br>h_i(x)=0，i=0，1，…，n<br>\end{cases}$</p>
-<p>求解：$\nabla_xL(x,a)=0$还有$\nabla_aL(x,a)=0$可得最优解的x和a</p>
-<p><img src="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images\pasted-44.png" alt="upload successful"></p>
-<blockquote>
-<p>拉格朗日的KKT条件</p>
-</blockquote>
-<ul>
-<li>初试条件：</li>
-</ul>
-<p>$\begin{cases}<br>min f(x) \\<br>\<br>g(x) &lt;= 0<br>\end{cases}$</p>
-<ul>
-<li>推导出来的最终公式：</li>
-</ul>
-<p>$\begin{cases}<br>式1： L(x,a)=min[f(x)+\lambda*g(x)]\\<br>式2： g(x) = 0 \\<br>式3：\lambda&gt;0<br>\end{cases}$</p>
-<p>*情况1： 如果可行解直接落在约束条件范围内，即落在g(x)&lt;0的范围内，则直接删掉约束条件即可。（但是最优点依旧满足前提：公式1即使两条线在$r_f$≈0的时候不相交）</p>
-<p>*情况2：如果可行解落在约束条件外，则最优解在边界上去的，即在g(x)=0的曲线上取得。（此时转换为前面讲的等式条件下求最优解的问题，直接套上面的公式）</p>
-<p><img src="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images\pasted-43.png" alt="upload successful"></p>
-<p>以上两种状况要么落在约束区域内，则$\lambda<em>解$=0，因为直接去掉约束条件即可，要么落在约束条件边界上，则$g(x)</em>解=0$, 综合起来就是$\lambda*g(x)=0$</p>
-<p>还有一个问题就是$\lambda$的取值问题，当$\lambda$不等于0的时候，即最优解在$g(x)=0$上取得时，$f(x,y)$梯度方向必须要和$g(x)=0$的梯度方向相反，即$-\nabla_xf(x)=\lambda\nabla_xg(x)$，所以$\lambda$一定大于0，要不然就恒非零了。</p>
-<p><img src="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/images\pasted-42.png" alt="upload successful"></p>
-<hr>
-<blockquote>
-<p>拉格朗日对偶性：（$\lambda$改为a表示）</p>
-</blockquote>
-<p>1.原始最优化问题：</p>
-<p>$\begin{cases}<br>式1： \min_{x \in R^n} f(x)\\<br>式2： c_i(x)&lt;=0 ， i=1，2，…，k \\<br>式3：h_j(x)=0 ，j=1，2，…，l<br>\end{cases}$</p>
-<p>$L(x,a,\beta)=f(x)+\sum<em>{i=1}^{k}a_ic_i(x)+\sum</em>{j=1}^{l}\beta_jh_j(x)$</p>
-<p>2.极小极大问题：</p>
-<p>$令\theta<em>P(x)=\max</em>{a,\beta:a_i&gt;=0}L(x,a,\beta)$</p>
-<p>如果$i$和$j$当中有一个不满足<code>式2</code>/<code>式3</code>条件，那么必然存在某个$i$满足$c_i(x)&gt;0$，可令$a_i-&gt;+\infty$，或者存在某个$j$满足$h_j(x) \ne 0$，则可令$\beta_jh_j(x)\rightarrow +\infty$，而将其余各个$a_i$，$\beta_j$均取为$0$，使得$\theta_P(x)=+\infty$</p>
-<p>所以<code>max</code>化的拉格朗日函数 $\theta_P(x)=\begin{cases}<br>f(x) ， x满足原始问题约束\\<br>+\infty ， 其他<br>\end{cases}$</p>
-<p>接着考虑max条件下的min最优值：</p>
-<script type="math/tex; mode=display">p^*=min \theta_P(x)=\min_{x} \max_{a,\beta:a_i>=0} L(x,a,\beta)</script><hr>
-<p>3.极大极小问题：</p>
-<p>$\max<em>{a,\beta}\theta_D(a,\beta)=\max</em>{a,\beta}\min_{x}L(x,a,\beta)，a_i&gt;=0$</p>
-<p>最优解：$d^*=\max_{a,\beta:a_i&gt;=0}\theta_D(a,\beta)$</p>
-<hr>
-<p>4.极大极小问题与极小极大问题的解什么时候相等？</p>
-<p>maxmin和minmax的最优解有以下大小关系：</p>
-<script type="math/tex; mode=display">d^*=\max_{a,\beta:a_i>=0}\min_{x}L(x,a,\beta)<=\min_{x} \max_{a,\beta:a_i>=0} L(x,a,\beta)=p^*</script><p>如果满足$f(x)$和$c_i(x)$是凸函数，$h_j(x)$是仿射函数，和KKT条件，则：</p>
-<script type="math/tex; mode=display">d^*=L(x^*,a^*,\beta^*)=p^*</script><p>KKT条件是$d^\star$ = $p^\star$的充要条件：</p>
-<script type="math/tex; mode=display">\nabla_xL(x^*,a^*,\beta^*)=0</script><script type="math/tex; mode=display">a_i^*c_i(x^*)=0，i=1,2,...,k</script><script type="math/tex; mode=display">c_i(x^*)<=0 ，i=1,2,...,k</script><script type="math/tex; mode=display">a_i^*>=0 ， i=1,2,...,k</script><script type="math/tex; mode=display">h_j(x^*)=0，j=1，...，l</script>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C维" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2019/10/12/C%E7%BB%B4/" class="article-date">
-      <time datetime="2019-10-12T13:00:00.000Z" itemprop="datePublished">2019-10-12</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/12/C%E7%BB%B4/">VC维</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<p>VC 维是衡量函数类的复杂度的一种方式，通过评估函数类中函数的弯曲程度实现。WIKI上的解释是：空间中的点在经过排列之后，能够被模型f打散(shatter)的最大数量。</p>
-<p>通过$y=a_0+a_1^Tx$将平面分割为两部分，如果满足平面中任意N个点（无论如何取值）总能被一条直线分开，而N+1个点却不行，则称该函数情况下的VC维为N。</p>
-<p><img src="/2019/10/12/C%E7%BB%B4/images\pasted-39.png" alt="upload successful"></p>
-<p>举个无穷的VC维的例子：</p>
-<script type="math/tex; mode=display">f(x,a)=I(sina*x)</script><p><img src="/2019/10/12/C%E7%BB%B4/images\pasted-40.png" alt="upload successful"></p>
-<p>从这两个例子，可以看出VC维刻画了函数的弯曲程度，越弯曲其VC维越大。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>
