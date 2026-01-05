@@ -201,7 +201,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">JAVA设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -279,6 +279,237 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-分布式事务" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2026/01/04/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="article-date">
+      <time datetime="2026-01-04T14:50:32.000Z" itemprop="datePublished">2026-01-04</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/04/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>2PC、TCC、SAGA、本地消息表的原理和优缺点分别是什么？在实际项目中如何选择合适的分布式事务方案？</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>2PC</th>
+<th>TCC</th>
+<th>SAGA</th>
+<th>本地消息表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一致性</td>
+<td>强一致性（ACID）</td>
+<td>强一致性（近似 ACID）</td>
+<td>最终一致性</td>
+<td>最终一致性</td>
+</tr>
+<tr>
+<td>业务侵入性</td>
+<td>低（依赖数据库）</td>
+<td>高（需实现 3 个方法）</td>
+<td>中（需实现补偿事务）</td>
+<td>低（需加消息表）</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>低（同步阻塞）</td>
+<td>高（无阻塞）</td>
+<td>高（无阻塞）</td>
+<td>高（异步消息）</td>
+</tr>
+<tr>
+<td>实现复杂度</td>
+<td>低</td>
+<td>高（处理幂等 / 空回滚）</td>
+<td>中（协调式易管理）</td>
+<td>低</td>
+</tr>
+<tr>
+<td>适用事务长度</td>
+<td>短事务</td>
+<td>短事务</td>
+<td>长事务</td>
+<td>中短事务</td>
+</tr>
+<tr>
+<td>核心问题</td>
+<td>同步阻塞、单点故障</td>
+<td>业务侵入、实现复杂</td>
+<td>补偿逻辑、最终一致</td>
+<td>消息延迟、幂等性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="SAGA"><a href="#SAGA" class="headerlink" title="SAGA"></a>SAGA</h3><p>将分布式事务拆分为一系列本地事务的有序执行链，每个本地事务都有对应的补偿事务：</p>
+<p>正向执行</p>
+<p>按顺序执行每个本地事务 T1, T2, …, Tn。<br>如果所有本地事务都执行成功，事务提交。</p>
+<p>反向补偿</p>
+<p>如果某个本地事务 Ti 执行失败，按逆序执行补偿事务 Ci-1, Ci-2, …, C1。<br>补偿事务的作用是撤销对应正向本地事务的执行结果，恢复到事务执行前的状态。</p>
+<h3 id="TCC（Try-Confirm-Cancel，补偿事务）"><a href="#TCC（Try-Confirm-Cancel，补偿事务）" class="headerlink" title="TCC（Try-Confirm-Cancel，补偿事务）"></a>TCC（Try-Confirm-Cancel，补偿事务）</h3><p><img src="/images/pasted-88.png" alt="upload successful"></p>
+<p>TCC 是一种业务侵入式的分布式事务方案，将每个业务操作拆分为三个独立的方法，由业务代码实现：</p>
+<p>1.Try 阶段</p>
+<p>尝试执行业务操作，预留资源（如冻结资金、锁定库存），保证操作的幂等性。</p>
+<p>此阶段只做资源检查和预留，不执行最终业务逻辑。</p>
+<p>2.Confirm 阶段</p>
+<p>确认执行业务操作，使用预留的资源完成最终逻辑。</p>
+<p>只有当所有参与者的 Try 阶段都成功时，才会执行 Confirm 阶段。</p>
+<p>3.Cancel 阶段</p>
+<p>取消执行业务操作，释放预留的资源。</p>
+<p>如果任何一个参与者的 Try 阶段失败，会执行所有参与者的 Cancel 阶段。</p>
+<blockquote>
+<p>幂等、空回滚、悬挂？</p>
+</blockquote>
+<p>幂等性就是无论接口调用多少次，返回的结果应该具有一致性。</p>
+<p>空回滚（try没执行就cancel）：当某分支事务的try阶段阻塞时，可能导致全局事务超时而触发二阶段的cancel操作。在未执行try操作时先执行了cancel操作，这时cancel不能做回滚，就是空回滚。</p>
+<p>业务悬挂（cancel之后try）：对于已经空回滚的业务，如果以后继续执行try，就永远不可能confirm或cancel</p>
+<ul>
+<li>资金业务的具体例子：</li>
+</ul>
+<p>为了实现空回滚、防止业务悬挂,记录冻结金额的同时,记录当前事务id和执行状态<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `account_freeze_tbl` (</span><br><span class="line">  `xid` varchar(128) NOT NULL COMMENT &#x27;事务id&#x27;,</span><br><span class="line">  `user_id` varchar(255) DEFAULT NULL COMMENT &#x27;用户id&#x27;,</span><br><span class="line">  `freeze_money` int(11) unsigned DEFAULT &#x27;0&#x27; COMMENT &#x27;冻结金额&#x27;,</span><br><span class="line">  `state` int(1) DEFAULT NULL COMMENT &#x27;事务状态，0:try，1:confirm，2:cancel&#x27;,</span><br><span class="line">  PRIMARY KEY (`xid`) USING BTREE</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;</span><br></pre></td></tr></table></figure></p>
+<p>1.Try业务</p>
+<p>记录冻结金额和事务状态0到account_freeze表</p>
+<p>扣减account表可用金额</p>
+<p>2.Confirm业务</p>
+<p>根据xid删除account_freeze表的冻结记录(因为如果一个事务confirm那么记录就没有意义了)</p>
+<p>3.Cancel业务</p>
+<p>修改account_freeze表，冻结金额为0，state为2</p>
+<p>修改account表，恢复可用金额</p>
+<ul>
+<li>如何判断是否空回滚:</li>
+</ul>
+<p>cancel业务中，根据xid查询account_freeze，如果为null则说明try还没做，需要空回滚</p>
+<ul>
+<li>如何避免业务悬挂:</li>
+</ul>
+<p>try业务中，根据xid查询account_freeze ，如果存在金额=0/state=2则证明Cancel已经执行，拒绝执行try业务</p>
+<h3 id="TCC-vs-2PC"><a href="#TCC-vs-2PC" class="headerlink" title="TCC  vs 2PC"></a>TCC  vs 2PC</h3><p>TCC只需要处理业务异常情况，异常处理相对简单。 2PC适用于对事务一致性要求较高的场景，例如银行转账等，需要保证数据致性和完整性。 而TCC适用于对事务一致性要求不那么高的场景，例如电商库存扣减等，需要保证数据最终一致性即可。</p>
+<h3 id="本地消息表"><a href="#本地消息表" class="headerlink" title="本地消息表"></a>本地消息表</h3><p>写本地消息+状态，然后链式流转。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-单例模式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2026/01/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="article-date">
+      <time datetime="2026-01-04T14:41:00.000Z" itemprop="datePublished">2026-01-04</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="double-check-lock-懒汉模式"><a href="#double-check-lock-懒汉模式" class="headerlink" title="double check lock 懒汉模式"></a>double check lock 懒汉模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class DCLSingleton &#123;</span><br><span class="line">    // 使用 volatile 关键字，防止指令重排</span><br><span class="line">    private static volatile DCLSingleton instance;</span><br><span class="line"></span><br><span class="line">    private DCLSingleton() &#123;</span><br><span class="line">        System.out.println(&quot;DCLSingleton 被实例化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static DCLSingleton getInstance() &#123;</span><br><span class="line">        // 第一次检查：如果实例已存在，直接返回</span><br><span class="line">        if (instance == null) &#123;</span><br><span class="line">            // 加锁</span><br><span class="line">            synchronized (DCLSingleton.class) &#123;</span><br><span class="line">                // 第二次检查：防止多个线程同时进入第一个 if 后重复创建实例</span><br><span class="line">                if (instance == null) &#123;</span><br><span class="line">                    instance = new DCLSingleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class EagerSingleton &#123;</span><br><span class="line">    // 在类加载时就初始化实例</span><br><span class="line">    private static final EagerSingleton INSTANCE = new EagerSingleton();</span><br><span class="line"></span><br><span class="line">    private EagerSingleton() &#123;</span><br><span class="line">        System.out.println(&quot;EagerSingleton 被实例化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static EagerSingleton getInstance() &#123;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public enum EnumSingleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line"></span><br><span class="line">    EnumSingleton() &#123;</span><br><span class="line">        System.out.println(&quot;EnumSingleton 被实例化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void doSomething() &#123;</span><br><span class="line">        System.out.println(&quot;枚举单例执行方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">JAVA设计模式</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">JAVA设计模式</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
   
     <article id="post-synchronized锁升级" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -680,6 +911,7 @@
         <h3 id="常用初始化模块执行顺序"><a href="#常用初始化模块执行顺序" class="headerlink" title="常用初始化模块执行顺序"></a>常用初始化模块执行顺序</h3><p>构造函数 &gt; @Autowired &gt; @PostConstruct &gt; init函数</p>
 <h3 id="bean的生命周期"><a href="#bean的生命周期" class="headerlink" title="bean的生命周期"></a>bean的生命周期</h3><p>1.实例化</p>
 <p>Spring 首先实例化一个 Bean，并为其分配内存空间。这个阶段就是通过 Spring 的 ApplicationContext 或 BeanFactory 根据 Bean 定义的类信息（通过 XML 配置或注解）创建 Bean 对象的过程。</p>
+<p>Spring 通过反射机制创建 Bean 的实例（调用构造方法）</p>
 <p>2.属性赋值（依赖注入）</p>
 <p>实例化完成后，Spring 会通过依赖注入（DI）机制为 Bean 设置属性。这个过程确保了所有依赖项（无论是通过构造器注入还是通过 setter 注入）都会被自动注入。<br>依赖注入的方式有多种，其中最常见的是使用 @Autowired 注解或者通过 XML 配置来完成。</p>
 <p>3.初始化</p>
@@ -848,6 +1080,14 @@
 </blockquote>
 <p>年轻代使用复制算法，老年代使用标记-清除算法。</p>
 <p>老年代GC触发条件：CMS 不会等到老年代完全满了才进行回收，而是当老年代使用达到一定阈值时（默认 92%）开始回收，以避免长时间的 Full GC。</p>
+<blockquote>
+<p>标记策略 - 增量更新</p>
+</blockquote>
+<p>在并发标记过程中，当发现一个原本未被标记为存活的对象，因为某个应用程序线程执行了写操作而使得其被一个已标记的存活对象引用时，并不会立即将这个原本未标记的对象标记为存活，而是将这个引用关系变化记录下来，等待重新标记阶段再根据这些记录来更新标记情况，确保该对象能被正确标记为存活。</p>
+<ul>
+<li>CMS使用插入写屏障</li>
+</ul>
+<p>新增黑色到白色的引用，JVM就会通过写屏障，将黑色变成灰色</p>
 <blockquote>
 <p>CMS缺点：</p>
 </blockquote>
@@ -1088,220 +1328,6 @@
 
 
   
-    <article id="post-gcc优化" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/" class="article-date">
-      <time datetime="2020-05-20T12:36:00.000Z" itemprop="datePublished">2020-05-20</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<blockquote>
-<p>在优化之前要提醒的内容：</p>
-</blockquote>
-<p>1.任何级别的优化都将带来代码结构的改变。例如：对分支的合并和消除，对公用子表达式的消除，对循环内load/store操作的替换和更改等，都将会使目标代码的执行顺序变得面目全非，导致调试信息严重不足。 </p>
-<p>2.内存操作顺序改变所带来的问题：在O2优化后，编译器会对影响内存操作的执行顺序。例如：-fschedule-insns允许数据处理时先完成其他的指令；-fforce-mem有可能导致内存与寄存器之间的数据产生类似脏数据的不一致等。对于某些依赖内存操作顺序而进行的逻辑，需要做严格的处理后才能进行优化。例如，采用volatile关键字限制变量的操作方式，或者利用barrier迫使cpu严格按照指令序执行的。</p>
-<blockquote>
-<p>表示程序性能的标准：CPE（越小性能越优）延迟界限　吞吐量界限</p>
-</blockquote>
-<p>CPE指数只是针对循环代码而言的（几乎可以说代码性能优化就是对循环的优化），它指处理数据的每个元素所消耗的周期数。之所以使用每个元素的周期数而不是每个循环的周期数来度量，是因为循环次数可能随循环展开的程度不同而变化。</p>
-<p>延迟界限：当一系列操作必须按照严格的顺序执行时，处理每个元素所历经的关键路径（最长路径）的周期数。当数据相关问题限制了指令级并行的能力时，延迟界限能够限制程序性能。</p>
-<p>吞吐量界限：处理器功能单元全力运行时的原始计算能力。比如处理器具有两个能同时做乘法的单元，对于只有1次乘/元素的循环而言，此时的吞吐量界限就是0.5。吞吐量界限是程序性能的终极界限。</p>
-<blockquote>
-<p>程序转换的优化安全：</p>
-</blockquote>
-<ol>
-<li>内存别名使用：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void twiddle1(long*xp,long*yp)&#123;</span><br><span class="line">    *xp+=*yp;</span><br><span class="line">    *xp+=*yp</span><br><span class="line">&#125;</span><br><span class="line">void twiddle2(long*xp,long*yp)&#123;</span><br><span class="line">    *xp+=2* *yp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-如果<code>*xp=*yp</code>，则twiddle1会是增加四倍（xp翻倍的同时yp也翻倍），twidde2则是增加三倍，编译器不知道xp会不会等于yp，所以无法将代码从twiddle1优化为twiddle2</li>
-</ol>
-<p>2.函数调用合并<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">long counter=0;</span><br><span class="line">long f()&#123;</span><br><span class="line">    return counter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">long func1()&#123;</span><br><span class="line">    return f()+f()+f()+f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">long func2()&#123;</span><br><span class="line">    return 4*f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>func1的结果是0+1+2+3=6，而func2的结果是4*0=0</p>
-<hr>
-<blockquote>
-<p>循环展开技术（－O3）</p>
-</blockquote>
-<p>一种牺牲程序的尺寸来加快程序的执行速度的优化方法。可以由程序员完成，也可由编译器自动优化完成。循环展开最常用来降低循环开销，为具有多个功能单元的处理器提供指令级并行。也有利于指令流水线的调度。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 计算p[i]=a[0]+...a[i]</span><br><span class="line">void psum1(float a[],float p[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    p[0]=a[0];</span><br><span class="line">    for(i=1;i&lt;n;i++)&#123;</span><br><span class="line">        p[i]=p[i-1]+a[i]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void psum1(float a[],float p[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    p[0]=a[0];</span><br><span class="line">    for(i=1;i&lt;n;i++)&#123;</span><br><span class="line">        float mid_val=p[i-1]+a[i];</span><br><span class="line">        p[i]=mid_val;</span><br><span class="line">        p[i+1]=mid_val+a[i+1];</span><br><span class="line">    &#125;</span><br><span class="line">    // 对奇数值的特殊处理</span><br><span class="line">    if(i&lt;n)&#123;</span><br><span class="line">        p[i]=p[i-1]+a[i];  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/pasted-64.png" alt="upload successful"></p>
-<hr>
-<blockquote>
-<p>gcc　参数优化</p>
-</blockquote>
-<p>-Og 使用基本的优化<br>-O1 … -O3 使用更大量的优化，但是也可能增加程序的规模（主要以O1为主）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 通过修改data_t修改数据类型</span><br><span class="line">#define data_t int</span><br><span class="line">// 通过修改OP来修改执行的是加还是乘</span><br><span class="line">#define IDENT 0</span><br><span class="line">#define OP +</span><br><span class="line">void combine1(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    </span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;vec_length(v);i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/pasted-65.png" alt="upload successful"></p>
-<hr>
-<blockquote>
-<p>频繁使用数据缓存（针对全局变量和数组保存中间结果）</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// combine1</span><br><span class="line">for(i=0;i&lt;vec_length(v);i++)&#123;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// combine2</span><br><span class="line">void combine2(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    long length=get_vec_element(v,i,&amp;val);</span><br><span class="line">  </span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/pasted-66.png" alt="upload successful"></p>
-<hr>
-<blockquote>
-<p>减少过程调用</p>
-</blockquote>
-<p>把函数调用取消直接访问元素，性能没啥提升。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data_t* get_vec_start(vec_ptr v)&#123;</span><br><span class="line">        return v-&gt;data;</span><br><span class="line">&#125;</span><br><span class="line">// combine3</span><br><span class="line">void combine3(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    long length = get_vec_element(v,i,&amp;val);</span><br><span class="line">    data_t *data = get_vec_start(v);</span><br><span class="line"></span><br><span class="line">    *dest=IDENT;</span><br><span class="line">    for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">        data_t val;</span><br><span class="line">        get_vec_element(v,i,&amp;val);</span><br><span class="line">        *dest=*dest OP data[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/pasted-67.png" alt="upload successful"></p>
-<hr>
-<blockquote>
-<p>使用临时变量替代传入的指针变量（临时变量方便寄存器优化而不是内存地址读取数据）</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void combine4(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line"></span><br><span class="line">        for(i=0;i&lt;length;i++)&#123;</span><br><span class="line">                acc=acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/pasted-68.png" alt="upload successful"></p>
-<blockquote>
-<p>k*n循环展开</p>
-</blockquote>
-<p>步长为二，一个循环（2<em>1）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void combine5(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line">        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc=(acc OP data[i])OP data[i+1];</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc = acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>步长为二，两个循环（2</em>2）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void combine6(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc0=IDENT;</span><br><span class="line">        data_t acc1=IDENT;        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc0=(acc0 OP data[i]);</span><br><span class="line">                acc1=(acc1 OP data[i+1]);</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc0 = acc0 OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc0 OP acc1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>重新结合变换（k*1a）<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void combine7(vec_ptr v,data_t *dest)&#123;</span><br><span class="line">        long i;</span><br><span class="line">        long length = vec_length(v);</span><br><span class="line">        long limit = length-1;</span><br><span class="line">        data_t *data=get_vec_start(v);</span><br><span class="line">        data_t acc=IDENT;</span><br><span class="line">        </span><br><span class="line">        // combine 2 elements at a time</span><br><span class="line">        for(i=0;i&lt;limit;i+=2)&#123;</span><br><span class="line">                acc=acc OP (data[i] OP data[i+1]);</span><br><span class="line">        &#125;</span><br><span class="line">        // Finish any remaining elements</span><br><span class="line">        for(;i&lt;length;i++)&#123;</span><br><span class="line">                acc = acc OP data[i];</span><br><span class="line">        &#125;</span><br><span class="line">        *dest=acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><img src="/images/pasted-69.png" alt="upload successful"></p>
-<blockquote>
-<p>寄存器溢出</p>
-</blockquote>
-<p>现代ｘ８６架构拥有１６个寄存器，还有１６个ＹＭＭ寄存器可以存储浮点型数，如果需要缓存的变量超过该个数则需要将数据存放到内存，性能可能会下降。</p>
-<blockquote>
-<p>条件控制转移（if…else）　VS　条件传送（ ? … : … ）</p>
-</blockquote>
-<p>条件控制转移指根据代码的条件结果来选择执行的路径，条件传送指先把结果执行，在根据条件结果选择结果值。在相同的情况下，条件传送性能比条件控制转移高。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//  CPE 13.5</span><br><span class="line">void minmax1(long a[],long b[],long n)&#123;</span><br><span class="line">    long i;</span><br><span class="line">    for(i=0;i&lt;n;i++)&#123;</span><br><span class="line">        long t=a[i];</span><br><span class="line">        a[i]=b[i];</span><br><span class="line">        b[i]=t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// CPE 4.0</span><br><span class="line">void minmax2(long a[],long b[],long n)&#123;</span><br><span class="line">    for(i=0;i&lt;n;i++)&#123;</span><br><span class="line">        long min=a[i]&lt;b[i]?a[i]:b[i];</span><br><span class="line">        long max=a[i]&lt;b[i]?b[i]:a[i];</span><br><span class="line">        a[i]=min;</span><br><span class="line">        b[i]=max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-常量指针和指针常量" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <!-- 添加代码  -->
-<a href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/" class="article-date">
-      <time datetime="2020-05-17T11:53:00.000Z" itemprop="datePublished">2020-05-17</time>
-</a>
-
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <hr>
-<h4 id="作用域："><a href="#作用域：" class="headerlink" title="　作用域："></a>　作用域：</h4><p>默认状态下，Const对象仅在文件内有效。所以不同文件的const对象不是同一个对象，即使名字相同，因为这样才能避免重复定义。</p>
-<p>那为了使一个非常量表达式的const变量在不同文件之间可以共享，可以使用extern来解决问题。</p>
-<h2 id><a href="#" class="headerlink" title></a><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extern const int temp;</span><br></pre></td></tr></table></figure></h2><h4 id="两种一样的写法"><a href="#两种一样的写法" class="headerlink" title="两种一样的写法"></a>两种一样的写法</h4><p><code>const int a; int const a;</code> 这两个写法是等同的</p>
-<p><code>const int *a; int const* a;</code>含义相同。</p>
-<hr>
-<h4 id="常量指针和指针常量"><a href="#常量指针和指针常量" class="headerlink" title="　常量指针和指针常量"></a>　常量指针和指针常量</h4><blockquote>
-<p>常量指针声明：<code>const int * p; int const * p;</code>（指针指向常量）</p>
-</blockquote>
-<p>具有只能够读取内存中数据，却不能够修改内存中数据的属性的指针，称为指向常量的指针。</p>
-<blockquote>
-<p>指针常量声明：<code>int * const p=&amp;a;</code>（指针指向常量地址）</p>
-</blockquote>
-<p>指针常量是指指针所指向的位置不能改变，即指针本身是一个常量，但是指针所指向的内容可以改变。</p>
-<ul>
-<li>指针常量必须在声明的同时对其初始化，不允许先声明一个指针常量随后再对其赋值，这和声明一般的常量是一样的。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int num=0;</span><br><span class="line"></span><br><span class="line">int*const cur=&amp;num;//一直指向num</span><br><span class="line"></span><br><span class="line">const double pi=3.1415;</span><br><span class="line"></span><br><span class="line">const double * const pip=&amp;pi;//指向常量的常量指针。</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1313,7 +1339,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2025 SaltedMdFiveSh
+                2016-2026 SaltedMdFiveSh
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>

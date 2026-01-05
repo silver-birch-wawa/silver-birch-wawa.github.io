@@ -115,6 +115,14 @@
 <p>年轻代使用复制算法，老年代使用标记-清除算法。</p>
 <p>老年代GC触发条件：CMS 不会等到老年代完全满了才进行回收，而是当老年代使用达到一定阈值时（默认 92%）开始回收，以避免长时间的 Full GC。</p>
 <blockquote>
+<p>标记策略 - 增量更新</p>
+</blockquote>
+<p>在并发标记过程中，当发现一个原本未被标记为存活的对象，因为某个应用程序线程执行了写操作而使得其被一个已标记的存活对象引用时，并不会立即将这个原本未标记的对象标记为存活，而是将这个引用关系变化记录下来，等待重新标记阶段再根据这些记录来更新标记情况，确保该对象能被正确标记为存活。</p>
+<ul>
+<li>CMS使用插入写屏障</li>
+</ul>
+<p>新增黑色到白色的引用，JVM就会通过写屏障，将黑色变成灰色</p>
+<blockquote>
 <p>CMS缺点：</p>
 </blockquote>
 <p>内存碎片问题：由于 CMS 是标记-清除回收器，不会整理内存，老年代内存中会产生碎片，这可能导致 Full GC。</p>
@@ -278,39 +286,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring的事务</title>
-    <url>/2025/12/28/Spring%E7%9A%84%E4%BA%8B%E5%8A%A1/</url>
-    <content><![CDATA[<hr>
-<h3 id="什么时候事务无法传递？"><a href="#什么时候事务无法传递？" class="headerlink" title="什么时候事务无法传递？"></a>什么时候事务无法传递？</h3><h4 id="1-AOP代理失败"><a href="#1-AOP代理失败" class="headerlink" title="1.AOP代理失败"></a>1.AOP代理失败</h4><p>如果在 同一个类内部 直接调用带有 @Transactional 注解的方法，调用不会经过代理，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class UserService &#123;</span><br><span class="line"></span><br><span class="line">    public void updateUser() &#123;</span><br><span class="line">        // 直接调用本类的事务方法，事务失效</span><br><span class="line">        doUpdate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Transactional</span><br><span class="line">    public void doUpdate() &#123;</span><br><span class="line">        // 事务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>解决方法：</li>
-</ul>
-<p>1.通过 Spring 容器获取代理对象（如 self = applicationContext.getBean(UserService.class)）。</p>
-<p>2.拆分到不同的类中，让调用走代理。</p>
-<hr>
-<h4 id="2-异常类型不匹配"><a href="#2-异常类型不匹配" class="headerlink" title="2.异常类型不匹配"></a>2.异常类型不匹配</h4><p>Spring 默认只在 运行时异常（RuntimeException） 或 Error 时回滚事务，受检异常（Checked Exception） 默认不会回滚。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public void updateUser() throws Exception &#123;</span><br><span class="line">    // 抛出受检异常，事务不会回滚</span><br><span class="line">    throw new Exception(&quot;出错了&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>解决方案：</li>
-</ul>
-<p>显式指定回滚异常类型：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional(rollbackFor = Exception.class)</span><br></pre></td></tr></table></figure><br>改为抛出运行时异常。</p>
-<hr>
-<h3 id="3-事务方法被声明为-static-或-final"><a href="#3-事务方法被声明为-static-或-final" class="headerlink" title="3.事务方法被声明为 static 或 final"></a>3.事务方法被声明为 static 或 final</h3><p>Spring 事务代理需要生成子类（CGLIB）或实现接口（JDK 动态代理）。如果方法是 static 或 final，代理无法覆盖，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public final void updateUser() &#123;</span><br><span class="line">    // 事务失效</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>解决方法：去掉 static 或 final 修饰符。</p>
-<hr>
-<h3 id="4-事务方法不是-public"><a href="#4-事务方法不是-public" class="headerlink" title="4.事务方法不是 public"></a>4.事务方法不是 public</h3><p>Spring 事务代理只对 public 方法 生效，private、protected 或默认访问权限的方法不会被代理。</p>
-<hr>
-<h3 id="5-多线程环境下事务失效"><a href="#5-多线程环境下事务失效" class="headerlink" title="5.多线程环境下事务失效"></a>5.多线程环境下事务失效</h3><p>Spring 事务是基于 ThreadLocal 管理的，如果在事务方法中开启新线程，新线程无法继承事务上下文，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public void updateUser() &#123;</span><br><span class="line">    new Thread(() -&gt; &#123;</span><br><span class="line">        // 新线程中的事务逻辑，事务失效</span><br><span class="line">    &#125;).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h3 id="6-数据源或事务管理器配置错误"><a href="#6-数据源或事务管理器配置错误" class="headerlink" title="6.数据源或事务管理器配置错误"></a>6.数据源或事务管理器配置错误</h3><p>数据源未被 Spring 事务管理器管理。</p>
-<p>事务管理器配置的数据源与实际使用的数据源不一致。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public PlatformTransactionManager transactionManager(DataSource dataSource) &#123;</span><br><span class="line">    return new DataSourceTransactionManager(dataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>如果 dataSource 没有被 Spring 管理，事务失效。</p>
-]]></content>
-      <categories>
-        <category>Spring</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</title>
     <url>/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/</url>
     <content><![CDATA[<hr>
@@ -341,6 +316,39 @@
       <tags>
         <tag>C++</tag>
         <tag>STL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring的事务</title>
+    <url>/2025/12/28/Spring%E7%9A%84%E4%BA%8B%E5%8A%A1/</url>
+    <content><![CDATA[<hr>
+<h3 id="什么时候事务无法传递？"><a href="#什么时候事务无法传递？" class="headerlink" title="什么时候事务无法传递？"></a>什么时候事务无法传递？</h3><h4 id="1-AOP代理失败"><a href="#1-AOP代理失败" class="headerlink" title="1.AOP代理失败"></a>1.AOP代理失败</h4><p>如果在 同一个类内部 直接调用带有 @Transactional 注解的方法，调用不会经过代理，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class UserService &#123;</span><br><span class="line"></span><br><span class="line">    public void updateUser() &#123;</span><br><span class="line">        // 直接调用本类的事务方法，事务失效</span><br><span class="line">        doUpdate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Transactional</span><br><span class="line">    public void doUpdate() &#123;</span><br><span class="line">        // 事务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>解决方法：</li>
+</ul>
+<p>1.通过 Spring 容器获取代理对象（如 self = applicationContext.getBean(UserService.class)）。</p>
+<p>2.拆分到不同的类中，让调用走代理。</p>
+<hr>
+<h4 id="2-异常类型不匹配"><a href="#2-异常类型不匹配" class="headerlink" title="2.异常类型不匹配"></a>2.异常类型不匹配</h4><p>Spring 默认只在 运行时异常（RuntimeException） 或 Error 时回滚事务，受检异常（Checked Exception） 默认不会回滚。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public void updateUser() throws Exception &#123;</span><br><span class="line">    // 抛出受检异常，事务不会回滚</span><br><span class="line">    throw new Exception(&quot;出错了&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>解决方案：</li>
+</ul>
+<p>显式指定回滚异常类型：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional(rollbackFor = Exception.class)</span><br></pre></td></tr></table></figure><br>改为抛出运行时异常。</p>
+<hr>
+<h3 id="3-事务方法被声明为-static-或-final"><a href="#3-事务方法被声明为-static-或-final" class="headerlink" title="3.事务方法被声明为 static 或 final"></a>3.事务方法被声明为 static 或 final</h3><p>Spring 事务代理需要生成子类（CGLIB）或实现接口（JDK 动态代理）。如果方法是 static 或 final，代理无法覆盖，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public final void updateUser() &#123;</span><br><span class="line">    // 事务失效</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>解决方法：去掉 static 或 final 修饰符。</p>
+<hr>
+<h3 id="4-事务方法不是-public"><a href="#4-事务方法不是-public" class="headerlink" title="4.事务方法不是 public"></a>4.事务方法不是 public</h3><p>Spring 事务代理只对 public 方法 生效，private、protected 或默认访问权限的方法不会被代理。</p>
+<hr>
+<h3 id="5-多线程环境下事务失效"><a href="#5-多线程环境下事务失效" class="headerlink" title="5.多线程环境下事务失效"></a>5.多线程环境下事务失效</h3><p>Spring 事务是基于 ThreadLocal 管理的，如果在事务方法中开启新线程，新线程无法继承事务上下文，事务失效。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Transactional</span><br><span class="line">public void updateUser() &#123;</span><br><span class="line">    new Thread(() -&gt; &#123;</span><br><span class="line">        // 新线程中的事务逻辑，事务失效</span><br><span class="line">    &#125;).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="6-数据源或事务管理器配置错误"><a href="#6-数据源或事务管理器配置错误" class="headerlink" title="6.数据源或事务管理器配置错误"></a>6.数据源或事务管理器配置错误</h3><p>数据源未被 Spring 事务管理器管理。</p>
+<p>事务管理器配置的数据源与实际使用的数据源不一致。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public PlatformTransactionManager transactionManager(DataSource dataSource) &#123;</span><br><span class="line">    return new DataSourceTransactionManager(dataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>如果 dataSource 没有被 Spring 管理，事务失效。</p>
+]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -385,39 +393,6 @@
       </tags>
   </entry>
   <entry>
-    <title>__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</title>
-    <url>/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<hr>
-<p>关于函数的调用规则（调用约定），大多数时候是不需要了解的，但是如果需要跨语言的编程，比如VC写的dll要delphi调用，则需要了解。</p>
-<blockquote>
-<p>1.__cdecl         </p>
-</blockquote>
-<p>__cdecl 是 C Declaration  的缩写，表示 C 语言默认的函数调用方法：所有参数从右到左依次入栈，这些参数由调用者清除，称为手动清栈。被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。</p>
-<blockquote>
-<p>2.__stdcall </p>
-</blockquote>
-<p>__stdcall 是 Standard Call 的缩写，是 C++ 的标准调用方式：所有参数从右到左依次入栈，如果是调用类成员的话，最后一个入栈的是 this 指针。这些堆栈中的参数由被调用的函数在返回后清除，使用的指令是 retnX，X 表示参数占用的字节数，CPU 在 ret 之后自动弹出 X 个字节的堆栈空间，称为自动清栈。函数在编译的时候就必须确定参数个数，并且调用者必须严格的控制参数的生成，不能多，不能少，否则返回后会出错。</p>
-<blockquote>
-<p>3.__fastcall         </p>
-</blockquote>
-<p><strong>fastcall 是编译器指定的快速调用方式。由于大多数的函数参数个数很少，使用堆栈传递比较费时。因此 </strong>fastcall 通常规定将前两个（或若干个）参数由寄存器传递，其余参数还是通过堆栈传递。不同编译器编译的程序规定的寄存器不同，返回方式和 __stdcall 相当。</p>
-<blockquote>
-<p>4.__pascal         </p>
-</blockquote>
-<p><strong>pascal 是 Pascal 语言（Delphi）的函数调用方式，也可以在 C/C++ 中使用，参数压栈顺序与前两者相反。返回时的清栈方式与 </strong>stdcall 相同。</p>
-<blockquote>
-<p>5.__thiscall</p>
-</blockquote>
-<p><strong>thiscall 是为了解决类成员调用中 this 指针传递而规定的。</strong>thiscall 要求把 this 指针放在特定寄存器中，该寄存器由编译器决定。VC 使用 ecx，Borland 的 C++ 编译器使用 eax。返回方式和 __stdcall 相当。</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kd树</title>
     <url>/2019/10/01/d/</url>
     <content><![CDATA[<hr>
@@ -457,6 +432,39 @@
       </categories>
       <tags>
         <tag>Machine Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</title>
+    <url>/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<hr>
+<p>关于函数的调用规则（调用约定），大多数时候是不需要了解的，但是如果需要跨语言的编程，比如VC写的dll要delphi调用，则需要了解。</p>
+<blockquote>
+<p>1.__cdecl         </p>
+</blockquote>
+<p>__cdecl 是 C Declaration  的缩写，表示 C 语言默认的函数调用方法：所有参数从右到左依次入栈，这些参数由调用者清除，称为手动清栈。被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。</p>
+<blockquote>
+<p>2.__stdcall </p>
+</blockquote>
+<p>__stdcall 是 Standard Call 的缩写，是 C++ 的标准调用方式：所有参数从右到左依次入栈，如果是调用类成员的话，最后一个入栈的是 this 指针。这些堆栈中的参数由被调用的函数在返回后清除，使用的指令是 retnX，X 表示参数占用的字节数，CPU 在 ret 之后自动弹出 X 个字节的堆栈空间，称为自动清栈。函数在编译的时候就必须确定参数个数，并且调用者必须严格的控制参数的生成，不能多，不能少，否则返回后会出错。</p>
+<blockquote>
+<p>3.__fastcall         </p>
+</blockquote>
+<p><strong>fastcall 是编译器指定的快速调用方式。由于大多数的函数参数个数很少，使用堆栈传递比较费时。因此 </strong>fastcall 通常规定将前两个（或若干个）参数由寄存器传递，其余参数还是通过堆栈传递。不同编译器编译的程序规定的寄存器不同，返回方式和 __stdcall 相当。</p>
+<blockquote>
+<p>4.__pascal         </p>
+</blockquote>
+<p><strong>pascal 是 Pascal 语言（Delphi）的函数调用方式，也可以在 C/C++ 中使用，参数压栈顺序与前两者相反。返回时的清栈方式与 </strong>stdcall 相同。</p>
+<blockquote>
+<p>5.__thiscall</p>
+</blockquote>
+<p><strong>thiscall 是为了解决类成员调用中 this 指针传递而规定的。</strong>thiscall 要求把 this 指针放在特定寄存器中，该寄存器由编译器决定。VC 使用 ecx，Borland 的 C++ 编译器使用 eax。返回方式和 __stdcall 相当。</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -576,6 +584,40 @@
       </tags>
   </entry>
   <entry>
+    <title>memset与虚函数</title>
+    <url>/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<hr>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void reset() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">class MyParameters : public BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  int data[3];</span><br><span class="line">  int buf[3];</span><br><span class="line">&#125;;</span><br><span class="line">MyParameters my_pars;</span><br><span class="line">memset(&amp;my_pars, 0, sizeof(my_pars));</span><br><span class="line">BaseParameters* pars = &amp;my_pars;</span><br><span class="line">//.....</span><br><span class="line">MyParameters* my = dynamic_cast&lt;MyParameters*&gt;(pars);</span><br></pre></td></tr></table></figure>
+<p>初始化数据结构MyParameters里的data和buf，正常来说需要初始化的内存空间是sizeof(int) <em> 3 </em> 2 = 24字节，但是使用memset初始化MyParameters类型的数据结构时，sizeof(my_pars)却是28字节。</p>
+<p>因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用memset时，会把该虚函数表的指针也初始化为0，而dynamic_cast也使用RTTI技术，运行时会使用到V-Table，可此时由于与V-Table的链接已经被破坏，导致程序发生异常。</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>new和malloc的区别</title>
+    <url>/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h4 id="new与malloc的区别"><a href="#new与malloc的区别" class="headerlink" title="new与malloc的区别?"></a>new与malloc的区别?</h4><p>（1）申请的内存所在位置:<br>new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。</p>
+<p>那么自由存储区是否能够是堆，这取决于operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看operator new在哪里为对象分配内存。</p>
+<p><code>在C++中，内存区分为5个区，分别是堆、栈、自由存储区、全局/静态存储区、常量存储区</code>，但是new其实是对malloc的封装，所以只是逻辑上有所区别….</p>
+<p>（2）返回类型安全性：<br>new操作符内存分配成功时，返回的是对象类型的指针，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void <em> ，需要通过强制类型转换将void</em>指针转换成我们需要的类型。</p>
+<p>（3）是否调用构造函数/析构函数：<br>使用new操作符来分配对象内存时会经历三个步骤：<br>第一步：调用operator new 函数（对于数组是operator new[]）分配一块足够大的，原始的，未命名的内存空间以便存储特定类型的对象。<br>第二步：编译器运行相应的构造函数以构造对象，并为其传入初值。<br>第三部：对象构造完成后，返回一个指向该对象的指针。</p>
+<p>使用delete操作符来释放对象内存时会经历两个步骤：<br>第一步：调用对象的析构函数。<br>第二步：编译器调用operator delete(或operator delete[])函数释放内存空间。</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+        <category>操作系统底层</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>操作系统底层</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>volatile</title>
     <url>/2019/08/13/olatile/</url>
     <content><![CDATA[<h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><p>volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。</p>
@@ -622,26 +664,12 @@
       </tags>
   </entry>
   <entry>
-    <title>memset与虚函数</title>
-    <url>/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<hr>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  virtual void reset() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">class MyParameters : public BaseParameters</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  int data[3];</span><br><span class="line">  int buf[3];</span><br><span class="line">&#125;;</span><br><span class="line">MyParameters my_pars;</span><br><span class="line">memset(&amp;my_pars, 0, sizeof(my_pars));</span><br><span class="line">BaseParameters* pars = &amp;my_pars;</span><br><span class="line">//.....</span><br><span class="line">MyParameters* my = dynamic_cast&lt;MyParameters*&gt;(pars);</span><br></pre></td></tr></table></figure>
-<p>初始化数据结构MyParameters里的data和buf，正常来说需要初始化的内存空间是sizeof(int) <em> 3 </em> 2 = 24字节，但是使用memset初始化MyParameters类型的数据结构时，sizeof(my_pars)却是28字节。</p>
-<p>因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用memset时，会把该虚函数表的指针也初始化为0，而dynamic_cast也使用RTTI技术，运行时会使用到V-Table，可此时由于与V-Table的链接已经被破坏，导致程序发生异常。</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>spring的Bean生命周期</title>
     <url>/2025/12/29/spring%E5%88%9D%E5%A7%8B%E5%8C%96%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/</url>
     <content><![CDATA[<h3 id="常用初始化模块执行顺序"><a href="#常用初始化模块执行顺序" class="headerlink" title="常用初始化模块执行顺序"></a>常用初始化模块执行顺序</h3><p>构造函数 &gt; @Autowired &gt; @PostConstruct &gt; init函数</p>
 <h3 id="bean的生命周期"><a href="#bean的生命周期" class="headerlink" title="bean的生命周期"></a>bean的生命周期</h3><p>1.实例化</p>
 <p>Spring 首先实例化一个 Bean，并为其分配内存空间。这个阶段就是通过 Spring 的 ApplicationContext 或 BeanFactory 根据 Bean 定义的类信息（通过 XML 配置或注解）创建 Bean 对象的过程。</p>
+<p>Spring 通过反射机制创建 Bean 的实例（调用构造方法）</p>
 <p>2.属性赋值（依赖注入）</p>
 <p>实例化完成后，Spring 会通过依赖注入（DI）机制为 Bean 设置属性。这个过程确保了所有依赖项（无论是通过构造器注入还是通过 setter 注入）都会被自动注入。<br>依赖注入的方式有多种，其中最常见的是使用 @Autowired 注解或者通过 XML 配置来完成。</p>
 <p>3.初始化</p>
@@ -745,85 +773,124 @@
       </tags>
   </entry>
   <entry>
-    <title>内存对齐</title>
-    <url>/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/</url>
+    <title>分布式事务</title>
+    <url>/2026/01/04/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
     <content><![CDATA[<hr>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    double b;</span><br><span class="line">    short c;</span><br><span class="line">&#125;A;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    short b;</span><br><span class="line">    double c;</span><br><span class="line">&#125;B;</span><br></pre></td></tr></table></figure>
-<p><code>sizeof(A)=24而sizeof(B)=16</code></p>
+<p>2PC、TCC、SAGA、本地消息表的原理和优缺点分别是什么？在实际项目中如何选择合适的分布式事务方案？</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>2PC</th>
+<th>TCC</th>
+<th>SAGA</th>
+<th>本地消息表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一致性</td>
+<td>强一致性（ACID）</td>
+<td>强一致性（近似 ACID）</td>
+<td>最终一致性</td>
+<td>最终一致性</td>
+</tr>
+<tr>
+<td>业务侵入性</td>
+<td>低（依赖数据库）</td>
+<td>高（需实现 3 个方法）</td>
+<td>中（需实现补偿事务）</td>
+<td>低（需加消息表）</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>低（同步阻塞）</td>
+<td>高（无阻塞）</td>
+<td>高（无阻塞）</td>
+<td>高（异步消息）</td>
+</tr>
+<tr>
+<td>实现复杂度</td>
+<td>低</td>
+<td>高（处理幂等 / 空回滚）</td>
+<td>中（协调式易管理）</td>
+<td>低</td>
+</tr>
+<tr>
+<td>适用事务长度</td>
+<td>短事务</td>
+<td>短事务</td>
+<td>长事务</td>
+<td>中短事务</td>
+</tr>
+<tr>
+<td>核心问题</td>
+<td>同步阻塞、单点故障</td>
+<td>业务侵入、实现复杂</td>
+<td>补偿逻辑、最终一致</td>
+<td>消息延迟、幂等性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="SAGA"><a href="#SAGA" class="headerlink" title="SAGA"></a>SAGA</h3><p>将分布式事务拆分为一系列本地事务的有序执行链，每个本地事务都有对应的补偿事务：</p>
+<p>正向执行</p>
+<p>按顺序执行每个本地事务 T1, T2, …, Tn。<br>如果所有本地事务都执行成功，事务提交。</p>
+<p>反向补偿</p>
+<p>如果某个本地事务 Ti 执行失败，按逆序执行补偿事务 Ci-1, Ci-2, …, C1。<br>补偿事务的作用是撤销对应正向本地事务的执行结果，恢复到事务执行前的状态。</p>
+<h3 id="TCC（Try-Confirm-Cancel，补偿事务）"><a href="#TCC（Try-Confirm-Cancel，补偿事务）" class="headerlink" title="TCC（Try-Confirm-Cancel，补偿事务）"></a>TCC（Try-Confirm-Cancel，补偿事务）</h3><p><img src="/images/pasted-88.png" alt="upload successful"></p>
+<p>TCC 是一种业务侵入式的分布式事务方案，将每个业务操作拆分为三个独立的方法，由业务代码实现：</p>
+<p>1.Try 阶段</p>
+<p>尝试执行业务操作，预留资源（如冻结资金、锁定库存），保证操作的幂等性。</p>
+<p>此阶段只做资源检查和预留，不执行最终业务逻辑。</p>
+<p>2.Confirm 阶段</p>
+<p>确认执行业务操作，使用预留的资源完成最终逻辑。</p>
+<p>只有当所有参与者的 Try 阶段都成功时，才会执行 Confirm 阶段。</p>
+<p>3.Cancel 阶段</p>
+<p>取消执行业务操作，释放预留的资源。</p>
+<p>如果任何一个参与者的 Try 阶段失败，会执行所有参与者的 Cancel 阶段。</p>
 <blockquote>
-<p>A的内存分布：(每一个元素都存在最大元素大小的空间内)</p>
+<p>幂等、空回滚、悬挂？</p>
 </blockquote>
-<p><img src="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/images\pasted-5.png" alt="upload successful"></p>
-<blockquote>
-<p>B的内存分布：</p>
-</blockquote>
-<p><img src="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/images\pasted-6.png" alt="upload successful"></p>
-]]></content>
-      <categories>
-        <category>C++</category>
-        <category>操作系统底层</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>操作系统底层</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多头注意力机制</title>
-    <url>/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<hr>
-<p><img src="/images/pasted-70.png" alt="upload successful"></p>
-<h3 id="单头注意力"><a href="#单头注意力" class="headerlink" title="单头注意力"></a>单头注意力</h3><p>Q（查询query）=&gt; （seq_len×d_k）</p>
-<p>K（键值key）=&gt; Q*K 输出每个单词和其他单词的概率关系分布（seq_len x seq_len）</p>
-<p>V（值 value）=&gt; 赋予每个向量重要性</p>
-<p><img src="/images/pasted-71.png" alt="upload successful"></p>
-<p>d_k：是 Q/K 的维度，通常远小于 d_model（如 d_k=64），目的是降低计算复杂度，将原始得分除以 √d_k，避免因 d_k 过大导致 Softmax 输出过于极端（梯度消失）。</p>
-<p>d_model：输入词向量的维度。</p>
-<p>输入都是同一个词向量+位置编码，注意力的Q、K、V矩阵参数不同但是长宽相同（seq_len×d_k）</p>
-<p>Attention = softmax(Q×K^T / √d_k )*V</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│ 输入X (seq_len×d_model)                                │</span><br><span class="line">└───────────┬───────────┬───────────┬───────────────────┘</span><br><span class="line">            │           │           │</span><br><span class="line">            ▼           ▼           ▼</span><br><span class="line">┌───────────┐   ┌───────────┐   ┌───────────┐</span><br><span class="line">│ W_Q       │   │ W_K       │   │ W_V       │</span><br><span class="line">└───────────┘   └───────────┘   └───────────┘</span><br><span class="line">            │           │           │</span><br><span class="line">            ▼           ▼           ▼</span><br><span class="line">┌───────────┐   ┌───────────┐   ┌───────────┐</span><br><span class="line">│ Q         │   │ K         │   │ V         │</span><br><span class="line">└───────────┘   └───────────┘   └───────────┘</span><br><span class="line">            │           │           │</span><br><span class="line">            └───────────┼───────────┘</span><br><span class="line">                        │</span><br><span class="line">                        ▼</span><br><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│ Q×K^T / √d_k → Softmax → 注意力权重    │</span><br><span class="line">└─────────────────────────────────────────┘</span><br><span class="line">                        │</span><br><span class="line">                        ▼</span><br><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│ 注意力权重 × V → 单头输出                │</span><br><span class="line">└─────────────────────────────────────────┘</span><br><span class="line">                        │</span><br><span class="line">                        ▼</span><br><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│ 多头拼接 → W_O → 最终输出                │</span><br><span class="line">└─────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+<p>幂等性就是无论接口调用多少次，返回的结果应该具有一致性。</p>
+<p>空回滚（try没执行就cancel）：当某分支事务的try阶段阻塞时，可能导致全局事务超时而触发二阶段的cancel操作。在未执行try操作时先执行了cancel操作，这时cancel不能做回滚，就是空回滚。</p>
+<p>业务悬挂（cancel之后try）：对于已经空回滚的业务，如果以后继续执行try，就永远不可能confirm或cancel</p>
 <ul>
-<li>单头注意力的输出是融合了上下文信息的 Token 表示矩阵</li>
+<li>资金业务的具体例子：</li>
 </ul>
-<h3 id="多头注意力"><a href="#多头注意力" class="headerlink" title="多头注意力"></a>多头注意力</h3><p>并行执行多个单头注意力，然后将结果拼接并线性变换，目的是捕捉不同维度的上下文信息。</p>
-<p>原先（d_model）的矩阵分解成h个头，每个头都是单头注意力（d_k），但是拼接起来等于d_model</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Q, K, V (seq_len×d_model)</span><br><span class="line">  |</span><br><span class="line">  ├→ 分拆为h个头 → Q1-Qh, K1-Kh, V1-Vh (每个seq_len×d_k)</span><br><span class="line">  |</span><br><span class="line">  ├→ 头1：自注意力 → Output1 (seq_len×d_k)</span><br><span class="line">  ├→ 头2：自注意力 → Output2 (seq_len×d_k)</span><br><span class="line">  ├→ ...</span><br><span class="line">  ├→ 头h：自注意力 → Outputh (seq_len×d_k)</span><br><span class="line">  |</span><br><span class="line">  ├→ 拼接 → Output (seq_len×h*d_k)</span><br><span class="line">  |</span><br><span class="line">  └→ 线性变换W_O → 最终输出 (seq_len×d_model)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>掩码自注意力（Masked Self-Attention）</p>
-</blockquote>
-<p>用于 Transformer 的解码器，防止模型看到未来的 Token。<br>通过在注意力得分矩阵中加入掩码（Mask），将未来 Token 的得分设为 -∞，Softmax 后权重为 0。</p>
+<p>为了实现空回滚、防止业务悬挂,记录冻结金额的同时,记录当前事务id和执行状态<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE `account_freeze_tbl` (</span><br><span class="line">  `xid` varchar(128) NOT NULL COMMENT &#x27;事务id&#x27;,</span><br><span class="line">  `user_id` varchar(255) DEFAULT NULL COMMENT &#x27;用户id&#x27;,</span><br><span class="line">  `freeze_money` int(11) unsigned DEFAULT &#x27;0&#x27; COMMENT &#x27;冻结金额&#x27;,</span><br><span class="line">  `state` int(1) DEFAULT NULL COMMENT &#x27;事务状态，0:try，1:confirm，2:cancel&#x27;,</span><br><span class="line">  PRIMARY KEY (`xid`) USING BTREE</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;</span><br></pre></td></tr></table></figure></p>
+<p>1.Try业务</p>
+<p>记录冻结金额和事务状态0到account_freeze表</p>
+<p>扣减account表可用金额</p>
+<p>2.Confirm业务</p>
+<p>根据xid删除account_freeze表的冻结记录(因为如果一个事务confirm那么记录就没有意义了)</p>
+<p>3.Cancel业务</p>
+<p>修改account_freeze表，冻结金额为0，state为2</p>
+<p>修改account表，恢复可用金额</p>
+<ul>
+<li>如何判断是否空回滚:</li>
+</ul>
+<p>cancel业务中，根据xid查询account_freeze，如果为null则说明try还没做，需要空回滚</p>
+<ul>
+<li>如何避免业务悬挂:</li>
+</ul>
+<p>try业务中，根据xid查询account_freeze ，如果存在金额=0/state=2则证明Cancel已经执行，拒绝执行try业务</p>
+<h3 id="TCC-vs-2PC"><a href="#TCC-vs-2PC" class="headerlink" title="TCC  vs 2PC"></a>TCC  vs 2PC</h3><p>TCC只需要处理业务异常情况，异常处理相对简单。 2PC适用于对事务一致性要求较高的场景，例如银行转账等，需要保证数据致性和完整性。 而TCC适用于对事务一致性要求不那么高的场景，例如电商库存扣减等，需要保证数据最终一致性即可。</p>
+<h3 id="本地消息表"><a href="#本地消息表" class="headerlink" title="本地消息表"></a>本地消息表</h3><p>写本地消息+状态，然后链式流转。</p>
 ]]></content>
-      <categories>
-        <category>LLM</category>
-      </categories>
-      <tags>
-        <tag>LLM</tag>
-      </tags>
   </entry>
   <entry>
-    <title>大小端存储</title>
-    <url>/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/</url>
-    <content><![CDATA[<hr>
-<p>大端模式，是指数据的高字节保存在内存的低地址中。</p>
-<p><img src="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/images\pasted-4.png" alt="upload successful"><br>4个两位16进制数=8*4=32位=4B=1int</p>
-<hr>
-<p>编程判断大小端的两种方法：</p>
-<ol>
-<li>union 判断法</li>
-</ol>
-<p>在union中所有的数据成员共用一个空间，同一时间只能储存其中一个数据成员，所有的数据成员具有相同的起始地址。即上述的union虽然定义了两个成员，但其实这个union只占用了4个字节(32位机器中)，往a成员赋值，然后读取b就相读取a成员的低位第一个字节的值。如果机器使用大端模式，则u.a=1那a的最高字节值为1；<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef union &#123;</span><br><span class="line">	int i;</span><br><span class="line">	char c;</span><br><span class="line">&#125;my_union;</span><br><span class="line"> </span><br><span class="line">int checkSystem1(void)</span><br><span class="line">&#123;</span><br><span class="line">	my_union u;</span><br><span class="line">	u.i = 1;</span><br><span class="line">	return (u.i == u.c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>直接判断法</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int checkSystem2(void)</span><br><span class="line">&#123;</span><br><span class="line">	int i = 0x12345678;</span><br><span class="line">	char *c = (char*)&amp;i;</span><br><span class="line">	return ((c[0] == 0x78) &amp;&amp; (c[1] == 0x56) &amp;&amp; (c[2] == 0x34) &amp;&amp; (c[3] == 0x12));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <title>单例模式</title>
+    <url>/2026/01/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h3 id="double-check-lock-懒汉模式"><a href="#double-check-lock-懒汉模式" class="headerlink" title="double check lock 懒汉模式"></a>double check lock 懒汉模式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class DCLSingleton &#123;</span><br><span class="line">    // 使用 volatile 关键字，防止指令重排</span><br><span class="line">    private static volatile DCLSingleton instance;</span><br><span class="line"></span><br><span class="line">    private DCLSingleton() &#123;</span><br><span class="line">        System.out.println(&quot;DCLSingleton 被实例化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static DCLSingleton getInstance() &#123;</span><br><span class="line">        // 第一次检查：如果实例已存在，直接返回</span><br><span class="line">        if (instance == null) &#123;</span><br><span class="line">            // 加锁</span><br><span class="line">            synchronized (DCLSingleton.class) &#123;</span><br><span class="line">                // 第二次检查：防止多个线程同时进入第一个 if 后重复创建实例</span><br><span class="line">                if (instance == null) &#123;</span><br><span class="line">                    instance = new DCLSingleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class EagerSingleton &#123;</span><br><span class="line">    // 在类加载时就初始化实例</span><br><span class="line">    private static final EagerSingleton INSTANCE = new EagerSingleton();</span><br><span class="line"></span><br><span class="line">    private EagerSingleton() &#123;</span><br><span class="line">        System.out.println(&quot;EagerSingleton 被实例化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static EagerSingleton getInstance() &#123;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public enum EnumSingleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line"></span><br><span class="line">    EnumSingleton() &#123;</span><br><span class="line">        System.out.println(&quot;EnumSingleton 被实例化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void doSomething() &#123;</span><br><span class="line">        System.out.println(&quot;枚举单例执行方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>C++</category>
-        <category>操作系统底层</category>
+        <category>JAVA设计模式</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>操作系统底层</tag>
+        <tag>JAVA设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -859,6 +926,88 @@
       </tags>
   </entry>
   <entry>
+    <title>多头注意力机制</title>
+    <url>/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<hr>
+<p><img src="/images/pasted-70.png" alt="upload successful"></p>
+<h3 id="单头注意力"><a href="#单头注意力" class="headerlink" title="单头注意力"></a>单头注意力</h3><p>Q（查询query）=&gt; （seq_len×d_k）</p>
+<p>K（键值key）=&gt; Q*K 输出每个单词和其他单词的概率关系分布（seq_len x seq_len）</p>
+<p>V（值 value）=&gt; 赋予每个向量重要性</p>
+<p><img src="/images/pasted-71.png" alt="upload successful"></p>
+<p>d_k：是 Q/K 的维度，通常远小于 d_model（如 d_k=64），目的是降低计算复杂度，将原始得分除以 √d_k，避免因 d_k 过大导致 Softmax 输出过于极端（梯度消失）。</p>
+<p>d_model：输入词向量的维度。</p>
+<p>输入都是同一个词向量+位置编码，注意力的Q、K、V矩阵参数不同但是长宽相同（seq_len×d_k）</p>
+<p>Attention = softmax(Q×K^T / √d_k )*V</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│ 输入X (seq_len×d_model)                                │</span><br><span class="line">└───────────┬───────────┬───────────┬───────────────────┘</span><br><span class="line">            │           │           │</span><br><span class="line">            ▼           ▼           ▼</span><br><span class="line">┌───────────┐   ┌───────────┐   ┌───────────┐</span><br><span class="line">│ W_Q       │   │ W_K       │   │ W_V       │</span><br><span class="line">└───────────┘   └───────────┘   └───────────┘</span><br><span class="line">            │           │           │</span><br><span class="line">            ▼           ▼           ▼</span><br><span class="line">┌───────────┐   ┌───────────┐   ┌───────────┐</span><br><span class="line">│ Q         │   │ K         │   │ V         │</span><br><span class="line">└───────────┘   └───────────┘   └───────────┘</span><br><span class="line">            │           │           │</span><br><span class="line">            └───────────┼───────────┘</span><br><span class="line">                        │</span><br><span class="line">                        ▼</span><br><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│ Q×K^T / √d_k → Softmax → 注意力权重    │</span><br><span class="line">└─────────────────────────────────────────┘</span><br><span class="line">                        │</span><br><span class="line">                        ▼</span><br><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│ 注意力权重 × V → 单头输出                │</span><br><span class="line">└─────────────────────────────────────────┘</span><br><span class="line">                        │</span><br><span class="line">                        ▼</span><br><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│ 多头拼接 → W_O → 最终输出                │</span><br><span class="line">└─────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+<ul>
+<li>单头注意力的输出是融合了上下文信息的 Token 表示矩阵</li>
+</ul>
+<h3 id="多头注意力"><a href="#多头注意力" class="headerlink" title="多头注意力"></a>多头注意力</h3><p>并行执行多个单头注意力，然后将结果拼接并线性变换，目的是捕捉不同维度的上下文信息。</p>
+<p>原先（d_model）的矩阵分解成h个头，每个头都是单头注意力（d_k），但是拼接起来等于d_model</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Q, K, V (seq_len×d_model)</span><br><span class="line">  |</span><br><span class="line">  ├→ 分拆为h个头 → Q1-Qh, K1-Kh, V1-Vh (每个seq_len×d_k)</span><br><span class="line">  |</span><br><span class="line">  ├→ 头1：自注意力 → Output1 (seq_len×d_k)</span><br><span class="line">  ├→ 头2：自注意力 → Output2 (seq_len×d_k)</span><br><span class="line">  ├→ ...</span><br><span class="line">  ├→ 头h：自注意力 → Outputh (seq_len×d_k)</span><br><span class="line">  |</span><br><span class="line">  ├→ 拼接 → Output (seq_len×h*d_k)</span><br><span class="line">  |</span><br><span class="line">  └→ 线性变换W_O → 最终输出 (seq_len×d_model)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>掩码自注意力（Masked Self-Attention）</p>
+</blockquote>
+<p>用于 Transformer 的解码器，防止模型看到未来的 Token。<br>通过在注意力得分矩阵中加入掩码（Mask），将未来 Token 的得分设为 -∞，Softmax 后权重为 0。</p>
+]]></content>
+      <categories>
+        <category>LLM</category>
+      </categories>
+      <tags>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内存对齐</title>
+    <url>/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/</url>
+    <content><![CDATA[<hr>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    double b;</span><br><span class="line">    short c;</span><br><span class="line">&#125;A;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    short b;</span><br><span class="line">    double c;</span><br><span class="line">&#125;B;</span><br></pre></td></tr></table></figure>
+<p><code>sizeof(A)=24而sizeof(B)=16</code></p>
+<blockquote>
+<p>A的内存分布：(每一个元素都存在最大元素大小的空间内)</p>
+</blockquote>
+<p><img src="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/images\pasted-5.png" alt="upload successful"></p>
+<blockquote>
+<p>B的内存分布：</p>
+</blockquote>
+<p><img src="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/images\pasted-6.png" alt="upload successful"></p>
+]]></content>
+      <categories>
+        <category>C++</category>
+        <category>操作系统底层</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>操作系统底层</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大小端存储</title>
+    <url>/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/</url>
+    <content><![CDATA[<hr>
+<p>大端模式，是指数据的高字节保存在内存的低地址中。</p>
+<p><img src="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/images\pasted-4.png" alt="upload successful"><br>4个两位16进制数=8*4=32位=4B=1int</p>
+<hr>
+<p>编程判断大小端的两种方法：</p>
+<ol>
+<li>union 判断法</li>
+</ol>
+<p>在union中所有的数据成员共用一个空间，同一时间只能储存其中一个数据成员，所有的数据成员具有相同的起始地址。即上述的union虽然定义了两个成员，但其实这个union只占用了4个字节(32位机器中)，往a成员赋值，然后读取b就相读取a成员的低位第一个字节的值。如果机器使用大端模式，则u.a=1那a的最高字节值为1；<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef union &#123;</span><br><span class="line">	int i;</span><br><span class="line">	char c;</span><br><span class="line">&#125;my_union;</span><br><span class="line"> </span><br><span class="line">int checkSystem1(void)</span><br><span class="line">&#123;</span><br><span class="line">	my_union u;</span><br><span class="line">	u.i = 1;</span><br><span class="line">	return (u.i == u.c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>直接判断法</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int checkSystem2(void)</span><br><span class="line">&#123;</span><br><span class="line">	int i = 0x12345678;</span><br><span class="line">	char *c = (char*)&amp;i;</span><br><span class="line">	return ((c[0] == 0x78) &amp;&amp; (c[1] == 0x56) &amp;&amp; (c[2] == 0x34) &amp;&amp; (c[3] == 0x12));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>C++</category>
+        <category>操作系统底层</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>操作系统底层</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>const</title>
     <url>/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/</url>
     <content><![CDATA[<hr>
@@ -887,86 +1036,27 @@
       </tags>
   </entry>
   <entry>
-    <title>常见的几种决策树</title>
-    <url>/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/</url>
-    <content><![CDATA[<p><a href="https://www.cnblogs.com/pinard/p/6053344.html">https://www.cnblogs.com/pinard/p/6053344.html</a><br><a href="https://blog.csdn.net/a857553315/article/details/95620881">https://blog.csdn.net/a857553315/article/details/95620881</a></p>
-<hr>
-<h3 id="特征选择："><a href="#特征选择：" class="headerlink" title="特征选择："></a>特征选择：</h3><p>如果瞎猜中的概率与特征选择出来的概率相差无几，那么就可以放弃该特征了。特征选择的标准是信息增益或信息增益比。</p>
+    <title>归并排序为什么要用败者树？</title>
+    <url>/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/</url>
+    <content><![CDATA[<p><a href="https://www.zhihu.com/question/35144290/answer/148681658">https://www.zhihu.com/question/35144290/answer/148681658</a></p>
 <hr>
 <blockquote>
-<p>ID3算法与信息增益：（木有剪枝，只能处理离散数据）</p>
+<p>堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$ </p>
 </blockquote>
-<p>得知特征X的信息而使输出的分类Y的不确定性减少的程度。</p>
-<p>条件熵：$H(Y|X)=\sum_{n}^{i=1}p_iH(Y|X=x_i)$</p>
-<p>信息增益：$g(D,A)=H(D)-H(D|A)$，D是数据集，A是特征。</p>
-<hr>
-<h4 id="计算过程："><a href="#计算过程：" class="headerlink" title="计算过程："></a>计算过程：</h4><p>（1）计算数据集D的经验熵：</p>
-<p>$H(D)=-\sum_{k=1}^{K}\frac{|C_k|}{|D|}log_2\frac{|C_k|}{|D|}$ ，k为第一级特征{纹理，色泽，触感}</p>
-<p>（2）计算条件熵：</p>
-<p>$H(D|A)=\sum<em>{i=1}^{n}\frac{|D_i|}{D}H(D_i)=\sum</em>{i=1}^{n}\frac{|D<em>i|}{|D|}\sum</em>{k=1}^{K}\frac{|D<em>{ik}|}{D_i}log_2\frac{|D</em>{ik}|}{|D_i|}$</p>
-<p>i为第一级特征{ 纹理 / 色泽 / 触感 }，ik为纹理中的第二级特征{ 清晰，模糊，稍糊 }</p>
-<p>（3）$g(D,A)=H(D)-H(D|A)$，越大越好。</p>
-<ul>
-<li>ID3算法就是完全依赖信息增益，但是信息增益明显对多个取值的特征有偏好，所以出现了使用增益率的C4.5算法。</li>
-</ul>
-<hr>
-<blockquote>
-<p>C4.5算法与增益率（后剪枝，可以处理连续数据—&gt;多叉树，特征要计算排序）</p>
-</blockquote>
-<p>$Gainratio(D,a)=\frac{Gain(D,a)}{IV(a)}$</p>
-<p>固有值：$IV(a)=-\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$ ，Dv是第一级特征a下的第二级特征，固有值随V的个数增加而增加。</p>
-<hr>
-<blockquote>
-<p>CART决策树（减少log的使用降低计算量，还可以用于回归，二叉树）</p>
-</blockquote>
-<p>使用Gini系数替代ID3里的熵，Gini系数越小越均衡（被错分的概率低），说明该样本只属于同一类的概率（纯度）越高。</p>
-<p>$Gini(D)=\sum<em>{k=1}^{y}\sum</em>{k’ \ne k}p<em>k*p_k’=1-\sum</em>{k=1}^{y}p_k^2$ </p>
-<p>pk表示选中的样本属于k类别的概率，则这个样本被分错的概率是(1-pk)</p>
-<p>基尼指数（基尼不纯度）= 样本被选中的概率 * 样本被分错的概率</p>
-<h3 id="预剪枝与后剪枝：（对抗过拟合与欠拟合）"><a href="#预剪枝与后剪枝：（对抗过拟合与欠拟合）" class="headerlink" title="预剪枝与后剪枝：（对抗过拟合与欠拟合）"></a>预剪枝与后剪枝：（对抗过拟合与欠拟合）</h3><ul>
-<li>预剪枝：（边自上往下生成枝杈边剪枝）</li>
-</ul>
-<p>预剪枝使得很多分支没有展开，这不仅<code>降低了过拟合的风险</code>，还显著<code>减少了决策树的训练时间开销和测试时间</code>。但是，有些分支虽当前不能提升泛化性。甚至可能导致泛化性暂时降低，但在其基础上进行后续划分却有可能导致显著提高，因此预剪枝的这种贪心本质，给决策树带来了<code>欠拟合的风险</code>。</p>
-<ul>
-<li>后剪枝：（先生成枝桠，最后从下往上剪枝）</li>
-</ul>
-<p>后剪枝通常比预剪枝<code>保留更多的分支</code>，其<code>欠拟合风险很小</code>，因此后剪枝的<code>泛化性能</code>往往<code>优</code>于预剪枝决策树。但后剪枝过程是从底往上裁剪，因此其<code>训练时间开销</code>比前剪枝要<code>大</code>。</p>
-<hr>
-<h3 id="连续值处理：（密度-甜度）"><a href="#连续值处理：（密度-甜度）" class="headerlink" title="连续值处理：（密度/甜度）"></a>连续值处理：（密度/甜度）</h3><p>连续（非离散）特征可以将特征值从小到大排列然后取</p>
-<script type="math/tex; mode=display">T_a={\frac{a_i+a_{i+1}}{2},0<i<n}</script><script type="math/tex; mode=display">Gain(D,a)=\max_{t \in T_a}  Gain(D,a,t)=max Ent(D)-\sum_{\lambda \in {-,+}}\frac{|D_t^\lambda|}{|D|}Ent(D_t^\lambda)</script><p>按照 $T_a$ 进行划分 { - ，+ }，从而得到该情况下的信息增益。</p>
-<hr>
-<h3 id="缺失值处理：（检测数据缺失）"><a href="#缺失值处理：（检测数据缺失）" class="headerlink" title="缺失值处理：（检测数据缺失）"></a>缺失值处理：（检测数据缺失）</h3><p>（1）如何在属性值缺失的情况下进行划分属性的选择？（创建决策树的时候怎么计算缺失值存在下的信息增益，选择正确的属性）<br>（2）给定划分属性，若样本在该属性上的值是缺失的，那么该如何对这个样本进行划分？（在分类过程中有缺失值的话怎么进行划分）</p>
-<p>无缺失样本所占比例：$p=\frac{ \sum<em>{x \in \tilde{D}}w_x}{ \sum</em>{x \in D} w<em>x}$<br>无缺失样本中第k类所占比例：$\tilde{p}_k=\frac{ \sum</em>{x \in \tilde{D}<em>k}w_x}{ \sum</em>{x \in \tilde{D}} w<em>x}$<br>无缺失样本中在特征a上取值为$a_v$的样本所占比例：$\tilde{r}_v=\frac{ \sum</em>{x \in \tilde{D}<em>k}w_x}{ \sum</em>{x \in \tilde{D}} w_x}$</p>
-<p>最后得到了推广了的公式：</p>
-<script type="math/tex; mode=display">Gain(D,a)=p*Gain(D,\tilde a)=p*(Ent(\tilde D)-\sum_{v=1}^{V}\tilde{r}_vEnt(\tilde D^v))</script><ul>
-<li>上式 = 总样本中非缺失的比例 *（非缺失中各类的熵-各类概率*各类特征值的熵）</li>
-</ul>
-<script type="math/tex; mode=display">Ent(\tilde D)=-\sum_{k=1}^{y}\tilde{p}_klog_2{\tilde{p}_k}</script><hr>
-<blockquote>
-<p>多变量决策树：</p>
-</blockquote>
-<p>一般的决策树分类边界由若干个与坐标轴平行的分段组成：</p>
-<p>判断过程：密度 -&gt; 含糖率 -&gt; 密度 -&gt; 含糖率…</p>
-<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-36.png" alt="upload successful"></p>
-<p>多变量决策树有d个属性对应d维空间的一个数据点，对样本分类表示在坐标空间中找到不同样本之间的分类边界。</p>
-<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-41.png" alt="upload successful"></p>
-<p>“多变量决策树”能实现斜的划分边界，使决策树模型简化。在多变量决策树的学习过程中，不是为非叶结点寻找最优划分属性，而是试图建立合适的线性分类器：</p>
-<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-37.png" alt="upload successful"></p>
-<p>可以通过最小二乘或者嵌入神经网络进一步优化。</p>
-<hr>
-<p>增量学习：根据新样本可对学得的模型进行调整适应当前形势，而不需要重新训练。如ID4，ID5R还有ITI</p>
-<hr>
-<h3 id="熵与基尼系数哪个好"><a href="#熵与基尼系数哪个好" class="headerlink" title="熵与基尼系数哪个好"></a>熵与基尼系数哪个好</h3><p>和熵模型的度量方式比，基尼系数对应的误差有多大呢？对于二类分类，基尼系数和熵之半的曲线如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-38.png" alt="upload successful"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt </span><br><span class="line">import matplotlib as mpl</span><br><span class="line">mpl.rcParams[&#x27;font.sans-serif&#x27;] = [&#x27;simHei&#x27;]</span><br><span class="line">mpl.rcParams[&#x27;axes.unicode_minus&#x27;] = False</span><br><span class="line"> </span><br><span class="line">p = np.linspace(0.0001, 0.9999 ,50)</span><br><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br><span class="line">x1 = np.linspace(0,0.5,50)</span><br><span class="line">y1 = x1</span><br><span class="line">x2 = np.linspace(0.5,1,50)</span><br><span class="line">y2 = 1- x2</span><br><span class="line"> </span><br><span class="line">plt.figure(figsize=(10,5))</span><br><span class="line">plt.plot(p, Gini, &#x27;r-&#x27;, label=&#x27;基尼指数&#x27;)</span><br><span class="line">plt.plot(p, H, &#x27;b-&#x27;, label=&#x27;半熵&#x27;)</span><br><span class="line">plt.plot(x1, y1, &#x27;g-&#x27;, label=&#x27;分类误差率&#x27;)</span><br><span class="line">plt.plot(x2, y2, &#x27;g-&#x27;)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlim(-0.01, 1.01)</span><br><span class="line">plt.ylim(0, 0.51)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p>从上图可以看出，基尼系数和熵之半的曲线非常接近，因此，基尼系数可以做为熵模型的一个近似替代。而CART分类树算法就是使用的基尼系数来选择决策树的特征。为了进一步简化，CART分类树算法每次仅仅对某个特征的值进行二分，而不是多分，这样CART分类树算法建立起来的是二叉树，而不是多叉树。</p>
+<p>其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后再用孩子节点的最小值和父节点进行比较，所以每调整一层需要比较两次。 这时人们想能否简化比较过程，这时就有了胜者树。</p>
+<p>这样每次比较只用跟自己的兄弟节点进行比较就好，所以用胜者树可以比堆少一半的比较次数。 而胜者树在节点上升的时候首先需要获得父节点，然后再获得兄弟节点，然后再比较。这时人们又想能否再次减少比较次数，于是就有了败者树。</p>
+<p>在使用败者树的时候，每个新元素上升时，只需要获得父节点并比较即可。 所以总的来说，减少了访存的时间。（拿空间换时间）</p>
+<p>原因：胜者树以小为胜的话，如果比较兄弟节点发现更小直接替代父节点即可，如果更大则兄弟节点胜出。<br>败者树比较父节点指向的点发现更大直接替换败者即可，更小则不需要替换然后接着上移。</p>
+<p>二者都是顶点缺失，都要从底部叶节点遍历到顶点。</p>
+<p>最后就是现在程序的主要瓶颈在于访存了，计算倒几乎可以忽略不计。</p>
 ]]></content>
       <categories>
-        <category>Machine Learning</category>
+        <category>分布式与并行计算</category>
+        <category>数据结构</category>
       </categories>
       <tags>
-        <tag>Machine Learning</tag>
+        <tag>分布式与并行计算</tag>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -1089,26 +1179,6 @@
 <script type="math/tex; mode=display">\nabla_xL(x^*,a^*,\beta^*)=0</script><script type="math/tex; mode=display">a_i^*c_i(x^*)=0，i=1,2,...,k</script><script type="math/tex; mode=display">c_i(x^*)<=0 ，i=1,2,...,k</script><script type="math/tex; mode=display">a_i^*>=0 ， i=1,2,...,k</script><script type="math/tex; mode=display">h_j(x^*)=0，j=1，...，l</script>]]></content>
   </entry>
   <entry>
-    <title>特征工程-特征归一化</title>
-    <url>/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/</url>
-    <content><![CDATA[<h2 id="为什么要归一化？"><a href="#为什么要归一化？" class="headerlink" title="为什么要归一化？"></a>为什么要归一化？</h2><p>在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。</p>
-<p><div align="center">
-![upload successful](\images\pasted-1.png)
-</div></p>
-<h3 id="逻辑回归一定要归一化么？"><a href="#逻辑回归一定要归一化么？" class="headerlink" title="逻辑回归一定要归一化么？"></a>逻辑回归一定要归一化么？</h3><p>如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。</p>
-<h2 id="归一化的方法"><a href="#归一化的方法" class="headerlink" title="归一化的方法"></a>归一化的方法</h2><ol>
-<li>线性函数归一化（适用于简单数值）：$X=\frac{X-X<em>{min}}{X</em>{max}-X_{min}}$</li>
-<li>0均值归一化：$z=\frac{x-u}{\sigma}$</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Machine Learning</category>
-      </categories>
-      <tags>
-        <tag>Machine Learning</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>指针的形参</title>
     <url>/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/</url>
     <content><![CDATA[<hr>
@@ -1229,6 +1299,109 @@
       </categories>
       <tags>
         <tag>分布式与并行计算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常见的几种决策树</title>
+    <url>/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/</url>
+    <content><![CDATA[<p><a href="https://www.cnblogs.com/pinard/p/6053344.html">https://www.cnblogs.com/pinard/p/6053344.html</a><br><a href="https://blog.csdn.net/a857553315/article/details/95620881">https://blog.csdn.net/a857553315/article/details/95620881</a></p>
+<hr>
+<h3 id="特征选择："><a href="#特征选择：" class="headerlink" title="特征选择："></a>特征选择：</h3><p>如果瞎猜中的概率与特征选择出来的概率相差无几，那么就可以放弃该特征了。特征选择的标准是信息增益或信息增益比。</p>
+<hr>
+<blockquote>
+<p>ID3算法与信息增益：（木有剪枝，只能处理离散数据）</p>
+</blockquote>
+<p>得知特征X的信息而使输出的分类Y的不确定性减少的程度。</p>
+<p>条件熵：$H(Y|X)=\sum_{n}^{i=1}p_iH(Y|X=x_i)$</p>
+<p>信息增益：$g(D,A)=H(D)-H(D|A)$，D是数据集，A是特征。</p>
+<hr>
+<h4 id="计算过程："><a href="#计算过程：" class="headerlink" title="计算过程："></a>计算过程：</h4><p>（1）计算数据集D的经验熵：</p>
+<p>$H(D)=-\sum_{k=1}^{K}\frac{|C_k|}{|D|}log_2\frac{|C_k|}{|D|}$ ，k为第一级特征{纹理，色泽，触感}</p>
+<p>（2）计算条件熵：</p>
+<p>$H(D|A)=\sum<em>{i=1}^{n}\frac{|D_i|}{D}H(D_i)=\sum</em>{i=1}^{n}\frac{|D<em>i|}{|D|}\sum</em>{k=1}^{K}\frac{|D<em>{ik}|}{D_i}log_2\frac{|D</em>{ik}|}{|D_i|}$</p>
+<p>i为第一级特征{ 纹理 / 色泽 / 触感 }，ik为纹理中的第二级特征{ 清晰，模糊，稍糊 }</p>
+<p>（3）$g(D,A)=H(D)-H(D|A)$，越大越好。</p>
+<ul>
+<li>ID3算法就是完全依赖信息增益，但是信息增益明显对多个取值的特征有偏好，所以出现了使用增益率的C4.5算法。</li>
+</ul>
+<hr>
+<blockquote>
+<p>C4.5算法与增益率（后剪枝，可以处理连续数据—&gt;多叉树，特征要计算排序）</p>
+</blockquote>
+<p>$Gainratio(D,a)=\frac{Gain(D,a)}{IV(a)}$</p>
+<p>固有值：$IV(a)=-\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$ ，Dv是第一级特征a下的第二级特征，固有值随V的个数增加而增加。</p>
+<hr>
+<blockquote>
+<p>CART决策树（减少log的使用降低计算量，还可以用于回归，二叉树）</p>
+</blockquote>
+<p>使用Gini系数替代ID3里的熵，Gini系数越小越均衡（被错分的概率低），说明该样本只属于同一类的概率（纯度）越高。</p>
+<p>$Gini(D)=\sum<em>{k=1}^{y}\sum</em>{k’ \ne k}p<em>k*p_k’=1-\sum</em>{k=1}^{y}p_k^2$ </p>
+<p>pk表示选中的样本属于k类别的概率，则这个样本被分错的概率是(1-pk)</p>
+<p>基尼指数（基尼不纯度）= 样本被选中的概率 * 样本被分错的概率</p>
+<h3 id="预剪枝与后剪枝：（对抗过拟合与欠拟合）"><a href="#预剪枝与后剪枝：（对抗过拟合与欠拟合）" class="headerlink" title="预剪枝与后剪枝：（对抗过拟合与欠拟合）"></a>预剪枝与后剪枝：（对抗过拟合与欠拟合）</h3><ul>
+<li>预剪枝：（边自上往下生成枝杈边剪枝）</li>
+</ul>
+<p>预剪枝使得很多分支没有展开，这不仅<code>降低了过拟合的风险</code>，还显著<code>减少了决策树的训练时间开销和测试时间</code>。但是，有些分支虽当前不能提升泛化性。甚至可能导致泛化性暂时降低，但在其基础上进行后续划分却有可能导致显著提高，因此预剪枝的这种贪心本质，给决策树带来了<code>欠拟合的风险</code>。</p>
+<ul>
+<li>后剪枝：（先生成枝桠，最后从下往上剪枝）</li>
+</ul>
+<p>后剪枝通常比预剪枝<code>保留更多的分支</code>，其<code>欠拟合风险很小</code>，因此后剪枝的<code>泛化性能</code>往往<code>优</code>于预剪枝决策树。但后剪枝过程是从底往上裁剪，因此其<code>训练时间开销</code>比前剪枝要<code>大</code>。</p>
+<hr>
+<h3 id="连续值处理：（密度-甜度）"><a href="#连续值处理：（密度-甜度）" class="headerlink" title="连续值处理：（密度/甜度）"></a>连续值处理：（密度/甜度）</h3><p>连续（非离散）特征可以将特征值从小到大排列然后取</p>
+<script type="math/tex; mode=display">T_a={\frac{a_i+a_{i+1}}{2},0<i<n}</script><script type="math/tex; mode=display">Gain(D,a)=\max_{t \in T_a}  Gain(D,a,t)=max Ent(D)-\sum_{\lambda \in {-,+}}\frac{|D_t^\lambda|}{|D|}Ent(D_t^\lambda)</script><p>按照 $T_a$ 进行划分 { - ，+ }，从而得到该情况下的信息增益。</p>
+<hr>
+<h3 id="缺失值处理：（检测数据缺失）"><a href="#缺失值处理：（检测数据缺失）" class="headerlink" title="缺失值处理：（检测数据缺失）"></a>缺失值处理：（检测数据缺失）</h3><p>（1）如何在属性值缺失的情况下进行划分属性的选择？（创建决策树的时候怎么计算缺失值存在下的信息增益，选择正确的属性）<br>（2）给定划分属性，若样本在该属性上的值是缺失的，那么该如何对这个样本进行划分？（在分类过程中有缺失值的话怎么进行划分）</p>
+<p>无缺失样本所占比例：$p=\frac{ \sum<em>{x \in \tilde{D}}w_x}{ \sum</em>{x \in D} w<em>x}$<br>无缺失样本中第k类所占比例：$\tilde{p}_k=\frac{ \sum</em>{x \in \tilde{D}<em>k}w_x}{ \sum</em>{x \in \tilde{D}} w<em>x}$<br>无缺失样本中在特征a上取值为$a_v$的样本所占比例：$\tilde{r}_v=\frac{ \sum</em>{x \in \tilde{D}<em>k}w_x}{ \sum</em>{x \in \tilde{D}} w_x}$</p>
+<p>最后得到了推广了的公式：</p>
+<script type="math/tex; mode=display">Gain(D,a)=p*Gain(D,\tilde a)=p*(Ent(\tilde D)-\sum_{v=1}^{V}\tilde{r}_vEnt(\tilde D^v))</script><ul>
+<li>上式 = 总样本中非缺失的比例 *（非缺失中各类的熵-各类概率*各类特征值的熵）</li>
+</ul>
+<script type="math/tex; mode=display">Ent(\tilde D)=-\sum_{k=1}^{y}\tilde{p}_klog_2{\tilde{p}_k}</script><hr>
+<blockquote>
+<p>多变量决策树：</p>
+</blockquote>
+<p>一般的决策树分类边界由若干个与坐标轴平行的分段组成：</p>
+<p>判断过程：密度 -&gt; 含糖率 -&gt; 密度 -&gt; 含糖率…</p>
+<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-36.png" alt="upload successful"></p>
+<p>多变量决策树有d个属性对应d维空间的一个数据点，对样本分类表示在坐标空间中找到不同样本之间的分类边界。</p>
+<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-41.png" alt="upload successful"></p>
+<p>“多变量决策树”能实现斜的划分边界，使决策树模型简化。在多变量决策树的学习过程中，不是为非叶结点寻找最优划分属性，而是试图建立合适的线性分类器：</p>
+<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-37.png" alt="upload successful"></p>
+<p>可以通过最小二乘或者嵌入神经网络进一步优化。</p>
+<hr>
+<p>增量学习：根据新样本可对学得的模型进行调整适应当前形势，而不需要重新训练。如ID4，ID5R还有ITI</p>
+<hr>
+<h3 id="熵与基尼系数哪个好"><a href="#熵与基尼系数哪个好" class="headerlink" title="熵与基尼系数哪个好"></a>熵与基尼系数哪个好</h3><p>和熵模型的度量方式比，基尼系数对应的误差有多大呢？对于二类分类，基尼系数和熵之半的曲线如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/images\pasted-38.png" alt="upload successful"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt </span><br><span class="line">import matplotlib as mpl</span><br><span class="line">mpl.rcParams[&#x27;font.sans-serif&#x27;] = [&#x27;simHei&#x27;]</span><br><span class="line">mpl.rcParams[&#x27;axes.unicode_minus&#x27;] = False</span><br><span class="line"> </span><br><span class="line">p = np.linspace(0.0001, 0.9999 ,50)</span><br><span class="line">Gini = 2 * p * (1-p)</span><br><span class="line">H = (-p * np.log2(p) - (1 - p) * np.log2(1 - p))/2.0</span><br><span class="line">x1 = np.linspace(0,0.5,50)</span><br><span class="line">y1 = x1</span><br><span class="line">x2 = np.linspace(0.5,1,50)</span><br><span class="line">y2 = 1- x2</span><br><span class="line"> </span><br><span class="line">plt.figure(figsize=(10,5))</span><br><span class="line">plt.plot(p, Gini, &#x27;r-&#x27;, label=&#x27;基尼指数&#x27;)</span><br><span class="line">plt.plot(p, H, &#x27;b-&#x27;, label=&#x27;半熵&#x27;)</span><br><span class="line">plt.plot(x1, y1, &#x27;g-&#x27;, label=&#x27;分类误差率&#x27;)</span><br><span class="line">plt.plot(x2, y2, &#x27;g-&#x27;)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlim(-0.01, 1.01)</span><br><span class="line">plt.ylim(0, 0.51)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>从上图可以看出，基尼系数和熵之半的曲线非常接近，因此，基尼系数可以做为熵模型的一个近似替代。而CART分类树算法就是使用的基尼系数来选择决策树的特征。为了进一步简化，CART分类树算法每次仅仅对某个特征的值进行二分，而不是多分，这样CART分类树算法建立起来的是二叉树，而不是多叉树。</p>
+]]></content>
+      <categories>
+        <category>Machine Learning</category>
+      </categories>
+      <tags>
+        <tag>Machine Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>特征工程-特征归一化</title>
+    <url>/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/</url>
+    <content><![CDATA[<h2 id="为什么要归一化？"><a href="#为什么要归一化？" class="headerlink" title="为什么要归一化？"></a>为什么要归一化？</h2><p>在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。</p>
+<p><div align="center">
+![upload successful](\images\pasted-1.png)
+</div></p>
+<h3 id="逻辑回归一定要归一化么？"><a href="#逻辑回归一定要归一化么？" class="headerlink" title="逻辑回归一定要归一化么？"></a>逻辑回归一定要归一化么？</h3><p>如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。</p>
+<h2 id="归一化的方法"><a href="#归一化的方法" class="headerlink" title="归一化的方法"></a>归一化的方法</h2><ol>
+<li>线性函数归一化（适用于简单数值）：$X=\frac{X-X<em>{min}}{X</em>{max}-X_{min}}$</li>
+<li>0均值归一化：$z=\frac{x-u}{\sigma}$</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Machine Learning</category>
+      </categories>
+      <tags>
+        <tag>Machine Learning</tag>
       </tags>
   </entry>
   <entry>
@@ -1394,49 +1567,6 @@
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>new和malloc的区别</title>
-    <url>/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<h4 id="new与malloc的区别"><a href="#new与malloc的区别" class="headerlink" title="new与malloc的区别?"></a>new与malloc的区别?</h4><p>（1）申请的内存所在位置:<br>new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。</p>
-<p>那么自由存储区是否能够是堆，这取决于operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看operator new在哪里为对象分配内存。</p>
-<p><code>在C++中，内存区分为5个区，分别是堆、栈、自由存储区、全局/静态存储区、常量存储区</code>，但是new其实是对malloc的封装，所以只是逻辑上有所区别….</p>
-<p>（2）返回类型安全性：<br>new操作符内存分配成功时，返回的是对象类型的指针，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void <em> ，需要通过强制类型转换将void</em>指针转换成我们需要的类型。</p>
-<p>（3）是否调用构造函数/析构函数：<br>使用new操作符来分配对象内存时会经历三个步骤：<br>第一步：调用operator new 函数（对于数组是operator new[]）分配一块足够大的，原始的，未命名的内存空间以便存储特定类型的对象。<br>第二步：编译器运行相应的构造函数以构造对象，并为其传入初值。<br>第三部：对象构造完成后，返回一个指向该对象的指针。</p>
-<p>使用delete操作符来释放对象内存时会经历两个步骤：<br>第一步：调用对象的析构函数。<br>第二步：编译器调用operator delete(或operator delete[])函数释放内存空间。</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-        <category>操作系统底层</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>操作系统底层</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>归并排序为什么要用败者树？</title>
-    <url>/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/</url>
-    <content><![CDATA[<p><a href="https://www.zhihu.com/question/35144290/answer/148681658">https://www.zhihu.com/question/35144290/answer/148681658</a></p>
-<hr>
-<blockquote>
-<p>堆排序的时间复杂度跟败者树的时间复杂度一致为什么不用堆？$O(nklog_k(n) + k) =O(nklog_kn)$ </p>
-</blockquote>
-<p>其实一开始就是用堆来完成多路归并的，但是人们发现堆每次取出最小值之后，把最后一个数放到堆顶，调整堆的时候，每次都要选出父节点的左右两个孩子节点的最小值，然后再用孩子节点的最小值和父节点进行比较，所以每调整一层需要比较两次。 这时人们想能否简化比较过程，这时就有了胜者树。</p>
-<p>这样每次比较只用跟自己的兄弟节点进行比较就好，所以用胜者树可以比堆少一半的比较次数。 而胜者树在节点上升的时候首先需要获得父节点，然后再获得兄弟节点，然后再比较。这时人们又想能否再次减少比较次数，于是就有了败者树。</p>
-<p>在使用败者树的时候，每个新元素上升时，只需要获得父节点并比较即可。 所以总的来说，减少了访存的时间。（拿空间换时间）</p>
-<p>原因：胜者树以小为胜的话，如果比较兄弟节点发现更小直接替代父节点即可，如果更大则兄弟节点胜出。<br>败者树比较父节点指向的点发现更大直接替换败者即可，更小则不需要替换然后接着上移。</p>
-<p>二者都是顶点缺失，都要从底部叶节点遍历到顶点。</p>
-<p>最后就是现在程序的主要瓶颈在于访存了，计算倒几乎可以忽略不计。</p>
-]]></content>
-      <categories>
-        <category>分布式与并行计算</category>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>分布式与并行计算</tag>
-        <tag>数据结构</tag>
       </tags>
   </entry>
 </search>
