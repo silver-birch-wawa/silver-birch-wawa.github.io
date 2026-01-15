@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="SaltedMdFiveSh" />
+
+
+
+<meta name="description" content="基于ANN的FAISS进行毫秒级别召回，然后基于BERT模型精排。 1.评估指标平均精确率（mAP）只处理 0&#x2F;1 二元的情况，只考虑topK，不关心topK内部顺序。   分母：所有相关结果的sum 分子：sum_N N内查询相关个数&#x2F;N 2.归一化折损累积增益（normalized discounted cumulative gain，nDCG）能处理 0&#x2F;1&#x2F;2&#x2F;3 多元的情况，关心top">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么评估FAQ召回的效果">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/index.html">
+<meta property="og:site_name" content="Blog for AI Self-Study">
+<meta property="og:description" content="基于ANN的FAISS进行毫秒级别召回，然后基于BERT模型精排。 1.评估指标平均精确率（mAP）只处理 0&#x2F;1 二元的情况，只考虑topK，不关心topK内部顺序。   分母：所有相关结果的sum 分子：sum_N N内查询相关个数&#x2F;N 2.归一化折损累积增益（normalized discounted cumulative gain，nDCG）能处理 0&#x2F;1&#x2F;2&#x2F;3 多元的情况，关心top">
+<meta property="og:locale">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-106.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-107.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-108.png">
+<meta property="article:published_time" content="2026-01-15T05:34:00.000Z">
+<meta property="article:modified_time" content="2026-01-15T10:00:58.360Z">
+<meta property="article:author" content="SaltedMdFiveSh">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://silver-birch-wawa.github.io/images/pasted-106.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Blog for AI Self-Study" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.icon">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>怎么评估FAQ召回的效果 | Blog for AI Self-Study</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=5d56a3af24b9abfe"></script>
+
+
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:w3393151055@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/silver-birch-wawa" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IO/" rel="tag">IO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">JAVA设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KAFKA/" rel="tag">KAFKA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:w3393151055@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/silver-birch-wawa" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-怎么评估FAQ召回的效果" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/" class="article-date">
+      <time datetime="2026-01-15T05:34:00.000Z" itemprop="datePublished">2026-01-15</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      怎么评估FAQ召回的效果
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/LLM/">LLM</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>基于ANN的FAISS进行毫秒级别召回，然后基于BERT模型精排。</p>
+<h3 id="1-评估指标平均精确率（mAP）"><a href="#1-评估指标平均精确率（mAP）" class="headerlink" title="1.评估指标平均精确率（mAP）"></a>1.评估指标平均精确率（mAP）</h3><p>只处理 0/1 二元的情况，只考虑topK，不关心topK内部顺序。</p>
+<p><img src="/images/pasted-106.png" alt="upload successful"></p>
+<p><img src="/images/pasted-107.png" alt="upload successful"></p>
+<p>分母：所有相关结果的sum</p>
+<p>分子：sum_N N内查询相关个数/N</p>
+<h3 id="2-归一化折损累积增益（normalized-discounted-cumulative-gain，nDCG）"><a href="#2-归一化折损累积增益（normalized-discounted-cumulative-gain，nDCG）" class="headerlink" title="2.归一化折损累积增益（normalized discounted cumulative gain，nDCG）"></a>2.归一化折损累积增益（normalized discounted cumulative gain，nDCG）</h3><p>能处理 0/1/2/3 多元的情况，关心topK内部顺序。</p>
+<p>高关联度的结果排在排名靠前的位置是最合理的，因此：</p>
+<p>高关联度的结果对得分的贡献大。</p>
+<p>排名越靠前的结果，权重越大。</p>
+<p>模型给出的排序结果，是否把 “更相关的东西” 排在了更前面。</p>
+<p><img src="/images/pasted-108.png" alt="reli = 0/1"></p>
+<h3 id="3-AUC-类似AP"><a href="#3-AUC-类似AP" class="headerlink" title="3.AUC 类似AP"></a>3.AUC 类似AP</h3><p>衡量预测分数的准确性。ROC曲线是通过将<strong>真阳性率（TPR）与假阳性率（FPR）</strong>绘制在坐标系中形成的曲线。</p>
+<h3 id="4-MRR（Mean-Reciprocal-Rank）"><a href="#4-MRR（Mean-Reciprocal-Rank）" class="headerlink" title="4. MRR（Mean Reciprocal Rank）"></a>4. MRR（Mean Reciprocal Rank）</h3><p>衡量 “第一个正确答案出现的位置”。</p>
+<p>公式：1 /rank_of_first_relevant</p>
+<p>对 “首命中” 非常敏感。</p>
+<p>适用：问答系统、搜索中 “第一个结果准不准” 很重要的场景。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/">怎么评估FAQ召回的效果</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2026-01-15, 13:34:00</p>
+        <p><span>最后更新:</span>2026-01-15, 18:00:58</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/" title="怎么评估FAQ召回的效果">https://silver-birch-wawa.github.io/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2026/01/15/java%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
+                    java什么时候内存泄漏
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2026/01/13/%E6%80%8E%E4%B9%88%E5%87%8F%E5%B0%91%E6%A8%A1%E5%9E%8B%E5%B9%BB%E8%A7%89%EF%BC%9F/">
+                    怎么减少模型幻觉？
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E5%B9%B3%E5%9D%87%E7%B2%BE%E7%A1%AE%E7%8E%87%EF%BC%88mAP%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1.评估指标平均精确率（mAP）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BD%92%E4%B8%80%E5%8C%96%E6%8A%98%E6%8D%9F%E7%B4%AF%E7%A7%AF%E5%A2%9E%E7%9B%8A%EF%BC%88normalized-discounted-cumulative-gain%EF%BC%8CnDCG%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">2.归一化折损累积增益（normalized discounted cumulative gain，nDCG）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-AUC-%E7%B1%BB%E4%BC%BCAP"><span class="toc-number">3.</span> <span class="toc-text">3.AUC 类似AP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-MRR%EF%BC%88Mean-Reciprocal-Rank%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">4. MRR（Mean Reciprocal Rank）</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    <div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>         
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"怎么评估FAQ召回的效果　| Blog for AI Self-Study　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://silver-birch-wawa.github.io/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+    
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+    
+
+
+
+  
+  <!-- Gitment评论插件通用代码 -->
+<div id="git"></div>
+<link rel="stylesheet" href="https://silver-birch-wawa.github.io/css/gitment.css">
+<script src="https://silver-birch-wawa.github.io/js/gitment.js"></script>
+<!-- 汉化
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+-->
+<script>
+var gitment = new Gitment({
+      id: "怎么评估FAQ召回的效果",
+      owner: 'silver-birch-wawa',
+      repo: 'silver-birch-wawa.github.io',
+      oauth: {
+        client_id: '0bdbf12aa2f1fbb3971f',
+        client_secret: 'fc1dc6d7c7886a85d50e4c5225294b8f107d9e31'
+      },
+})
+gitment.render('git')
+</script>
+<!-- Gitment代码结束 -->
+  
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2026/01/15/java%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" title="上一篇: java什么时候内存泄漏">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2026/01/13/%E6%80%8E%E4%B9%88%E5%87%8F%E5%B0%91%E6%A8%A1%E5%9E%8B%E5%B9%BB%E8%A7%89%EF%BC%9F/" title="下一篇: 怎么减少模型幻觉？">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/01/15/java%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">java什么时候内存泄漏</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/">怎么评估FAQ召回的效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/13/%E6%80%8E%E4%B9%88%E5%87%8F%E5%B0%91%E6%A8%A1%E5%9E%8B%E5%B9%BB%E8%A7%89%EF%BC%9F/">怎么减少模型幻觉？</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/13/%E6%80%8E%E4%B9%88%E6%89%A9%E5%AE%B9%E8%83%BD%E9%81%BF%E5%85%8D/">kafka怎么扩容能避免乱序</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/11/select%E3%80%81poll%E3%80%81epoll%E3%80%81io-uring/">select、poll、epoll、io_uring</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/10/RabbitMQ/">RabbitMQ vs RocketMq</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/10/POJO/">POJO VO DTO</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/09/go/">go范型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/07/SingleFlight/">SingleFlight</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/06/%E5%8D%95%E8%B0%83%E6%A0%88/">单调栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/05/java%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/">java四种引用类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/04/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/AQS/">AQS</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/synchronized%E9%94%81%E5%8D%87%E7%BA%A7/">synchronized锁升级</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/">Java类加载流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/reentrantLock/">reentrantLock</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/">Spring的循环依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/spring%E5%88%9D%E5%A7%8B%E5%8C%96%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/">spring的Bean生命周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/28/Spring%E7%9A%84%E4%BA%8B%E5%8A%A1/">Spring的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/">JVM垃圾回收算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">多头注意力机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C%E7%BB%B4/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2026 SaltedMdFiveSh
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+
+                <script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1277892196&web_id=1277892196"></script>                            
+                
+                
+                    <span>| </span>
+                
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+                ,本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+                <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+                </script>              
+            </div>
+        
+    </div>
+    <script src="/js/mermaid.min.js"></script>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+          
+    <!-- 代码块复制功能 -->
+    <script type="text/javascript" src="/js/clipboard.min.js"></script>  
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+
+  </div>
+    <style>
+      .btn-copy {
+          display: inline-block;
+          cursor: pointer;
+          background-color: #eee;
+          background-image: linear-gradient(#fcfcfc,#eee);
+          border: 1px solid #d5d5d5;
+          border-radius: 3px;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          -webkit-appearance: none;
+          font-size: 13px;
+          font-weight: 700;
+          line-height: 20px;
+          color: #333;
+          -webkit-transition: opacity .3s ease-in-out;
+          -o-transition: opacity .3s ease-in-out;
+          transition: opacity .3s ease-in-out;
+          padding: 2px 6px;
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          opacity: 0;
+      }
+      .btn-copy span {
+          margin-left: 5px;
+      }
+      .highlight:hover .btn-copy{
+        opacity: 1;
+      }      
+    </style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

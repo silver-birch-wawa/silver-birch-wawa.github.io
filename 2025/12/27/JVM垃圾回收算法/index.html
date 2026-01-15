@@ -15,24 +15,27 @@
 
 
 
-<meta name="description" content="CMS垃圾回收 回收步骤：  年轻代使用复制算法，老年代使用标记-清除算法。 老年代GC触发条件：CMS 不会等到老年代完全满了才进行回收，而是当老年代使用达到一定阈值时（默认 92%）开始回收，以避免长时间的 Full GC。  标记策略 - 增量更新  在并发标记过程中，当发现一个原本未被标记为存活的对象，因为某个应用程序线程执行了写操作而使得其被一个已标记的存活对象引用时，并不会立即将这个原">
+<meta name="description" content="知识概念CMS垃圾回收 回收步骤：  年轻代使用复制算法，老年代使用标记-清除算法。 老年代GC触发条件：CMS 不会等到老年代完全满了才进行回收，而是当老年代使用达到一定阈值时（默认 92%）开始回收，以避免长时间的 Full GC。  标记策略 - 增量更新  在并发标记过程中，当发现一个原本未被标记为存活的对象，因为某个应用程序线程执行了写操作而使得其被一个已标记的存活对象引用时，并不会立即">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM垃圾回收算法">
 <meta property="og:url" content="https://silver-birch-wawa.github.io/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Blog for AI Self-Study">
-<meta property="og:description" content="CMS垃圾回收 回收步骤：  年轻代使用复制算法，老年代使用标记-清除算法。 老年代GC触发条件：CMS 不会等到老年代完全满了才进行回收，而是当老年代使用达到一定阈值时（默认 92%）开始回收，以避免长时间的 Full GC。  标记策略 - 增量更新  在并发标记过程中，当发现一个原本未被标记为存活的对象，因为某个应用程序线程执行了写操作而使得其被一个已标记的存活对象引用时，并不会立即将这个原">
+<meta property="og:description" content="知识概念CMS垃圾回收 回收步骤：  年轻代使用复制算法，老年代使用标记-清除算法。 老年代GC触发条件：CMS 不会等到老年代完全满了才进行回收，而是当老年代使用达到一定阈值时（默认 92%）开始回收，以避免长时间的 Full GC。  标记策略 - 增量更新  在并发标记过程中，当发现一个原本未被标记为存活的对象，因为某个应用程序线程执行了写操作而使得其被一个已标记的存活对象引用时，并不会立即">
 <meta property="og:locale">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-73.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-74.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-77.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-75.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-72.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-96.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-79.png">
-<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-80.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-95.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-78.png">
 <meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-76.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-72.png">
+<meta property="og:image" content="https://silver-birch-wawa.github.io/images/pasted-73.png">
 <meta property="article:published_time" content="2025-12-27T07:57:00.000Z">
-<meta property="article:modified_time" content="2026-01-04T12:50:59.267Z">
+<meta property="article:modified_time" content="2026-01-13T04:20:34.009Z">
 <meta property="article:author" content="SaltedMdFiveSh">
 <meta property="article:tag" content="JAVA GC">
 <meta name="twitter:card" content="summary">
@@ -208,7 +211,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">JAVA设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IO/" rel="tag">IO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">JAVA设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KAFKA/" rel="tag">KAFKA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -331,7 +334,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="CMS垃圾回收"><a href="#CMS垃圾回收" class="headerlink" title="CMS垃圾回收"></a>CMS垃圾回收</h3><blockquote>
+        <h2 id="知识概念"><a href="#知识概念" class="headerlink" title="知识概念"></a>知识概念</h2><h3 id="CMS垃圾回收"><a href="#CMS垃圾回收" class="headerlink" title="CMS垃圾回收"></a>CMS垃圾回收</h3><blockquote>
 <p>回收步骤：</p>
 </blockquote>
 <p>年轻代使用复制算法，老年代使用标记-清除算法。</p>
@@ -344,6 +347,11 @@
 <li>CMS使用插入写屏障</li>
 </ul>
 <p>新增黑色到白色的引用，JVM就会通过写屏障，将黑色变成灰色</p>
+<ul>
+<li>CMS 也有卡表</li>
+</ul>
+<p>在CMS中，写屏障主要用于记录跨代引用（即老年代对象引用新生代对象或反之）的变化，并将这些变化信息反映到卡表中。</p>
+<p>卡表本质是bit数组，帮助定位需要重新扫描的老年代区域。</p>
 <blockquote>
 <p>CMS缺点：</p>
 </blockquote>
@@ -357,6 +365,7 @@
 <p>分区堆模型：G1 将堆分成多个大小相等的区域（Region），不同区域可能属于年轻代或老年代。通过收集垃圾最多的区域进行复制回收，因此称为“Garbage First”。</p>
 <p>混合回收：G1 能够同时回收年轻代和老年代的内存，避免了 Full GC 的大范围内存整理。</p>
 <p>暂停时间可控：G1 可以根据设置的最大暂停时间目标（默认 200ms），智能选择要回收的区域，来控制 GC 的影响。</p>
+<p>生产环境中，G1 最稳定的堆内存范围是8GB ~ 128GB；少数优化到位的场景（如高 CPU 核心、低对象分配速率）可到 256GB，但超过 256GB 后，G1 很难维持低延迟</p>
 <blockquote>
 <p>区块划分</p>
 </blockquote>
@@ -389,6 +398,11 @@
 <p>当某个卡页中的对象引用自己Region区域的对象时，会将老年代的卡表对应编号位置的字节修改为1，为1的字节被称之为脏卡。</p>
 <p>在Young GC回收年轻代对象时，会将记忆集中的对象也加入到GC Root中，有效避免年轻代的对象被错误的回收。</p>
 <ul>
+<li>G1卡表和CMS卡表有啥区别？</li>
+</ul>
+<p>G1卡表维护范围：覆盖整个堆（包括年轻代和老年代分区）。CMS只是老年代。</p>
+<p>G1卡表维护信息：对每张卡，不仅标记是否脏，还关联对应的 Region 信息，方便定位影响的区域。</p>
+<ul>
 <li>SATB：</li>
 </ul>
 <p>核心思想是：在标记过程的起始阶段捕捉一个对象的快照，并基于这个快照来进行后续的标记工作。</p>
@@ -415,14 +429,21 @@
 <li>浮动垃圾：SATB基于初始快照进行标记，因此在本轮垃圾回收过程中，可能会将一些实际上应该被回收的不存活对象错误地标记为存活对象。这些错误标记的对象被称为“浮动垃圾”。这些浮动垃圾只能下一次的时候回收。</li>
 </ul>
 <ul>
-<li>问题排查：G1在执行Full GC时，会在GC日志中记录相关信息，如[Full GC (Allocation Failure)]，表示由于分配失败触发了Full GC。</li>
+<li><p>问题排查：G1在执行Full GC时，会在GC日志中记录相关信息，如[Full GC (Allocation Failure)]，表示由于分配失败触发了Full GC。</p>
+</li>
+<li><p>怎么实现的预测回收STW？</p>
+</li>
 </ul>
+<p>如果目标延迟是 50ms，G1 会计算 “回收多少个 Region 能在 50ms 内完成”，只回收这部分，剩下的留到下一次 GC 处理。</p>
+<p>如果某次 GC 实际停顿超过了目标值，模型会在下一次自动减少回收的 Region 数量；如果远低于目标值，会适当增加，平衡延迟和吞吐量。</p>
 <h3 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h3><p>超低延迟：ZGC 是一种面向超低延迟设计的垃圾回收器，旨在将垃圾回收停顿时间控制在 10ms 以内。</p>
 <p>堆内存极大：ZGC 支持非常大的堆内存（TB 级别），这使得它在处理大规模内存应用时有很大的优势。</p>
 <p>1.着色指针（Colored Pointers）</p>
-<p>原理：利用 64 位指针的高几位空闲位（不同 CPU 架构空闲位不同，如 x86-64 保留 18 位）存储标记信息，包括：</p>
-<p>Marked0/Marked1：标记对象是否存活（用于并发标记）；</p>
+<p><img src="/images/pasted-96.png" alt="upload successful"></p>
+<p>原理：利用 64 位指针的高几位空闲位（不同 CPU 架构空闲位不同，如 x86-64 保留 18 位）存储标记信息，包括：高18位都是0暂未使用，剩余的46位实际上是能支持64TB的内存的，但是目前来说计算机内存空间还没这么大。剩余的46位中，高4位用来保存了4个标志位，低42位置才是用来保存对象的指针，所以ZGC最大可以管理的内存不超过4TB。</p>
+<p>Marked0/Marked1：三色标记对象是否存活（用于并发标记）；</p>
 <p>Remapped：标记对象是否已完成重定位（用于并发重定位）。</p>
+<p>Finalizable：是否需要通过 finalize 方法来访问到（Finalizable）等信息。</p>
 <p>优势：<br>无需修改对象头，减少内存占用；</p>
 <p>指针本身携带状态，GC 阶段无需扫描整个堆，大幅提升效率；</p>
 <p>支持并发重定位（对象移动时，应用线程可同时访问旧指针，由读屏障透明转发到新地址）。</p>
@@ -433,6 +454,7 @@
 <p>指针转发：若对象已被移动，自动将旧指针转发到新地址；</p>
 <p>并发标记辅助：在标记阶段，协助标记对象的可达性。</p>
 <p>读屏障的性能开销极低（实测约 1%~3%），远小于传统 GC 的写屏障。</p>
+<p>在从堆读取引用时介入：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object o = obj.fieldA;  // 触发读屏障</span><br></pre></td></tr></table></figure><br>当对象被移动时，屏障自动修正指针，实现指针自愈。</p>
 <ul>
 <li>回收流程</li>
 </ul>
@@ -452,14 +474,54 @@
 <p>目标：更新应用线程中所有指向旧 Region 的指针，使其直接指向新地址，消除读屏障的转发开销。</p>
 <p>特点：与应用线程并发执行，优先级较低，可被 GC 周期打断（下次 GC 继续处理）。</p>
 <p>本质还是标记-复制</p>
-<p><img src="/images/pasted-80.png" alt="upload successful"></p>
+<p><img src="/images/pasted-95.png" alt="upload successful"></p>
 <ul>
 <li>动态的区域容量大小： </li>
 </ul>
 <p>ZGC引入了不同大小的Region，包括Small Region（2MB）、Medium Region（32MB）和Large Region（可变大小），使得ZGC在内存分配时能够更好地适应不同大小的对象，提高内存利用率。</p>
 <p><img src="/images/pasted-78.png" alt="upload successful"></p>
+<ul>
+<li>ZGC主要问题</li>
+</ul>
+<p>浮动垃圾：无分代导致全堆扫描，新对象需下次GC回收</p>
+<p>内存开销：颜色指针和读屏障带来额外开销</p>
 <h3 id="三色标级"><a href="#三色标级" class="headerlink" title="三色标级"></a>三色标级</h3><p>CMS和G1都有三色标记算法。标记对象的颜色其实是通过位图（bitmap）实现的，默认的白色对象的bit为0，黑色对象的bit位会被设置为1，而灰色对象不会体现在位图，会被放置于一个单独的队列</p>
 <p><img src="/images/pasted-76.png" alt="upload successful"></p>
+<hr>
+<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><h3 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h3><h4 id="1-老年代空间不足"><a href="#1-老年代空间不足" class="headerlink" title="1. 老年代空间不足"></a>1. 老年代空间不足</h4><p>这是最常见的触发原因：</p>
+<p>新生代对象经过 Minor GC 后，存活对象需要晋升到老年代，但老年代剩余空间不足以容纳这些对象。</p>
+<p>大对象直接分配到老年代时，老年代空间不足（大对象指需要连续内存的对象，如大数组、大字符串）。</p>
+<p>老年代中内存碎片过多，虽然总空间足够，但没有连续的内存块容纳新的大对象（CMS 收集器尤为明显）。</p>
+<h4 id="2-永久代-元空间（Metaspace）不足"><a href="#2-永久代-元空间（Metaspace）不足" class="headerlink" title="2. 永久代 / 元空间（Metaspace）不足"></a>2. 永久代 / 元空间（Metaspace）不足</h4><p>JDK 7 及之前：永久代（PermGen）存储类元数据、常量池等，当永久代空间不足时，会触发 Full GC 尝试回收无用的类信息（如卸载不再使用的类），若回收后仍不足则抛出OutOfMemoryError: PermGen space。</p>
+<p>JDK 8 及之后：永久代被元空间（Metaspace）取代，元空间默认使用本地内存，但如果设置了-XX:MaxMetaspaceSize且达到上限，也会触发 Full GC 尝试卸载类，失败则抛出OutOfMemoryError: Metaspace。</p>
+<h4 id="3-CMS-收集器的特殊触发场景"><a href="#3-CMS-收集器的特殊触发场景" class="headerlink" title="3. CMS 收集器的特殊触发场景"></a>3. CMS 收集器的特殊触发场景</h4><p>CMS（Concurrent Mark Sweep）是老年代并发收集器，除了老年代不足外，还有专属触发条件：</p>
+<p>CMS Concurrent Mode Failure：CMS 在并发标记 / 清理阶段，老年代空间被新对象占满，无法继续并发回收，会触发 “Concurrent Mode Failure”，进而强制触发 Full GC（通常会退化为 Serial Old 收集器，停顿时间更长）。</p>
+<p>CMS 晋升失败（Promotion Failure）：新生代 Minor GC 时，存活对象要晋升到老年代，但老年代空间不足，且 CMS 无法及时腾出空间，触发 Full GC。</p>
+<p>显式设置-XX:CMSFullGCsBeforeCompaction：指定 CMS 执行 N 次 Full GC 后，触发一次内存碎片整理（Serial Old），这也是 Full GC 的一种。</p>
+<h4 id="4-显式调用-System-gc"><a href="#4-显式调用-System-gc" class="headerlink" title="4. 显式调用 System.gc ()"></a>4. 显式调用 System.gc ()</h4><p>代码中调用System.gc()或Runtime.getRuntime().gc()时，JVM可能触发 Full GC（注意：这只是建议，JVM 可通过-XX:+DisableExplicitGC参数禁用该行为）。</p>
+<p>常见场景：一些第三方库、框架（如 NIO 的 DirectByteBuffer 回收）可能会调用该方法，导致非预期的 Full GC。</p>
+<h4 id="5-G1-收集器的-Full-GC-触发"><a href="#5-G1-收集器的-Full-GC-触发" class="headerlink" title="5. G1 收集器的 Full GC 触发"></a>5. G1 收集器的 Full GC 触发</h4><p>G1（Garbage-First）作为混合收集器，触发 Full GC 的场景包括：</p>
+<p>老年代达到-XX:InitiatingHeapOccupancyPercent（默认 45%）阈值，且并发回收无法及时释放空间。<br>新生代晋升失败、大对象分配失败，且 G1 的混合回收来不及处理。</p>
+<p>G1 的回收过程中，记忆集（Remembered Set）维护异常，也可能触发 Full GC。</p>
+<h4 id="6-其他特殊场景"><a href="#6-其他特殊场景" class="headerlink" title="6. 其他特殊场景"></a>6. 其他特殊场景</h4><p>JVM 在做堆内存快照（如 jmap dump）时，可能会触发 Full GC 以获取一致性的内存快照。<br>某些 JVM 参数配置不当（如新生代 / 老年代比例不合理），也可能间接导致频繁 Full GC。</p>
+<h4 id="怎么定位？"><a href="#怎么定位？" class="headerlink" title="怎么定位？"></a>怎么定位？</h4><p>查看 GC 日志：添加 JVM 参数打印详细 GC 日志，关键参数：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:/path/to/gc.log</span><br></pre></td></tr></table></figure><br>日志中会包含Full GC关键字，以及触发原因（如Allocation Failure、Metadata GC Threshold等）。</p>
+<p>使用工具分析：</p>
+<p>jstat：jstat -gcutil <pid> 1000（每秒打印 GC 统计，关注 O 列（老年代使用率）和 FGCT 列（Full GC 总时间））。</pid></p>
+<p>jvisualvm/JMC：可视化监控 GC 状态，定位 Full GC 触发时机。</p>
+<h3 id="CMS-vs-G1"><a href="#CMS-vs-G1" class="headerlink" title="CMS vs G1"></a>CMS vs G1</h3><p>1.堆内存管理：连续分区（G1） vs 离散 Region（CMS）</p>
+<p>G1 可以动态调整年轻代 Region 的数量，回收时只挑选 “垃圾多、回收性价比高” 的 Region，从根本上限制单次回收的范围。</p>
+<p>2.延迟控制：被动并发 vs 主动预测</p>
+<p>范围可控，有预测机制</p>
+<p>3.标记清除（CMS） vs 标记复制（G1）</p>
+<p>内存碎片</p>
+<p>4.stw period</p>
+<ul>
+<li>G1</li>
+</ul>
+<p>整个 Young GC 全程都是 STW 阶段，但因为只处理年轻代 Region，且多线程并行执行，耗时通常在 几毫秒～30 毫秒。</p>
+<p>Full GC 会回收整个堆，全程 STW，秒级。</p>
+<p><img src="/images/pasted-72.png" alt="G1_STW"></p>
+<p><img src="/images/pasted-73.png" alt="CMS_STW"></p>
 
       
     </div>
@@ -471,7 +533,7 @@
         <p><span>本文标题:</span><a href="/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/">JVM垃圾回收算法</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
         <p><span>发布时间:</span>2025-12-27, 15:57:00</p>
-        <p><span>最后更新:</span>2026-01-04, 20:50:59</p>
+        <p><span>最后更新:</span>2026-01-13, 12:20:34</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" title="JVM垃圾回收算法">https://silver-birch-wawa.github.io/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/</a>
             <span class="copy-path" data-clipboard-text="原文: https://silver-birch-wawa.github.io/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -507,7 +569,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CMS%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">1.</span> <span class="toc-text">CMS垃圾回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#G1%EF%BC%88Garbage-First-GC%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">G1（Garbage First GC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ZGC"><span class="toc-number">3.</span> <span class="toc-text">ZGC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E8%89%B2%E6%A0%87%E7%BA%A7"><span class="toc-number">4.</span> <span class="toc-text">三色标级</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">知识概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CMS%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">1.1.</span> <span class="toc-text">CMS垃圾回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#G1%EF%BC%88Garbage-First-GC%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">G1（Garbage First GC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ZGC"><span class="toc-number">1.3.</span> <span class="toc-text">ZGC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E8%89%B2%E6%A0%87%E7%BA%A7"><span class="toc-number">1.4.</span> <span class="toc-text">三色标级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">面试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-GC"><span class="toc-number">2.1.</span> <span class="toc-text">Full GC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%80%81%E5%B9%B4%E4%BB%A3%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. 老年代空间不足</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B0%B8%E4%B9%85%E4%BB%A3-%E5%85%83%E7%A9%BA%E9%97%B4%EF%BC%88Metaspace%EF%BC%89%E4%B8%8D%E8%B6%B3"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. 永久代 &#x2F; 元空间（Metaspace）不足</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-CMS-%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E7%89%B9%E6%AE%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF"><span class="toc-number">2.1.3.</span> <span class="toc-text">3. CMS 收集器的特殊触发场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%98%BE%E5%BC%8F%E8%B0%83%E7%94%A8-System-gc"><span class="toc-number">2.1.4.</span> <span class="toc-text">4. 显式调用 System.gc ()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-G1-%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84-Full-GC-%E8%A7%A6%E5%8F%91"><span class="toc-number">2.1.5.</span> <span class="toc-text">5. G1 收集器的 Full GC 触发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%85%B6%E4%BB%96%E7%89%B9%E6%AE%8A%E5%9C%BA%E6%99%AF"><span class="toc-number">2.1.6.</span> <span class="toc-text">6. 其他特殊场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%AE%9A%E4%BD%8D%EF%BC%9F"><span class="toc-number">2.1.7.</span> <span class="toc-text">怎么定位？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMS-vs-G1"><span class="toc-number">2.2.</span> <span class="toc-text">CMS vs G1</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -600,7 +662,7 @@ gitment.render('git')
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/01/04/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/synchronized%E9%94%81%E5%8D%87%E7%BA%A7/">synchronized锁升级</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/">Java类加载流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/reentrantLock/">reentrantLock</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/">Spring的循环依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/spring%E5%88%9D%E5%A7%8B%E5%8C%96%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/">spring的Bean生命周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/28/Spring%E7%9A%84%E4%BA%8B%E5%8A%A1/">Spring的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/">JVM垃圾回收算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">多头注意力机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C%E7%BB%B4/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/01/15/java%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">java什么时候内存泄漏</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/15/%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0FAQ%E5%8F%AC%E5%9B%9E%E7%9A%84%E6%95%88%E6%9E%9C/">怎么评估FAQ召回的效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/13/%E6%80%8E%E4%B9%88%E5%87%8F%E5%B0%91%E6%A8%A1%E5%9E%8B%E5%B9%BB%E8%A7%89%EF%BC%9F/">怎么减少模型幻觉？</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/13/%E6%80%8E%E4%B9%88%E6%89%A9%E5%AE%B9%E8%83%BD%E9%81%BF%E5%85%8D/">kafka怎么扩容能避免乱序</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/11/select%E3%80%81poll%E3%80%81epoll%E3%80%81io-uring/">select、poll、epoll、io_uring</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/10/RabbitMQ/">RabbitMQ vs RocketMq</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/10/POJO/">POJO VO DTO</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/09/go/">go范型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/07/SingleFlight/">SingleFlight</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/06/%E5%8D%95%E8%B0%83%E6%A0%88/">单调栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/05/java%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/">java四种引用类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/04/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/01/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/AQS/">AQS</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/synchronized%E9%94%81%E5%8D%87%E7%BA%A7/">synchronized锁升级</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B/">Java类加载流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/reentrantLock/">reentrantLock</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/">Spring的循环依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/29/spring%E5%88%9D%E5%A7%8B%E5%8C%96%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/">spring的Bean生命周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/28/Spring%E7%9A%84%E4%BA%8B%E5%8A%A1/">Spring的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/27/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/">JVM垃圾回收算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/12/21/%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">多头注意力机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/gcc%E4%BC%98%E5%8C%96/">gcc优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/17/%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F/">const</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/memset%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">memset与虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E8%B4%A5%E8%80%85%E6%A0%91%EF%BC%9F/">归并排序为什么要用败者树？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">置换-选择排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/15/%E6%8E%92%E5%BA%8F/">外部排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/05/test/">成员初始化的顺序</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%92%8C%EF%BC%88%E5%AF%B9%E5%81%B6%E6%80%A7%E4%B8%8EKKT%E6%9D%A1%E4%BB%B6%EF%BC%89/">拉格朗日乘子法和（对偶性与KKT条件）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/C%E7%BB%B4/">VC维</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91/">常见的几种决策树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/12/%E4%BC%A0%E6%95%99%E5%A3%AB%E5%92%8C%E9%87%8E%E4%BA%BA%E9%97%AE%E9%A2%98%EF%BC%88M-C%E9%97%AE%E9%A2%98%EF%BC%89/">传教士和野人问题（M-C问题）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/d/">kd树</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/%E6%84%9F%E7%9F%A5%E6%9C%BA/">感知机</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/">new和malloc的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/%E5%9E%83%E5%9C%BE%E7%AE%A1%E7%90%86%EF%BC%88%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89/">内存垃圾管理（智能指针）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/L%E9%87%8C%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-auto-ptr%E3%80%81scoped-ptr%E3%80%81shared-ptr%E3%80%81weak-ptr/">STL里的四种智能指针auto_ptr,scoped_ptr,shared_ptr,weak_ptr</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/ecl-stdcall-fastcall-pascal-thiscall-%E7%9A%84%E5%8C%BA%E5%88%AB/">__cdecl,__stdcall,__fastcall,__pascal,__thiscall 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/olatile/">volatile</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/11/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a></li></ul>
 
 
 
