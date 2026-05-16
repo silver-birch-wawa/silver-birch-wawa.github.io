@@ -88,7 +88,7 @@ admin:
   username: w3693151055@163.com
   password_hash: $2a$10$OB2oKi.eCFIZR96I0lSBfu7KI4HE7029RNjH/y1MGsGefANU0Wkmm
   secret: my super secret phrase.......
-  deployCommand: 'hexo-publish.bat'
+  deployCommand: './hexo-publish.sh'
 
 
 # 是否开启访问量统计功能(不蒜子)
