@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="SaltedMdFiveSh" />
+
+
+    
+    
+
+
+<meta name="description" content="Machine Learning,Data Mining,Deep Learning">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Blog for AI Self-Study">
+<meta property="og:url" content="https://silver-birch-wawa.github.io/page/5/index.html">
+<meta property="og:site_name" content="Blog for AI Self-Study">
+<meta property="og:description" content="Machine Learning,Data Mining,Deep Learning">
+<meta property="og:locale">
+<meta property="article:author" content="SaltedMdFiveSh">
+<meta property="article:tag" content="Machine Learning,Data Mining,Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Blog for AI Self-Study" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.icon">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+    <style> .article { opacity: 0;} </style>
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Blog for AI Self-Study</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: true,
+        isPost: false,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=5d56a3af24b9abfe"></script>
+
+
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:w3393151055@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/silver-birch-wawa" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IO/" rel="tag">IO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA-GC/" rel="tag">JAVA GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">JAVA设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KAFKA/" rel="tag">KAFKA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">分布式与并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" rel="tag">分布式事务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/%E9%9A%8F%E7%AC%94">随笔</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:w3393151055@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/silver-birch-wawa" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap">
+  
+    <article id="post-存对齐" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/" class="article-date">
+      <time datetime="2019-08-13T09:10:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/">内存对齐</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    double b;</span><br><span class="line">    short c;</span><br><span class="line">&#125;A;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    short b;</span><br><span class="line">    double c;</span><br><span class="line">&#125;B;</span><br></pre></td></tr></table></figure>
+<p><code>sizeof(A)=24而sizeof(B)=16</code></p>
+<blockquote>
+<p>A的内存分布：(每一个元素都存在最大元素大小的空间内)</p>
+</blockquote>
+<p><img src="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/images\pasted-5.png" alt="upload successful"></p>
+<blockquote>
+<p>B的内存分布：</p>
+</blockquote>
+<p><img src="/2019/08/13/%E5%AD%98%E5%AF%B9%E9%BD%90/images\pasted-6.png" alt="upload successful"></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/">操作系统底层</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-小端存储" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/" class="article-date">
+      <time datetime="2019-08-13T08:55:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/">大小端存储</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>大端模式，是指数据的高字节保存在内存的低地址中。</p>
+<p><img src="/2019/08/13/%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/images\pasted-4.png" alt="upload successful"><br>4个两位16进制数=8*4=32位=4B=1int</p>
+<hr>
+<p>编程判断大小端的两种方法：</p>
+<ol>
+<li>union 判断法</li>
+</ol>
+<p>在union中所有的数据成员共用一个空间，同一时间只能储存其中一个数据成员，所有的数据成员具有相同的起始地址。即上述的union虽然定义了两个成员，但其实这个union只占用了4个字节(32位机器中)，往a成员赋值，然后读取b就相读取a成员的低位第一个字节的值。如果机器使用大端模式，则u.a=1那a的最高字节值为1；<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef union &#123;</span><br><span class="line">	int i;</span><br><span class="line">	char c;</span><br><span class="line">&#125;my_union;</span><br><span class="line"> </span><br><span class="line">int checkSystem1(void)</span><br><span class="line">&#123;</span><br><span class="line">	my_union u;</span><br><span class="line">	u.i = 1;</span><br><span class="line">	return (u.i == u.c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>直接判断法</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int checkSystem2(void)</span><br><span class="line">&#123;</span><br><span class="line">	int i = 0x12345678;</span><br><span class="line">	char *c = (char*)&amp;i;</span><br><span class="line">	return ((c[0] == 0x78) &amp;&amp; (c[1] == 0x56) &amp;&amp; (c[2] == 0x34) &amp;&amp; (c[3] == 0x12));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a><a class="article-category-link" href="/categories/C/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/">操作系统底层</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82/" rel="tag">操作系统底层</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-指针的形参" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/" class="article-date">
+      <time datetime="2019-08-13T03:11:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/">指针的形参</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<p>函数中传递的是p指针的形参（只能修改arr[1]的值，无法修改*p指向的位置）</p>
+<p><img src="/2019/08/13/%E6%8C%87%E9%92%88%E7%9A%84%E5%BD%A2%E5%8F%82/images\pasted-3.png" alt="upload successful"></p>
+<h4 id="p形参的情况："><a href="#p形参的情况：" class="headerlink" title="*p形参的情况："></a>*p形参的情况：</h4><ul>
+<li>一开始:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id3[*p 形参]-->id1[7]
+    subgraph arr数组
+    id[10]-->id1[7]
+    id1[7]-->id2[5]
+    end
+    subgraph *p
+    id3[*p 形参]
+    end
+    class id,id1,id2,id3 className;</pre>
+
+<ul>
+<li>最后:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id4[*p]-->id1[3]
+    id3[*p 形参]-->id[10]
+
+    subgraph *p 形参
+    id3[*p 形参]
+    end
+
+    subgraph *p
+    id4[*p]
+    end    
+
+    subgraph arr数组
+    id[10]-->id1[3]
+    id1[3]-->id2[5]
+    end
+
+    class id,id1,id2,id3,id4 className;</pre>
+
+<ul>
+<li>注意：<code>*p--=3</code>实际上是<code>*p=3</code>，然后<code>(p--)</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *p)&#123;</span><br><span class="line">	return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">	int *p=arr+1;</span><br><span class="line">	printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="amp-p引用的情况："><a href="#amp-p引用的情况：" class="headerlink" title="*&amp;p引用的情况："></a>*&amp;p引用的情况：</h4><ul>
+<li>一开始:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id3[*&p]-->id1[7]
+    subgraph arr数组
+    id[10]-->id1[7]
+    id1[7]-->id2[5]
+    end
+    subgraph *&p
+    id3[*&p]
+    end
+    class id,id1,id2,id3 className;</pre>
+
+<ul>
+<li>最后:</li>
+</ul>
+<pre class="mermaid">graph LR
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id4[*p]-->id[10]
+    id3[*&p]-->id[10]
+
+    subgraph *&p
+    id3[*&p]
+    end
+
+    subgraph *p
+    id4[*p]
+    end    
+
+    subgraph arr数组
+    id[10]-->id1[3]
+    id1[3]-->id2[5]
+    end
+
+    class id,id1,id2,id3,id4 className;</pre>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int func(int *&amp;p)&#123;</span><br><span class="line">    return (*p--=3)-1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int arr[]=&#123;10,7,5&#125;;</span><br><span class="line">    int *p=arr+1;</span><br><span class="line">    printf(&quot;%d&quot;,func(p)+*p);</span><br><span class="line">        // 答案为12</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-ifndef-define-endif" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/ifndef-define-endif/" class="article-date">
+      <time datetime="2019-08-13T03:04:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/ifndef-define-endif/">#ifndef/#define/#endif</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在c语言中，对同一个变量或者函数进行多次声明是不会报错的。所以如果h文件里只是进行了声明工作，即使不使用# ifndef宏定义，多个c文件包含同一个h文件也不会报错。</p>
+<p>但是在c++语言中，#ifdef的作用域只是在单个文件中。所以如果h文件里定义了全局变量，即使采用#ifdef宏定义，多个c文件包含同一个h文件还是会出现全局变量重定义的错误。</p>
+<p>使用#ifndef可以避免下面这种错误：如果在h文件中定义了全局变量，一个c文件包含同一个h文件多次，如果不加#ifndef宏定义，会出现变量重复定义的错误；如果加了#ifndef，则不会出现这种错误。</p>
+<p>其实“被重复引用”是指一个头文件在同一个cpp文件中被include了多次，这种错误常常是由于include嵌套造成的。比如：存在a.h文件#include “c.h”而此时b.cpp文件导入了#include “a.h” 和#include “c.h”此时就会造成c.h重复引用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ifndef x                 //先测试x是否被宏定义过</span><br><span class="line">#define x</span><br><span class="line">   程序段1blabla~    //如果x没有被宏定义过，定义x，并编译程序段 1</span><br><span class="line">#endif   </span><br><span class="line">　　程序段2blabla~　　 //如果x已经定义过了则编译程序段2的语句，“忽视”程序段 1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>循环引用的后果：</p>
+</blockquote>
+<p>有些头文件重复引用只是增加了编译工作的工作量，不会引起太大的问题，仅仅是编译效率低一些，但是对于大工程而言编译效率低下那将是一件多么痛苦的事情。</p>
+<p>有些头文件重复包含，会引起错误，比如在头文件中定义了全局变量(虽然这种方式不被推荐，但确实是C规范允许的)这种会引起重复定义。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-olatile" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/olatile/" class="article-date">
+      <time datetime="2019-08-13T03:00:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/olatile/">volatile</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><p>volatile是一个类型修饰符（type specifier）volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。</p>
+<h4 id="volatile和编译器的优化有关："><a href="#volatile和编译器的优化有关：" class="headerlink" title="volatile和编译器的优化有关："></a>volatile和编译器的优化有关：</h4><p>在本次线程内，当读取一个变量时，为了提高读取速度，编译器进行优化时有时会先把变量读取到一个寄存器中；以后，再读取变量值时，就直接从寄存器中读取；当变量值在本线程里改变时，会同时把变量的新值copy到该寄存器中，以保持一致。 </p>
+<p>当变量因别的线程值发生改变，上面寄存器的值不会相应改变，从而造成应用程序读取的值和实际的变量值不一致。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-联函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/" class="article-date">
+      <time datetime="2019-08-13T01:41:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/%E8%81%94%E5%87%BD%E6%95%B0/">内联函数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<h4 id="函数调用原理："><a href="#函数调用原理：" class="headerlink" title="函数调用原理："></a>函数调用原理：</h4><p>执行到函数调用指令时，程序将在函数调用后立即存储该指令的内存地址，并将函数参数复制到堆栈（为此保留的内存块），跳到标记函数起点的内存单元，执行函数代码（也许还需将返回值放入寄存器中），然后跳回到地址被保存的指令处。来回跳跃并记录跳跃位置意味着以前使用函数时，需要一定的开销。</p>
+<hr>
+<p>内联函数提供了另一种选择。编译器将使用相应的函数代码替换函数调用。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。</p>
+<h2 id><a href="#" class="headerlink" title></a><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline double square(double x)&#123;return x*x;&#125;</span><br></pre></td></tr></table></figure></h2><blockquote>
+<p>内联函数与宏定义的区别:</p>
+</blockquote>
+<p>使用宏和内联函数都可以节省在函数调用方面所带来的时间和空间开销。二者都采用了空间换时间的方式，在其调用处进行展开：<br>(1)  在预编译时期，宏定义在调用处执行字符串的原样替换。在编译时期，内联函数在调用处展开，同时进行参数类型检查。<br>(2)  内联函数首先是函数，可以像调用普通函数一样调用内联函数。而宏定义往往需要添加很多括号防止歧义，编写更加复杂。<br>(3)  内联函数可以作为某个类的成员函数，这样可以使用类的保护成员和私有成员。而当一个表达式涉及到类保护成员或私有成员时，宏就不能实现了(无法将this指针放在合适位置)。</p>
+<p>可以用内联函数完全替代宏。<br>在编写内联函数时，函数体应该短小而简洁，不应该包含循环等较复杂结构，否则编译器不会将其当作内联函数看待，而是把它决议成为一个静态函数。</p>
+<p>有些编译器甚至会优化内联函数，通常为避免一些不必要拷贝和构造，提高工作效率。</p>
+<p>频繁的调用内联函数和宏定义容易造成代码膨胀，消耗更大的内存而造成过多的换页操作。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-虚函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/" class="article-date">
+      <time datetime="2019-08-13T01:36:00.000Z" itemprop="datePublished">2019-08-13</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/">虚函数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><a href="https://blog.csdn.net/zwe7616175/article/details/81334711">https://blog.csdn.net/zwe7616175/article/details/81334711</a><br><a href="https://zhidao.baidu.com/question/123304290.html">https://zhidao.baidu.com/question/123304290.html</a></p>
+<hr>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+<p>使用虚函数，系统会有一定的空间开销。当一个类带有虚函数时，编译系统会为该类构造一个虚函数表（位于类内其他成员前面），是一个指针数组，存放每个虚函数的入口地址。系统在进行动态关联的时间开销很少，提高了多态性的效率。</p>
+<p><img src="/2019/08/13/%E8%99%9A%E5%87%BD%E6%95%B0/images\pasted-2.png" alt="upload successful"></p>
+<p>编译器生成的析构函数都是非虚的，除非是一个子类，其父类有个虚析构函数，此时的虚函数特性继承自基类。有虚函数的类，一般情况下要定义一个虚析构函数。</p>
+<p>纯虚函数不能new。</p>
+<hr>
+<blockquote>
+<p>构造函数不能声明为虚函数的原因？</p>
+</blockquote>
+<ol>
+<li><p>构造一个对象时，必须知道对象实际类型，而虚函数是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功，编译器就无法知道对象的实际类型，是该类本身，还是派生类，还是其他。</p>
+</li>
+<li><p>虚函数的执行依赖于虚函数表，而虚函数表是在构造函数中进行初始化的，即初始化虚表指针（vptr），使得正确指向虚函数表。而在构造对象期间，虚函数表（vtable）还没有被初始化，将无法进行。</p>
+</li>
+</ol>
+<blockquote>
+<p>什么情况下，类的析构函数应该声明为虚函数？为什么？</p>
+</blockquote>
+<p>类A中有了虚函数就会在类的数据成员的最前面添加一个vfptr指针(void** vfptr)，这个指针用来指向一个vtable表（一个函数指针数组）（一个类只有一个该表），该表存储着当前类的所有虚函数的地址。这样vfptr就成为了一个类似成员变量的存在。访问虚函数的时候通过vfptr间址找到vtable表，再间址进而找到要调用的函数。这样就在一定程度上摆脱了类型制约。</p>
+<p>当B类继承A类的时候，因为A中有虚函数，编译器就自动的给B类添加vfprt指针和vtable表。也可以理解为B类继承来了A类中的那个vptr指针成员。（B对象的vfptr浅拷贝到A对象的vfptr）因此，A对象的vfptr所指向的是B对象的虚函数表，而B的析构函数位于书函数表0的位置，因此，这样就可以通过A类对象的指针d，找到B类对象的析构函数，从而在delete d;时，可以销毁B对象，而不会产生内存泄漏和异常。</p>
+<ul>
+<li>简单得来讲：析构函数设为虚函数的原因是为了防止内存泄露。在继承体系中，当基类的指针或引用指向派生类，用基类delete时，如果基类的析构函数没有声明为虚函数，只能析构基类对象，派生类对象将无法析构。因为普通函数受类型的制约，（因为没有vptr指针）使用哪个类的指针调用函数，那么所调用的就是那个累的函数。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># bug复现</span><br><span class="line">a* aa= new b(); // b继承a</span><br><span class="line">delete aa;</span><br><span class="line">// 打印（执行） a 的析构函数，不执行b的</span><br></pre></td></tr></table></figure>
+所以需要将基类的析构函数声明为虚函数，当撤销基类对象的同时也撤销派生类的对象，这个过程是动态关联完成的。</li>
+</ul>
+<hr>
+<blockquote>
+<p>内联函数不能是虚函数</p>
+</blockquote>
+<p>内联函数会在预编译时会进行代码展开，省略函数调用，因此内联函数不能是虚函数。虽然使用inline和virtual共同修饰一个函数时能够通过编译，并在调用时会表现出虚函数的性质，但这是因为编译器在函数声明中遇到virtual关键字时，会选择忽略inline关键字，不进行代码展开。</p>
+<blockquote>
+<p>静态函数不能声明为虚函数</p>
+</blockquote>
+<p>虚函数体现了对象在运行时的多态性，而静态函数属于整个类，不属于某个对象，不能声明为虚函数。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post--编译过程" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/" class="article-date">
+      <time datetime="2019-08-12T14:26:00.000Z" itemprop="datePublished">2019-08-12</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/12/-%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">C++编译过程</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <pre class="mermaid">graph TD
+    classDef className fill:white,stroke:#333,stroke-width:1px;
+    id(预处理,做优化,生成.i文件)-->id1[编译器,生成.s文件]
+    id1[编译器,生成.s文件]-->id2[汇编器,生成.o文件]
+    id2[汇编器,生成.o文件]-->id3[链接器,连接库文件和其他目标文件]
+    id3[链接器,连接库文件和其他目标文件]-->id4(生成可执行文件)
+    class id,id1,id2,id3,id4 className;</pre>
+
+<h4 id="C-预处理阶段主要完成的工作："><a href="#C-预处理阶段主要完成的工作：" class="headerlink" title="C++预处理阶段主要完成的工作："></a>C++预处理阶段主要完成的工作：</h4><p>处理#开始的预编译指令：<br>（1）宏定义(#define)：对宏定义进行字符串替换。<br>（2）文件包含(#include)：文件包含命令把指定头文件插入该命令行位置取代该命令行，从而把指定的文件和当前的源程序文件连成一个源文件。<br>（3）条件编译(#ifdef)：当满足某条件时语句进行编译，而当条件不满足时则编译另一组语句。条件编译对程序的移植和调试是很有用的。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#ifndef  Linux</span><br><span class="line">	linux平台下运行的函数	</span><br><span class="line">#else</span><br><span class="line">	#ifndef  windows</span><br><span class="line">	Windows平台下运行的函数</span><br><span class="line">	#endif         </span><br><span class="line">#endif</span><br></pre></td></tr></table></figure></p>
+<h4 id="汇编阶段："><a href="#汇编阶段：" class="headerlink" title="汇编阶段："></a>汇编阶段：</h4><p>直接生成了汇编代码</p>
+<h4 id="链接器阶段"><a href="#链接器阶段" class="headerlink" title="链接器阶段"></a>链接器阶段</h4><p>（1）函数重载：同名函数，不同函数输入变量/输出变量的类型/不同功能。<br>（2）inline函数：如果函数体不太大，对此函数的所有调用都以函数本体去替代，注意inline只是对编译器的一个建议申请，不是强制命令<br>（3）模板处理：函数定义（包括具现化后的函数模板，类模板的成员函数），变量定义（包括函数模板的静态数据变量，类模板的静态数据变量，类模板的全局对象等）<br>（4）虚函数：每一个多态class都有一份虚函数表，定义或继承了虚函数的对象会有一个隐含成员：指向虚表的指针vptr，在构造或析构对象的时候，编译器生成的代码会修改这个指针。按道理说，一个多态class的虚表应该恰好被一个目标文件定义，这样链接就不会有错，但c++编译器有时无法判断是否应该在当前编译单元生成虚表定义，为保险起见，只能每个编译单元都生成虚表，然后交给链接器来消除重复数据。</p>
+<ul>
+<li>C++使用的也是C语言的单遍编译的方式，从头到尾扫描一遍源码，一边解析源码，一边即刻生成目标代码</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/11/hello-world/" class="article-date">
+      <time datetime="2019-08-11T12:22:00.000Z" itemprop="datePublished">2019-08-11</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/11/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p id="1"></p>
+
+<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+<p><a href="#1">第一段</a></p>
+<p><img src="/2019/08/11/hello-world/\images\pasted-26.png\" alt="upload successful"></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-特征工程-特征归一化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <!-- 添加代码  -->
+<a href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/" class="article-date">
+      <time datetime="2019-08-06T04:17:00.000Z" itemprop="datePublished">2019-08-06</time>
+</a>
+
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/06/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96/">特征工程-特征归一化</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="为什么要归一化？"><a href="#为什么要归一化？" class="headerlink" title="为什么要归一化？"></a>为什么要归一化？</h2><p>在实际应用中，通过梯度下降一类的方法需要进行归一化，比如逻辑回归，线性回归，SVM，神经网络，Adaboost，SVM，LR，Knn，KMeans等。但是决策树，朴素贝叶斯，隐马尔可夫等模型不需要归一化。因为前者是基于数值的决策，对单位敏感度高，如果不进行归一化操作可能会导致x/y中有一个变量的影响力$\uparrow$，可能需要更多轮次的迭代才能得到最终解。后者基于交叉熵的信息增益，基于概率分布模型，而概率本身是归一化的（%），所以不需要归一化。</p>
+<p><div align="center">
+![upload successful](\images\pasted-1.png)
+</div></p>
+<h3 id="逻辑回归一定要归一化么？"><a href="#逻辑回归一定要归一化么？" class="headerlink" title="逻辑回归一定要归一化么？"></a>逻辑回归一定要归一化么？</h3><p>如果你用了L1L2正则的话需要，因为不用正则时，我们的损失函数只是仅仅在度量预测与真实的差距，加上正则后，我们的损失函数除了要度量上面的差距外，还要度量参数值是否足够小。而参数值的大小程度是与特征的数值范围相关的。</p>
+<h2 id="归一化的方法"><a href="#归一化的方法" class="headerlink" title="归一化的方法"></a>归一化的方法</h2><ol>
+<li>线性函数归一化（适用于简单数值）：$X=\frac{X-X<em>{min}}{X</em>{max}-X_{min}}$</li>
+<li>0均值归一化：$z=\frac{x-u}{\sigma}$</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    </nav>
+  
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2026 SaltedMdFiveSh
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by SaltedMdFiveSh <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+
+                <script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1277892196&web_id=1277892196"></script>                            
+                
+                
+                    <span>| </span>
+                
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+                ,本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+                <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+                </script>              
+            </div>
+        
+    </div>
+    <script src="/js/mermaid.min.js"></script>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+          
+    <!-- 代码块复制功能 -->
+    <script type="text/javascript" src="/js/clipboard.min.js"></script>  
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+
+  </div>
+    <style>
+      .btn-copy {
+          display: inline-block;
+          cursor: pointer;
+          background-color: #eee;
+          background-image: linear-gradient(#fcfcfc,#eee);
+          border: 1px solid #d5d5d5;
+          border-radius: 3px;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          -webkit-appearance: none;
+          font-size: 13px;
+          font-weight: 700;
+          line-height: 20px;
+          color: #333;
+          -webkit-transition: opacity .3s ease-in-out;
+          -o-transition: opacity .3s ease-in-out;
+          transition: opacity .3s ease-in-out;
+          padding: 2px 6px;
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          opacity: 0;
+      }
+      .btn-copy span {
+          margin-left: 5px;
+      }
+      .highlight:hover .btn-copy{
+        opacity: 1;
+      }      
+    </style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
